@@ -1,0 +1,47 @@
+[
+  {
+    "id": "plan-exclusivo-i",
+    "name": "Exclusivo I",
+    "slug": "exclusivo-i",
+    "description": "Plano ambulatorial individual com cobertura essencial para consultas, exames e procedimentos básicos.",
+    "benefits": [
+      "Consultas médicas em diversas especialidades",
+      "Exames laboratoriais e de imagem",
+      "Atendimento ambulatorial completo",
+      "Rede credenciada ampla em São Paulo",
+      "Telemedicina 24 horas"
+    ],
+    "type": "individual",
+    "highlighted": false
+  },
+  {
+    "id": "plan-exclusivo-ii",
+    "name": "Exclusivo II",
+    "slug": "exclusivo-ii",
+    "description": "Plano ambulatorial completo com cobertura ampliada, incluindo especialidades adicionais e atendimento prioritário.",
+    "benefits": [
+      "Todas as coberturas do Exclusivo I",
+      "Especialidades médicas ampliadas",
+      "Fisioterapia e reabilitação",
+      "Atendimento prioritário na rede",
+      "Psicologia e acompanhamento mental"
+    ],
+    "type": "individual",
+    "highlighted": true
+  },
+  {
+    "id": "plan-empresarial",
+    "name": "Empresarial",
+    "slug": "empresarial",
+    "description": "Plano corporativo com franquia, ideal para empresas que buscam saúde ambulatorial para seus colaboradores.",
+    "benefits": [
+      "Cobertura ambulatorial completa",
+      "Carências reduzidas para grupos",
+      "Gestão simplificada para RH",
+      "Rede credenciada em toda São Paulo",
+      "Telemedicina para colaboradores"
+    ],
+    "type": "corporate",
+    "highlighted": false
+  }
+]

@@ -1,0 +1,92 @@
+[
+  {
+    "id": "wp-ind-001",
+    "procedure": "Consultas médicas",
+    "durationDays": 0,
+    "category": "Consultas"
+  },
+  {
+    "id": "wp-ind-002",
+    "procedure": "Consultas com especialistas",
+    "durationDays": 30,
+    "category": "Consultas"
+  },
+  {
+    "id": "wp-ind-003",
+    "procedure": "Exames laboratoriais simples",
+    "durationDays": 30,
+    "category": "Exames"
+  },
+  {
+    "id": "wp-ind-004",
+    "procedure": "Exames de imagem (raio-X, ultrassom)",
+    "durationDays": 60,
+    "category": "Exames"
+  },
+  {
+    "id": "wp-ind-005",
+    "procedure": "Exames de alta complexidade (ressonância, tomografia)",
+    "durationDays": 180,
+    "category": "Exames"
+  },
+  {
+    "id": "wp-ind-006",
+    "procedure": "Fisioterapia",
+    "durationDays": 30,
+    "category": "Terapias"
+  },
+  {
+    "id": "wp-ind-007",
+    "procedure": "Psicologia",
+    "durationDays": 30,
+    "category": "Terapias"
+  },
+  {
+    "id": "wp-ind-008",
+    "procedure": "Procedimentos ambulatoriais simples",
+    "durationDays": 30,
+    "category": "Procedimentos"
+  },
+  {
+    "id": "wp-ind-009",
+    "procedure": "Procedimentos ambulatoriais de média complexidade",
+    "durationDays": 90,
+    "category": "Procedimentos"
+  },
+  {
+    "id": "wp-ind-010",
+    "procedure": "Procedimentos ambulatoriais de alta complexidade",
+    "durationDays": 180,
+    "category": "Procedimentos"
+  },
+  {
+    "id": "wp-ind-011",
+    "procedure": "Urgência e emergência",
+    "durationDays": 1,
+    "category": "Urgência"
+  },
+  {
+    "id": "wp-ind-012",
+    "procedure": "Atendimento em pronto-socorro",
+    "durationDays": 1,
+    "category": "Urgência"
+  },
+  {
+    "id": "wp-ind-013",
+    "procedure": "Telemedicina",
+    "durationDays": 0,
+    "category": "Consultas"
+  },
+  {
+    "id": "wp-ind-014",
+    "procedure": "Doenças e lesões preexistentes",
+    "durationDays": 730,
+    "category": "Preexistências"
+  },
+  {
+    "id": "wp-ind-015",
+    "procedure": "Oftalmologia (consultas e exames)",
+    "durationDays": 60,
+    "category": "Consultas"
+  }
+]

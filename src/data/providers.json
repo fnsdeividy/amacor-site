@@ -1,0 +1,1121 @@
+[
+  {
+    "id": "prov-001",
+    "name": "Hospital Municipal Rocha Faria",
+    "type": "Hospital",
+    "specialties": [
+      "Clínica médica",
+      "Cardiologia",
+      "Ortopedia",
+      "Urgência"
+    ],
+    "address": {
+      "street": "Estrada do Campinho",
+      "number": "370",
+      "neighborhood": "Campo Grande",
+      "city": "Rio de Janeiro",
+      "state": "RJ",
+      "cep": "23052-080"
+    },
+    "coordinates": {
+      "lat": -22.8975,
+      "lng": -43.5614
+    },
+    "phone": "(21) 3395-4500",
+    "whatsapp": "(21) 99876-4500",
+    "operatingHours": {
+      "weekdays": "24 horas",
+      "saturday": "24 horas",
+      "sunday": "24 horas"
+    },
+    "acceptedPlans": [
+      "Exclusivo I",
+      "Exclusivo II",
+      "Empresarial"
+    ]
+  },
+  {
+    "id": "prov-002",
+    "name": "Hospital Santa Cruz Saúde",
+    "type": "Hospital",
+    "specialties": [
+      "Clínica médica",
+      "Pediatria",
+      "Ginecologia",
+      "Urgência"
+    ],
+    "address": {
+      "street": "Rua Felipe Cardoso",
+      "number": "1200",
+      "neighborhood": "Santa Cruz",
+      "city": "Rio de Janeiro",
+      "state": "RJ",
+      "cep": "23510-150"
+    },
+    "coordinates": {
+      "lat": -22.9132,
+      "lng": -43.6789
+    },
+    "phone": "(21) 3395-7800",
+    "whatsapp": "(21) 99812-7800",
+    "operatingHours": {
+      "weekdays": "24 horas",
+      "saturday": "24 horas",
+      "sunday": "24 horas"
+    },
+    "acceptedPlans": [
+      "Exclusivo I",
+      "Exclusivo II",
+      "Empresarial"
+    ]
+  },
+  {
+    "id": "prov-003",
+    "name": "Hospital Geral de Nova Iguaçu",
+    "type": "Hospital",
+    "specialties": [
+      "Clínica médica",
+      "Cardiologia",
+      "Ortopedia",
+      "Pediatria",
+      "Urgência"
+    ],
+    "address": {
+      "street": "Rua Henrique Duque Estrada Meyer",
+      "number": "105",
+      "neighborhood": "Centro",
+      "city": "Nova Iguaçu",
+      "state": "RJ",
+      "cep": "26210-035"
+    },
+    "coordinates": {
+      "lat": -22.7592,
+      "lng": -43.4510
+    },
+    "phone": "(21) 2667-4200",
+    "whatsapp": "(21) 99765-4200",
+    "operatingHours": {
+      "weekdays": "24 horas",
+      "saturday": "24 horas",
+      "sunday": "24 horas"
+    },
+    "acceptedPlans": [
+      "Exclusivo I",
+      "Exclusivo II",
+      "Empresarial"
+    ]
+  },
+  {
+    "id": "prov-004",
+    "name": "Hospital São José de Duque de Caxias",
+    "type": "Hospital",
+    "specialties": [
+      "Clínica médica",
+      "Ginecologia",
+      "Cardiologia",
+      "Urgência"
+    ],
+    "address": {
+      "street": "Avenida Presidente Kennedy",
+      "number": "2500",
+      "neighborhood": "Centro",
+      "city": "Duque de Caxias",
+      "state": "RJ",
+      "cep": "25020-220"
+    },
+    "coordinates": {
+      "lat": -22.7856,
+      "lng": -43.3115
+    },
+    "phone": "(21) 2771-3300",
+    "operatingHours": {
+      "weekdays": "24 horas",
+      "saturday": "24 horas",
+      "sunday": "24 horas"
+    },
+    "acceptedPlans": [
+      "Exclusivo II",
+      "Empresarial"
+    ]
+  },
+  {
+    "id": "prov-005",
+    "name": "Hospital Municipal Albert Schweitzer",
+    "type": "Hospital",
+    "specialties": [
+      "Clínica médica",
+      "Ortopedia",
+      "Cardiologia",
+      "Urgência"
+    ],
+    "address": {
+      "street": "Rua Dois de Maio",
+      "number": "450",
+      "neighborhood": "Realengo",
+      "city": "Rio de Janeiro",
+      "state": "RJ",
+      "cep": "21865-060"
+    },
+    "coordinates": {
+      "lat": -22.8745,
+      "lng": -43.4189
+    },
+    "phone": "(21) 3111-5600",
+    "whatsapp": "(21) 99654-5600",
+    "operatingHours": {
+      "weekdays": "24 horas",
+      "saturday": "24 horas",
+      "sunday": "24 horas"
+    },
+    "acceptedPlans": [
+      "Exclusivo I",
+      "Exclusivo II",
+      "Empresarial"
+    ]
+  },
+  {
+    "id": "prov-006",
+    "name": "Hospital Vida Nova Belford Roxo",
+    "type": "Hospital",
+    "specialties": [
+      "Clínica médica",
+      "Pediatria",
+      "Urgência"
+    ],
+    "address": {
+      "street": "Avenida Joaquim da Costa Lima",
+      "number": "880",
+      "neighborhood": "Centro",
+      "city": "Belford Roxo",
+      "state": "RJ",
+      "cep": "26130-100"
+    },
+    "coordinates": {
+      "lat": -22.7640,
+      "lng": -43.3990
+    },
+    "phone": "(21) 2761-8900",
+    "operatingHours": {
+      "weekdays": "24 horas",
+      "saturday": "24 horas",
+      "sunday": "24 horas"
+    },
+    "acceptedPlans": [
+      "Exclusivo I",
+      "Empresarial"
+    ]
+  },
+  {
+    "id": "prov-007",
+    "name": "Clínica São José Campo Grande",
+    "type": "Clínica",
+    "specialties": [
+      "Cardiologia",
+      "Dermatologia",
+      "Ginecologia"
+    ],
+    "address": {
+      "street": "Rua Augusto de Vasconcelos",
+      "number": "156",
+      "neighborhood": "Campo Grande",
+      "city": "Rio de Janeiro",
+      "state": "RJ",
+      "cep": "23050-100"
+    },
+    "coordinates": {
+      "lat": -22.9020,
+      "lng": -43.5580
+    },
+    "phone": "(21) 3394-2100",
+    "whatsapp": "(21) 99712-2100",
+    "operatingHours": {
+      "weekdays": "07:00 - 19:00",
+      "saturday": "08:00 - 13:00"
+    },
+    "acceptedPlans": [
+      "Exclusivo I",
+      "Exclusivo II",
+      "Empresarial"
+    ]
+  },
+  {
+    "id": "prov-008",
+    "name": "Clínica Integrada Bangu",
+    "type": "Clínica",
+    "specialties": [
+      "Clínica médica",
+      "Pediatria",
+      "Ortopedia"
+    ],
+    "address": {
+      "street": "Rua Silva Cardoso",
+      "number": "340",
+      "neighborhood": "Bangu",
+      "city": "Rio de Janeiro",
+      "state": "RJ",
+      "cep": "21820-130"
+    },
+    "coordinates": {
+      "lat": -22.8740,
+      "lng": -43.4620
+    },
+    "phone": "(21) 3332-1500",
+    "whatsapp": "(21) 99845-1500",
+    "operatingHours": {
+      "weekdays": "08:00 - 18:00",
+      "saturday": "08:00 - 12:00"
+    },
+    "acceptedPlans": [
+      "Exclusivo I",
+      "Exclusivo II"
+    ]
+  },
+  {
+    "id": "prov-009",
+    "name": "Clínica Médica Padre Miguel",
+    "type": "Clínica",
+    "specialties": [
+      "Clínica médica",
+      "Psicologia",
+      "Fisioterapia"
+    ],
+    "address": {
+      "street": "Rua Soldado Arlindo Oliveira",
+      "number": "78",
+      "neighborhood": "Padre Miguel",
+      "city": "Rio de Janeiro",
+      "state": "RJ",
+      "cep": "21775-090"
+    },
+    "coordinates": {
+      "lat": -22.8782,
+      "lng": -43.4412
+    },
+    "phone": "(21) 3331-0800",
+    "operatingHours": {
+      "weekdays": "08:00 - 17:00",
+      "saturday": "08:00 - 12:00"
+    },
+    "acceptedPlans": [
+      "Exclusivo II",
+      "Empresarial"
+    ]
+  },
+  {
+    "id": "prov-010",
+    "name": "Clínica Saúde & Vida Nova Iguaçu",
+    "type": "Clínica",
+    "specialties": [
+      "Ginecologia",
+      "Dermatologia",
+      "Oftalmologia"
+    ],
+    "address": {
+      "street": "Rua Bernardino de Melo",
+      "number": "2200",
+      "neighborhood": "Centro",
+      "city": "Nova Iguaçu",
+      "state": "RJ",
+      "cep": "26215-065"
+    },
+    "coordinates": {
+      "lat": -22.7580,
+      "lng": -43.4485
+    },
+    "phone": "(21) 2668-3400",
+    "whatsapp": "(21) 99678-3400",
+    "operatingHours": {
+      "weekdays": "07:00 - 20:00",
+      "saturday": "07:00 - 14:00"
+    },
+    "acceptedPlans": [
+      "Exclusivo I",
+      "Exclusivo II",
+      "Empresarial"
+    ]
+  },
+  {
+    "id": "prov-011",
+    "name": "Clínica Familiar São João de Meriti",
+    "type": "Clínica",
+    "specialties": [
+      "Pediatria",
+      "Clínica médica",
+      "Telemedicina"
+    ],
+    "address": {
+      "street": "Avenida Presidente Lincoln",
+      "number": "630",
+      "neighborhood": "Vilar dos Teles",
+      "city": "São João de Meriti",
+      "state": "RJ",
+      "cep": "25555-200"
+    },
+    "coordinates": {
+      "lat": -22.8035,
+      "lng": -43.3720
+    },
+    "phone": "(21) 2751-6700",
+    "whatsapp": "(21) 99534-6700",
+    "operatingHours": {
+      "weekdays": "07:00 - 19:00",
+      "saturday": "08:00 - 13:00"
+    },
+    "acceptedPlans": [
+      "Exclusivo I",
+      "Empresarial"
+    ]
+  },
+  {
+    "id": "prov-012",
+    "name": "Clínica Nilópolis Saúde",
+    "type": "Clínica",
+    "specialties": [
+      "Cardiologia",
+      "Ortopedia",
+      "Fisioterapia"
+    ],
+    "address": {
+      "street": "Rua Professor Alfredo Gonçalves Filgueiras",
+      "number": "412",
+      "neighborhood": "Centro",
+      "city": "Nilópolis",
+      "state": "RJ",
+      "cep": "26520-060"
+    },
+    "coordinates": {
+      "lat": -22.8065,
+      "lng": -43.4230
+    },
+    "phone": "(21) 2691-4500",
+    "operatingHours": {
+      "weekdays": "08:00 - 18:00",
+      "saturday": "08:00 - 12:00"
+    },
+    "acceptedPlans": [
+      "Exclusivo II"
+    ]
+  },
+  {
+    "id": "prov-013",
+    "name": "Clínica Senador Camará Médicos Associados",
+    "type": "Clínica",
+    "specialties": [
+      "Clínica médica",
+      "Dermatologia",
+      "Psicologia"
+    ],
+    "address": {
+      "street": "Rua Doutor Bernardino",
+      "number": "95",
+      "complement": "Sala 201",
+      "neighborhood": "Senador Camará",
+      "city": "Rio de Janeiro",
+      "state": "RJ",
+      "cep": "21840-050"
+    },
+    "coordinates": {
+      "lat": -22.8810,
+      "lng": -43.4750
+    },
+    "phone": "(21) 3338-9200",
+    "whatsapp": "(21) 99423-9200",
+    "operatingHours": {
+      "weekdays": "08:00 - 17:00"
+    },
+    "acceptedPlans": [
+      "Exclusivo I",
+      "Exclusivo II",
+      "Empresarial"
+    ]
+  },
+  {
+    "id": "prov-014",
+    "name": "Clínica Queimados Centro Médico",
+    "type": "Clínica",
+    "specialties": [
+      "Oftalmologia",
+      "Pediatria",
+      "Ginecologia"
+    ],
+    "address": {
+      "street": "Rua Doutor Luiz Guimarães",
+      "number": "250",
+      "neighborhood": "Centro",
+      "city": "Queimados",
+      "state": "RJ",
+      "cep": "26310-010"
+    },
+    "coordinates": {
+      "lat": -22.7105,
+      "lng": -43.5520
+    },
+    "phone": "(21) 2665-1800",
+    "operatingHours": {
+      "weekdays": "07:00 - 18:00",
+      "saturday": "07:00 - 12:00"
+    },
+    "acceptedPlans": [
+      "Empresarial"
+    ]
+  },
+  {
+    "id": "prov-015",
+    "name": "Clínica Guaratiba Bem Estar",
+    "type": "Clínica",
+    "specialties": [
+      "Clínica médica",
+      "Fisioterapia",
+      "Telemedicina"
+    ],
+    "address": {
+      "street": "Estrada da Matriz",
+      "number": "1450",
+      "neighborhood": "Guaratiba",
+      "city": "Rio de Janeiro",
+      "state": "RJ",
+      "cep": "23032-060"
+    },
+    "coordinates": {
+      "lat": -22.9920,
+      "lng": -43.6310
+    },
+    "phone": "(21) 3410-2200",
+    "whatsapp": "(21) 99312-2200",
+    "operatingHours": {
+      "weekdays": "08:00 - 17:00",
+      "saturday": "08:00 - 12:00"
+    },
+    "acceptedPlans": [
+      "Exclusivo I",
+      "Empresarial"
+    ]
+  },
+  {
+    "id": "prov-016",
+    "name": "Clínica Itaguaí Saúde Total",
+    "type": "Clínica",
+    "specialties": [
+      "Cardiologia",
+      "Clínica médica",
+      "Ortopedia"
+    ],
+    "address": {
+      "street": "Rua General Bocaiúva",
+      "number": "320",
+      "neighborhood": "Centro",
+      "city": "Itaguaí",
+      "state": "RJ",
+      "cep": "23810-090"
+    },
+    "coordinates": {
+      "lat": -22.8720,
+      "lng": -43.7750
+    },
+    "phone": "(21) 2688-5100",
+    "whatsapp": "(21) 99187-5100",
+    "operatingHours": {
+      "weekdays": "07:00 - 19:00",
+      "saturday": "07:00 - 13:00"
+    },
+    "acceptedPlans": [
+      "Exclusivo I",
+      "Exclusivo II"
+    ]
+  },
+  {
+    "id": "prov-017",
+    "name": "Clínica Seropédica Vida Plena",
+    "type": "Clínica",
+    "specialties": [
+      "Ginecologia",
+      "Psicologia",
+      "Dermatologia"
+    ],
+    "address": {
+      "street": "Rodovia Presidente Dutra km 49",
+      "number": "S/N",
+      "complement": "Bloco B",
+      "neighborhood": "Centro",
+      "city": "Seropédica",
+      "state": "RJ",
+      "cep": "23890-000"
+    },
+    "coordinates": {
+      "lat": -22.7440,
+      "lng": -43.7080
+    },
+    "phone": "(21) 2682-3300",
+    "operatingHours": {
+      "weekdays": "08:00 - 17:00"
+    },
+    "acceptedPlans": [
+      "Exclusivo II",
+      "Empresarial"
+    ]
+  },
+  {
+    "id": "prov-018",
+    "name": "Laboratório Diagnóstico Oeste",
+    "type": "Laboratório",
+    "specialties": [
+      "Laboratório",
+      "Exames"
+    ],
+    "address": {
+      "street": "Rua Coxilha",
+      "number": "55",
+      "neighborhood": "Campo Grande",
+      "city": "Rio de Janeiro",
+      "state": "RJ",
+      "cep": "23055-090"
+    },
+    "coordinates": {
+      "lat": -22.9005,
+      "lng": -43.5545
+    },
+    "phone": "(21) 3394-8800",
+    "whatsapp": "(21) 99456-8800",
+    "operatingHours": {
+      "weekdays": "06:00 - 18:00",
+      "saturday": "06:00 - 12:00"
+    },
+    "acceptedPlans": [
+      "Exclusivo I",
+      "Exclusivo II",
+      "Empresarial"
+    ]
+  },
+  {
+    "id": "prov-019",
+    "name": "Laboratório Santa Cruz Análises Clínicas",
+    "type": "Laboratório",
+    "specialties": [
+      "Laboratório",
+      "Exames"
+    ],
+    "address": {
+      "street": "Rua Lopes de Moura",
+      "number": "180",
+      "neighborhood": "Santa Cruz",
+      "city": "Rio de Janeiro",
+      "state": "RJ",
+      "cep": "23515-020"
+    },
+    "coordinates": {
+      "lat": -22.9155,
+      "lng": -43.6850
+    },
+    "phone": "(21) 3395-1200",
+    "whatsapp": "(21) 99234-1200",
+    "operatingHours": {
+      "weekdays": "06:00 - 17:00",
+      "saturday": "06:00 - 11:00"
+    },
+    "acceptedPlans": [
+      "Exclusivo I",
+      "Exclusivo II",
+      "Empresarial"
+    ]
+  },
+  {
+    "id": "prov-020",
+    "name": "Laboratório Caxias Diagnósticos",
+    "type": "Laboratório",
+    "specialties": [
+      "Laboratório",
+      "Exames"
+    ],
+    "address": {
+      "street": "Rua Governador Portela",
+      "number": "720",
+      "neighborhood": "Centro",
+      "city": "Duque de Caxias",
+      "state": "RJ",
+      "cep": "25010-060"
+    },
+    "coordinates": {
+      "lat": -22.7870,
+      "lng": -43.3090
+    },
+    "phone": "(21) 2771-5500",
+    "operatingHours": {
+      "weekdays": "06:00 - 18:00",
+      "saturday": "06:00 - 12:00"
+    },
+    "acceptedPlans": [
+      "Exclusivo II",
+      "Empresarial"
+    ]
+  },
+  {
+    "id": "prov-021",
+    "name": "Laboratório Nova Iguaçu Lab+",
+    "type": "Laboratório",
+    "specialties": [
+      "Laboratório",
+      "Exames"
+    ],
+    "address": {
+      "street": "Rua Coronel Alfredo Soares",
+      "number": "45",
+      "complement": "Loja A",
+      "neighborhood": "Centro",
+      "city": "Nova Iguaçu",
+      "state": "RJ",
+      "cep": "26220-040"
+    },
+    "coordinates": {
+      "lat": -22.7565,
+      "lng": -43.4530
+    },
+    "phone": "(21) 2667-9100",
+    "whatsapp": "(21) 99345-9100",
+    "operatingHours": {
+      "weekdays": "06:00 - 19:00",
+      "saturday": "06:00 - 13:00"
+    },
+    "acceptedPlans": [
+      "Exclusivo I",
+      "Exclusivo II",
+      "Empresarial"
+    ]
+  },
+  {
+    "id": "prov-022",
+    "name": "Laboratório Bangu Exames",
+    "type": "Laboratório",
+    "specialties": [
+      "Laboratório",
+      "Exames"
+    ],
+    "address": {
+      "street": "Rua Fonseca",
+      "number": "290",
+      "neighborhood": "Bangu",
+      "city": "Rio de Janeiro",
+      "state": "RJ",
+      "cep": "21810-080"
+    },
+    "coordinates": {
+      "lat": -22.8755,
+      "lng": -43.4650
+    },
+    "phone": "(21) 3333-7700",
+    "operatingHours": {
+      "weekdays": "06:30 - 17:00",
+      "saturday": "06:30 - 11:00"
+    },
+    "acceptedPlans": [
+      "Exclusivo I",
+      "Empresarial"
+    ]
+  },
+  {
+    "id": "prov-023",
+    "name": "Laboratório Japeri Saúde",
+    "type": "Laboratório",
+    "specialties": [
+      "Laboratório",
+      "Exames"
+    ],
+    "address": {
+      "street": "Rua Capitão Menezes",
+      "number": "112",
+      "neighborhood": "Centro",
+      "city": "Japeri",
+      "state": "RJ",
+      "cep": "26440-010"
+    },
+    "coordinates": {
+      "lat": -22.6430,
+      "lng": -43.6530
+    },
+    "phone": "(21) 2664-2200",
+    "whatsapp": "(21) 99567-2200",
+    "operatingHours": {
+      "weekdays": "06:00 - 16:00",
+      "saturday": "06:00 - 10:00"
+    },
+    "acceptedPlans": [
+      "Empresarial"
+    ]
+  },
+  {
+    "id": "prov-024",
+    "name": "Consultório Dra. Fernanda Oliveira - Dermatologia",
+    "type": "Consultório",
+    "specialties": [
+      "Dermatologia"
+    ],
+    "address": {
+      "street": "Rua Campo Grande",
+      "number": "800",
+      "complement": "Sala 305",
+      "neighborhood": "Campo Grande",
+      "city": "Rio de Janeiro",
+      "state": "RJ",
+      "cep": "23045-060"
+    },
+    "coordinates": {
+      "lat": -22.8990,
+      "lng": -43.5560
+    },
+    "phone": "(21) 3394-6600",
+    "whatsapp": "(21) 99876-6600",
+    "operatingHours": {
+      "weekdays": "09:00 - 18:00",
+      "saturday": "09:00 - 13:00"
+    },
+    "acceptedPlans": [
+      "Exclusivo I",
+      "Exclusivo II",
+      "Empresarial"
+    ]
+  },
+  {
+    "id": "prov-025",
+    "name": "Consultório Dr. Ricardo Mendes - Cardiologia",
+    "type": "Consultório",
+    "specialties": [
+      "Cardiologia"
+    ],
+    "address": {
+      "street": "Avenida Brasil",
+      "number": "13500",
+      "complement": "Sala 102",
+      "neighborhood": "Cosmos",
+      "city": "Rio de Janeiro",
+      "state": "RJ",
+      "cep": "23060-150"
+    },
+    "coordinates": {
+      "lat": -22.8920,
+      "lng": -43.6050
+    },
+    "phone": "(21) 3396-4400",
+    "operatingHours": {
+      "weekdays": "08:00 - 17:00"
+    },
+    "acceptedPlans": [
+      "Exclusivo I",
+      "Exclusivo II"
+    ]
+  },
+  {
+    "id": "prov-026",
+    "name": "Consultório Dra. Patrícia Lima - Ginecologia",
+    "type": "Consultório",
+    "specialties": [
+      "Ginecologia"
+    ],
+    "address": {
+      "street": "Rua Cândido Benício",
+      "number": "1850",
+      "complement": "Sala 408",
+      "neighborhood": "Realengo",
+      "city": "Rio de Janeiro",
+      "state": "RJ",
+      "cep": "21860-040"
+    },
+    "coordinates": {
+      "lat": -22.8710,
+      "lng": -43.4200
+    },
+    "phone": "(21) 3112-7700",
+    "whatsapp": "(21) 99234-7700",
+    "operatingHours": {
+      "weekdays": "08:00 - 18:00",
+      "saturday": "08:00 - 12:00"
+    },
+    "acceptedPlans": [
+      "Exclusivo II",
+      "Empresarial"
+    ]
+  },
+  {
+    "id": "prov-027",
+    "name": "Consultório Dr. Marcos Souza - Oftalmologia",
+    "type": "Consultório",
+    "specialties": [
+      "Oftalmologia"
+    ],
+    "address": {
+      "street": "Rua Marechal Mena Barreto",
+      "number": "67",
+      "complement": "Sala 201",
+      "neighborhood": "Centro",
+      "city": "São João de Meriti",
+      "state": "RJ",
+      "cep": "25520-100"
+    },
+    "coordinates": {
+      "lat": -22.8020,
+      "lng": -43.3700
+    },
+    "phone": "(21) 2752-3300",
+    "whatsapp": "(21) 99678-3300",
+    "operatingHours": {
+      "weekdays": "09:00 - 18:00"
+    },
+    "acceptedPlans": [
+      "Exclusivo I",
+      "Empresarial"
+    ]
+  },
+  {
+    "id": "prov-028",
+    "name": "Consultório Dr. André Figueiredo - Ortopedia",
+    "type": "Consultório",
+    "specialties": [
+      "Ortopedia",
+      "Fisioterapia"
+    ],
+    "address": {
+      "street": "Estrada do Mendanha",
+      "number": "555",
+      "complement": "Sala 3",
+      "neighborhood": "Inhoaíba",
+      "city": "Rio de Janeiro",
+      "state": "RJ",
+      "cep": "23058-100"
+    },
+    "coordinates": {
+      "lat": -22.8880,
+      "lng": -43.5850
+    },
+    "phone": "(21) 3397-1100",
+    "operatingHours": {
+      "weekdays": "08:00 - 17:00",
+      "saturday": "08:00 - 12:00"
+    },
+    "acceptedPlans": [
+      "Exclusivo I",
+      "Exclusivo II",
+      "Empresarial"
+    ]
+  },
+  {
+    "id": "prov-029",
+    "name": "Consultório Dra. Camila Rocha - Pediatria",
+    "type": "Consultório",
+    "specialties": [
+      "Pediatria"
+    ],
+    "address": {
+      "street": "Rua Barão de Itapagipe",
+      "number": "230",
+      "neighborhood": "Paciência",
+      "city": "Rio de Janeiro",
+      "state": "RJ",
+      "cep": "23575-020"
+    },
+    "coordinates": {
+      "lat": -22.9250,
+      "lng": -43.6420
+    },
+    "phone": "(21) 3398-5500",
+    "whatsapp": "(21) 99123-5500",
+    "operatingHours": {
+      "weekdays": "08:00 - 17:00"
+    },
+    "acceptedPlans": [
+      "Exclusivo I"
+    ]
+  },
+  {
+    "id": "prov-030",
+    "name": "Consultório Dr. Paulo Henrique - Psicologia",
+    "type": "Consultório",
+    "specialties": [
+      "Psicologia",
+      "Telemedicina"
+    ],
+    "address": {
+      "street": "Rua Ari Schiavo",
+      "number": "140",
+      "complement": "Sala 502",
+      "neighborhood": "Sepetiba",
+      "city": "Rio de Janeiro",
+      "state": "RJ",
+      "cep": "23545-040"
+    },
+    "coordinates": {
+      "lat": -22.9680,
+      "lng": -43.7100
+    },
+    "phone": "(21) 3399-2200",
+    "whatsapp": "(21) 99456-2200",
+    "operatingHours": {
+      "weekdays": "09:00 - 19:00",
+      "saturday": "09:00 - 13:00"
+    },
+    "acceptedPlans": [
+      "Exclusivo I",
+      "Exclusivo II",
+      "Empresarial"
+    ]
+  },
+  {
+    "id": "prov-031",
+    "name": "Consultório Dra. Juliana Alves - Clínica Médica",
+    "type": "Consultório",
+    "specialties": [
+      "Clínica médica",
+      "Telemedicina"
+    ],
+    "address": {
+      "street": "Rua Olinda Ellis",
+      "number": "88",
+      "complement": "Sala 104",
+      "neighborhood": "Centro",
+      "city": "Nilópolis",
+      "state": "RJ",
+      "cep": "26525-030"
+    },
+    "coordinates": {
+      "lat": -22.8050,
+      "lng": -43.4180
+    },
+    "phone": "(21) 2691-8800",
+    "operatingHours": {
+      "weekdays": "08:00 - 18:00"
+    },
+    "acceptedPlans": [
+      "Exclusivo II",
+      "Empresarial"
+    ]
+  },
+  {
+    "id": "prov-032",
+    "name": "Pronto-Socorro Campo Grande 24h",
+    "type": "Pronto-Socorro",
+    "specialties": [
+      "Urgência",
+      "Clínica médica",
+      "Ortopedia"
+    ],
+    "address": {
+      "street": "Estrada do Monteiro",
+      "number": "1200",
+      "neighborhood": "Campo Grande",
+      "city": "Rio de Janeiro",
+      "state": "RJ",
+      "cep": "23048-070"
+    },
+    "coordinates": {
+      "lat": -22.8950,
+      "lng": -43.5500
+    },
+    "phone": "(21) 3394-9900",
+    "whatsapp": "(21) 99789-9900",
+    "operatingHours": {
+      "weekdays": "24 horas",
+      "saturday": "24 horas",
+      "sunday": "24 horas"
+    },
+    "acceptedPlans": [
+      "Exclusivo I",
+      "Exclusivo II",
+      "Empresarial"
+    ]
+  },
+  {
+    "id": "prov-033",
+    "name": "Pronto-Socorro Nova Iguaçu Emergência",
+    "type": "Pronto-Socorro",
+    "specialties": [
+      "Urgência",
+      "Clínica médica",
+      "Pediatria"
+    ],
+    "address": {
+      "street": "Rua Getúlio Vargas",
+      "number": "1500",
+      "neighborhood": "Centro",
+      "city": "Nova Iguaçu",
+      "state": "RJ",
+      "cep": "26210-110"
+    },
+    "coordinates": {
+      "lat": -22.7610,
+      "lng": -43.4470
+    },
+    "phone": "(21) 2668-7700",
+    "operatingHours": {
+      "weekdays": "24 horas",
+      "saturday": "24 horas",
+      "sunday": "24 horas"
+    },
+    "acceptedPlans": [
+      "Exclusivo I",
+      "Exclusivo II",
+      "Empresarial"
+    ]
+  },
+  {
+    "id": "prov-034",
+    "name": "Pronto-Socorro Duque de Caxias Urgente",
+    "type": "Pronto-Socorro",
+    "specialties": [
+      "Urgência",
+      "Clínica médica",
+      "Cardiologia"
+    ],
+    "address": {
+      "street": "Avenida Nilo Peçanha",
+      "number": "890",
+      "neighborhood": "Jardim Vinte e Cinco de Agosto",
+      "city": "Duque de Caxias",
+      "state": "RJ",
+      "cep": "25070-050"
+    },
+    "coordinates": {
+      "lat": -22.7830,
+      "lng": -43.3050
+    },
+    "phone": "(21) 2772-4400",
+    "whatsapp": "(21) 99345-4400",
+    "operatingHours": {
+      "weekdays": "24 horas",
+      "saturday": "24 horas",
+      "sunday": "24 horas"
+    },
+    "acceptedPlans": [
+      "Exclusivo II",
+      "Empresarial"
+    ]
+  },
+  {
+    "id": "prov-035",
+    "name": "Pronto-Socorro Bangu Atendimento Imediato",
+    "type": "Pronto-Socorro",
+    "specialties": [
+      "Urgência",
+      "Clínica médica"
+    ],
+    "address": {
+      "street": "Rua Padre Guilherme Decaminada",
+      "number": "200",
+      "neighborhood": "Bangu",
+      "city": "Rio de Janeiro",
+      "state": "RJ",
+      "cep": "21815-060"
+    },
+    "coordinates": {
+      "lat": -22.8730,
+      "lng": -43.4680
+    },
+    "phone": "(21) 3334-5500",
+    "whatsapp": "(21) 99567-5500",
+    "operatingHours": {
+      "weekdays": "24 horas",
+      "saturday": "24 horas",
+      "sunday": "24 horas"
+    },
+    "acceptedPlans": [
+      "Exclusivo I",
+      "Empresarial"
+    ]
+  }
+]

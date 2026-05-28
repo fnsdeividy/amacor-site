@@ -1,0 +1,92 @@
+[
+  {
+    "id": "wp-corp-001",
+    "procedure": "Consultas médicas",
+    "durationDays": 0,
+    "category": "Consultas"
+  },
+  {
+    "id": "wp-corp-002",
+    "procedure": "Consultas com especialistas",
+    "durationDays": 0,
+    "category": "Consultas"
+  },
+  {
+    "id": "wp-corp-003",
+    "procedure": "Exames laboratoriais simples",
+    "durationDays": 0,
+    "category": "Exames"
+  },
+  {
+    "id": "wp-corp-004",
+    "procedure": "Exames de imagem (raio-X, ultrassom)",
+    "durationDays": 30,
+    "category": "Exames"
+  },
+  {
+    "id": "wp-corp-005",
+    "procedure": "Exames de alta complexidade (ressonância, tomografia)",
+    "durationDays": 90,
+    "category": "Exames"
+  },
+  {
+    "id": "wp-corp-006",
+    "procedure": "Fisioterapia",
+    "durationDays": 0,
+    "category": "Terapias"
+  },
+  {
+    "id": "wp-corp-007",
+    "procedure": "Psicologia",
+    "durationDays": 0,
+    "category": "Terapias"
+  },
+  {
+    "id": "wp-corp-008",
+    "procedure": "Procedimentos ambulatoriais simples",
+    "durationDays": 0,
+    "category": "Procedimentos"
+  },
+  {
+    "id": "wp-corp-009",
+    "procedure": "Procedimentos ambulatoriais de média complexidade",
+    "durationDays": 30,
+    "category": "Procedimentos"
+  },
+  {
+    "id": "wp-corp-010",
+    "procedure": "Procedimentos ambulatoriais de alta complexidade",
+    "durationDays": 90,
+    "category": "Procedimentos"
+  },
+  {
+    "id": "wp-corp-011",
+    "procedure": "Urgência e emergência",
+    "durationDays": 0,
+    "category": "Urgência"
+  },
+  {
+    "id": "wp-corp-012",
+    "procedure": "Atendimento em pronto-socorro",
+    "durationDays": 0,
+    "category": "Urgência"
+  },
+  {
+    "id": "wp-corp-013",
+    "procedure": "Telemedicina",
+    "durationDays": 0,
+    "category": "Consultas"
+  },
+  {
+    "id": "wp-corp-014",
+    "procedure": "Doenças e lesões preexistentes",
+    "durationDays": 365,
+    "category": "Preexistências"
+  },
+  {
+    "id": "wp-corp-015",
+    "procedure": "Oftalmologia (consultas e exames)",
+    "durationDays": 30,
+    "category": "Consultas"
+  }
+]
