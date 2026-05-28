@@ -13,7 +13,9 @@ export default function MobileMenu({
 }: MobileMenuProps) {
   return (
     <div
-      className={`tablet:hidden fixed inset-0 top-[80px] z-40 transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'
+      className={`tablet:hidden fixed inset-0 top-[80px] z-40 transition-all duration-300 ease-in-out ${isOpen
+          ? 'translate-x-0 opacity-100 pointer-events-auto'
+          : 'translate-x-full opacity-0 pointer-events-none'
         }`}
       aria-hidden={!isOpen}
     >
