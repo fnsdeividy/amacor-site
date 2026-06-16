@@ -8,7 +8,7 @@ export type {
   ViewMode,
 } from './provider';
 
-export type { Plan } from './plan';
+export type { Plan, PlanContractType, PlanBenefit } from './plan';
 
 export type { WaitingPeriod } from './waitingPeriod';
 
@@ -22,3 +22,31 @@ export type {
   ValidationRule,
   ValidationResult,
 } from './forms';
+
+export type {
+  LoginResponse,
+  LoginCredentials,
+  CreateLoginRequest,
+  CRMData,
+  CRMRequest,
+  BeneficiarySession,
+} from './beneficiary';
+
+export type {
+  AgeRange,
+  SimulationResult,
+  SimulatedPlan,
+  SimulationPricingData,
+  PlanPricing,
+  BenefitItem,
+  Testimonial,
+  TelemedicineStep,
+  TelemedicineBenefit,
+  FAQItem,
+  TelemedicineData,
+  Milestone,
+  ValueItem,
+  InstitutionalData,
+  LeadCapture,
+  WhatsAppMessageConfig,
+} from './simulation';

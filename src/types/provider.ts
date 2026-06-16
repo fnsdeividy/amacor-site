@@ -15,7 +15,7 @@ export type Specialty =
   | 'Urgência'
   | 'Telemedicina';
 
-export type PlanType = 'Exclusivo I' | 'Exclusivo II' | 'Empresarial';
+export type PlanType = 'Exclusivo I' | 'Exclusivo II' | 'Empresarial' | 'Amacor Mais com Franquia';
 
 export interface Provider {
   id: string;
