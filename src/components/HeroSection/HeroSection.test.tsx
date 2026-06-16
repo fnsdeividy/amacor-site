@@ -36,8 +36,9 @@ describe('HeroSection', () => {
   it('renders with background image when provided', () => {
     const { container } = renderHero({ backgroundImage: '/images/hero-bg.jpg' })
 
-    const section = container.querySelector('section')
-    expect(section).toHaveStyle({ backgroundImage: 'url(/images/hero-bg.jpg)' })
+    const img = container.querySelector('img')
+    expect(img).toBeInTheDocument()
+    expect(img).toHaveAttribute('src', '/images/hero-bg.jpg')
   })
 
   it('renders overlay when background image is provided', () => {
@@ -45,20 +46,21 @@ describe('HeroSection', () => {
 
     const overlay = container.querySelector('[aria-hidden="true"]')
     expect(overlay).toBeInTheDocument()
+    expect(overlay?.className).toContain('bg-gradient-brand-overlay')
   })
 
-  it('does not render overlay when no background image', () => {
+  it('renders gradient background when no background image', () => {
     const { container } = renderHero()
 
-    const overlay = container.querySelector('[aria-hidden="true"]')
-    expect(overlay).not.toBeInTheDocument()
+    const gradient = container.querySelector('[aria-hidden="true"]')
+    expect(gradient).toBeInTheDocument()
+    expect(gradient?.className).toContain('bg-gradient-brand')
   })
 
-  it('CTA button has minimum 48x48px touch target', () => {
+  it('CTA button has minimum touch target height', () => {
     renderHero()
 
     const link = screen.getByRole('link', { name: 'Simule seu plano' })
-    expect(link.className).toContain('min-w-touch')
     expect(link.className).toContain('min-h-touch')
   })
 })

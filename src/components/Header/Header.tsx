@@ -1,32 +1,60 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
+import { useAdminAuth } from '../../contexts/AdminAuthContext'
+import { useAuth } from '../../contexts/AuthContext'
 import MobileMenu from './MobileMenu'
 
 export interface HeaderProps {
   currentPath: string
 }
 
-const mainNavLinks = [
-  { label: 'Home', path: '/' },
-  { label: 'A Empresa', path: '/sobre' },
-  { label: 'Planos', path: '/planos' },
-  { label: 'Rede Credenciada', path: '/rede-credenciada' },
-  { label: 'Contato', path: '/contato' },
+export interface NavItem {
+  label: string
+  href: string
+  children?: NavItem[] // max 1 level deep
+}
+
+const navItems: NavItem[] = [
+  { label: 'Início', href: '/' },
+  {
+    label: 'Planos',
+    href: '/planos',
+    children: [
+      { label: 'Exclusivo I', href: '/planos/exclusivo-i' },
+      { label: 'Exclusivo II', href: '/planos/exclusivo-ii' },
+      { label: 'Mais com Franquia', href: '/planos/mais-com-franquia' },
+      { label: 'Empresarial', href: '/planos/empresarial' },
+    ],
+  },
+  { label: 'Telemedicina', href: '/telemedicina' },
+  { label: 'Rede Credenciada', href: '/rede-credenciada' },
+  { label: 'Área do Beneficiário', href: '/area-do-beneficiario' },
+  { label: 'Institucional', href: '/institucional' },
+  { label: 'Contato', href: '/contato' },
 ]
 
-const moreLinks = [
-  { label: 'Carência Individual', path: '/carencia-individual' },
-  { label: 'Carência Empresarial', path: '/carencia-empresarial' },
-  { label: 'IDSS', path: '/idss' },
-  { label: 'Manual TISS', path: '/manual-tiss' },
+const adminNavLinks = [
+  { label: 'Dashboard', path: '/admin/dashboard' },
+  { label: 'Solicitações', path: '/admin/solicitacoes' },
 ]
 
-// All links combined for mobile menu
-const allNavLinks = [...mainNavLinks, ...moreLinks]
+const beneficiaryNavLinks = [
+  { label: 'Boletos', path: '/beneficiario/boletos' },
+  { label: 'Solicitações', path: '/beneficiario/solicitacoes' },
+  { label: 'Nova Solicitação', path: '/beneficiario/solicitacoes/nova' },
+]
 
 export default function Header({ currentPath }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [isMoreOpen, setIsMoreOpen] = useState(false)
-  const moreRef = useRef<HTMLDivElement>(null)
+  const [isPlansDropdownOpen, setIsPlansDropdownOpen] = useState(false)
+  const plansDropdownRef = useRef<HTMLDivElement>(null)
+  const plansButtonRef = useRef<HTMLButtonElement>(null)
+  const dropdownItemsRef = useRef<(HTMLAnchorElement | null)[]>([])
+
+  const { isAuthenticated: isAdminAuthenticated, logout: adminLogout } = useAdminAuth()
+  const { session: beneficiarySession, logout: beneficiaryLogout } = useAuth()
+  const isBeneficiaryAuthenticated = beneficiarySession?.isAuthenticated ?? false
+
+  const plansNavItem = navItems.find((item) => item.children)!
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prev) => !prev)
@@ -36,18 +64,91 @@ export default function Header({ currentPath }: HeaderProps) {
     setIsMobileMenuOpen(false)
   }
 
+  const openPlansDropdown = () => {
+    setIsPlansDropdownOpen(true)
+  }
+
+  const closePlansDropdown = () => {
+    setIsPlansDropdownOpen(false)
+  }
+
+  const togglePlansDropdown = () => {
+    setIsPlansDropdownOpen((prev) => !prev)
+  }
+
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (moreRef.current && !moreRef.current.contains(event.target as Node)) {
-        setIsMoreOpen(false)
+      if (
+        plansDropdownRef.current &&
+        !plansDropdownRef.current.contains(event.target as Node)
+      ) {
+        closePlansDropdown()
       }
     }
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  const isMoreActive = moreLinks.some((link) => link.path === currentPath)
+  // Keyboard navigation for dropdown
+  const handleDropdownKeyDown = useCallback(
+    (event: React.KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        closePlansDropdown()
+        plansButtonRef.current?.focus()
+      }
+
+      if (!isPlansDropdownOpen) return
+
+      const items = dropdownItemsRef.current.filter(Boolean) as HTMLAnchorElement[]
+      const currentIndex = items.indexOf(document.activeElement as HTMLAnchorElement)
+
+      if (event.key === 'ArrowDown') {
+        event.preventDefault()
+        const nextIndex = currentIndex < items.length - 1 ? currentIndex + 1 : 0
+        items[nextIndex]?.focus()
+      }
+
+      if (event.key === 'ArrowUp') {
+        event.preventDefault()
+        const prevIndex = currentIndex > 0 ? currentIndex - 1 : items.length - 1
+        items[prevIndex]?.focus()
+      }
+    },
+    [isPlansDropdownOpen]
+  )
+
+  // Focus first dropdown item when opened via keyboard
+  const handlePlansButtonKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      togglePlansDropdown()
+      if (!isPlansDropdownOpen) {
+        // Will open — focus first item after render
+        setTimeout(() => {
+          dropdownItemsRef.current[0]?.focus()
+        }, 0)
+      }
+    }
+    if (event.key === 'ArrowDown' && !isPlansDropdownOpen) {
+      event.preventDefault()
+      openPlansDropdown()
+      setTimeout(() => {
+        dropdownItemsRef.current[0]?.focus()
+      }, 0)
+    }
+  }
+
+  const isPlansActive =
+    currentPath === '/planos' ||
+    plansNavItem.children?.some((child) => currentPath === child.href)
+
+  const isNavItemActive = (item: NavItem) => {
+    if (item.children) {
+      return isPlansActive
+    }
+    return currentPath === item.href
+  }
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/98 backdrop-blur-sm border-b border-warm-100 shadow-soft">
@@ -55,7 +156,7 @@ export default function Header({ currentPath }: HeaderProps) {
         {/* Logo / Brand */}
         <a
           href="/"
-          className="flex items-center gap-3 group"
+          className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 rounded-lg"
         >
           <img
             src="/img/logo.png"
@@ -65,75 +166,162 @@ export default function Header({ currentPath }: HeaderProps) {
         </a>
 
         {/* Desktop Navigation */}
-        <nav className="hidden tablet:flex items-center gap-1">
-          {mainNavLinks.map((link) => (
-            <a
-              key={link.path}
-              href={link.path}
-              className={`relative text-nav px-4 py-2.5 rounded-lg transition-all duration-200 ${currentPath === link.path
-                ? 'text-primary-600 font-semibold bg-primary-50'
-                : 'text-warm-600 hover:text-primary-600 hover:bg-warm-50'
-                }`}
-            >
-              {link.label}
-              {currentPath === link.path && (
-                <span className="absolute bottom-0.5 left-4 right-4 h-[2px] bg-primary-600 rounded-full" />
-              )}
-            </a>
-          ))}
+        <nav className="hidden tablet:flex items-center gap-1" aria-label="Navegação principal">
+          {navItems.map((item) => {
+            // Render dropdown for Plans
+            if (item.children) {
+              return (
+                <div
+                  key={item.href}
+                  className="relative"
+                  ref={plansDropdownRef}
+                  onMouseEnter={openPlansDropdown}
+                  onMouseLeave={closePlansDropdown}
+                  onKeyDown={handleDropdownKeyDown}
+                >
+                  <button
+                    ref={plansButtonRef}
+                    type="button"
+                    onClick={togglePlansDropdown}
+                    onKeyDown={handlePlansButtonKeyDown}
+                    className={`relative text-[16px] px-4 py-2.5 rounded-lg transition-all duration-200 flex items-center gap-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 ${isPlansActive
+                        ? 'text-primary-600 font-semibold bg-primary-50'
+                        : 'text-warm-600 hover:text-primary-600 hover:bg-warm-50'
+                      }`}
+                    aria-expanded={isPlansDropdownOpen}
+                    aria-haspopup="true"
+                    aria-controls="plans-dropdown-menu"
+                  >
+                    {item.label}
+                    <svg
+                      className={`w-4 h-4 transition-transform duration-200 ${isPlansDropdownOpen ? 'rotate-180' : ''
+                        }`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                    {isPlansActive && (
+                      <span className="absolute bottom-0.5 left-4 right-4 h-[2px] bg-primary-600 rounded-full" />
+                    )}
+                  </button>
 
-          {/* "Mais" dropdown for secondary links */}
-          <div className="relative" ref={moreRef}>
-            <button
-              type="button"
-              onClick={() => setIsMoreOpen((prev) => !prev)}
-              className={`relative text-nav px-4 py-2.5 rounded-lg transition-all duration-200 flex items-center gap-1.5 ${isMoreActive
-                ? 'text-primary-600 font-semibold bg-primary-50'
-                : 'text-warm-600 hover:text-primary-600 hover:bg-warm-50'
-                }`}
-              aria-expanded={isMoreOpen}
-              aria-haspopup="true"
-            >
-              Mais
-              <svg
-                className={`w-4 h-4 transition-transform duration-200 ${isMoreOpen ? 'rotate-180' : ''}`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
+                  {/* Dropdown panel */}
+                  {isPlansDropdownOpen && (
+                    <div
+                      id="plans-dropdown-menu"
+                      role="menu"
+                      className="absolute top-full left-0 mt-2 w-56 bg-white rounded-2xl shadow-elevated border border-warm-100 py-2 z-50"
+                    >
+                      {item.children.map((child, index) => (
+                        <a
+                          key={child.href}
+                          ref={(el) => {
+                            dropdownItemsRef.current[index] = el
+                          }}
+                          href={child.href}
+                          role="menuitem"
+                          tabIndex={-1}
+                          onClick={closePlansDropdown}
+                          className={`block px-5 py-3 text-[16px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-600 ${currentPath === child.href
+                              ? 'text-primary-600 font-semibold bg-primary-50'
+                              : 'text-warm-600 hover:text-primary-600 hover:bg-warm-50'
+                            }`}
+                        >
+                          {child.label}
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )
+            }
+
+            // Regular nav link
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                className={`relative text-[16px] px-4 py-2.5 rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 ${isNavItemActive(item)
+                    ? 'text-primary-600 font-semibold bg-primary-50'
+                    : 'text-warm-600 hover:text-primary-600 hover:bg-warm-50'
+                  }`}
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-              {isMoreActive && (
-                <span className="absolute bottom-0.5 left-4 right-4 h-[2px] bg-primary-600 rounded-full" />
-              )}
-            </button>
+                {item.label}
+                {isNavItemActive(item) && (
+                  <span className="absolute bottom-0.5 left-4 right-4 h-[2px] bg-primary-600 rounded-full" />
+                )}
+              </a>
+            )
+          })}
 
-            {/* Dropdown panel */}
-            {isMoreOpen && (
-              <div className="absolute top-full right-0 mt-3 w-60 bg-white rounded-2xl shadow-elevated border border-warm-100 py-2 z-50">
-                {moreLinks.map((link) => (
-                  <a
-                    key={link.path}
-                    href={link.path}
-                    onClick={() => setIsMoreOpen(false)}
-                    className={`block px-5 py-3 text-nav transition-colors ${currentPath === link.path
+          {/* Conditional auth-based navigation */}
+          {isAdminAuthenticated && (
+            <>
+              {adminNavLinks.map((link) => (
+                <a
+                  key={link.path}
+                  href={link.path}
+                  className={`relative text-[16px] px-4 py-2.5 rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 ${currentPath === link.path
                       ? 'text-primary-600 font-semibold bg-primary-50'
                       : 'text-warm-600 hover:text-primary-600 hover:bg-warm-50'
-                      }`}
-                  >
-                    {link.label}
-                  </a>
-                ))}
-              </div>
-            )}
-          </div>
+                    }`}
+                >
+                  {link.label}
+                  {currentPath === link.path && (
+                    <span className="absolute bottom-0.5 left-4 right-4 h-[2px] bg-primary-600 rounded-full" />
+                  )}
+                </a>
+              ))}
+              <button
+                type="button"
+                onClick={adminLogout}
+                className="text-[16px] px-4 py-2.5 rounded-lg transition-all duration-200 text-red-600 hover:bg-red-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2"
+              >
+                Sair
+              </button>
+            </>
+          )}
+
+          {isBeneficiaryAuthenticated && !isAdminAuthenticated && (
+            <>
+              {beneficiaryNavLinks.map((link) => (
+                <a
+                  key={link.path}
+                  href={link.path}
+                  className={`relative text-[16px] px-4 py-2.5 rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 ${currentPath === link.path
+                      ? 'text-primary-600 font-semibold bg-primary-50'
+                      : 'text-warm-600 hover:text-primary-600 hover:bg-warm-50'
+                    }`}
+                >
+                  {link.label}
+                  {currentPath === link.path && (
+                    <span className="absolute bottom-0.5 left-4 right-4 h-[2px] bg-primary-600 rounded-full" />
+                  )}
+                </a>
+              ))}
+              <button
+                type="button"
+                onClick={beneficiaryLogout}
+                className="text-[16px] px-4 py-2.5 rounded-lg transition-all duration-200 text-red-600 hover:bg-red-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2"
+              >
+                Sair
+              </button>
+            </>
+          )}
         </nav>
 
         {/* Mobile Hamburger Button */}
         <button
           type="button"
-          className="tablet:hidden flex items-center justify-center min-w-touch min-h-touch p-2 rounded-xl hover:bg-warm-50 transition-colors"
+          className="tablet:hidden flex items-center justify-center min-w-[48px] min-h-[48px] p-2 rounded-xl hover:bg-warm-50 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2"
           onClick={toggleMobileMenu}
           aria-expanded={isMobileMenuOpen}
           aria-label={isMobileMenuOpen ? 'Fechar menu' : 'Abrir menu'}
@@ -168,8 +356,22 @@ export default function Header({ currentPath }: HeaderProps) {
       <MobileMenu
         isOpen={isMobileMenuOpen}
         currentPath={currentPath}
-        navLinks={allNavLinks}
+        navItems={navItems}
         onClose={closeMobileMenu}
+        onLogout={
+          isAdminAuthenticated
+            ? adminLogout
+            : isBeneficiaryAuthenticated
+              ? beneficiaryLogout
+              : undefined
+        }
+        extraLinks={
+          isAdminAuthenticated
+            ? adminNavLinks
+            : isBeneficiaryAuthenticated
+              ? beneficiaryNavLinks
+              : undefined
+        }
       />
     </header>
   )

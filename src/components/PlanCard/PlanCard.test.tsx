@@ -53,13 +53,13 @@ describe('PlanCard', () => {
   it('applies highlighted styles when highlighted is true', () => {
     const { container } = renderPlanCard({ highlighted: true })
     const article = container.querySelector('article')
-    expect(article).toHaveClass('border-2', 'border-primary-500', 'shadow-card-hover')
+    expect(article).toHaveClass('border-2', 'border-primary-600', 'shadow-card-hover')
   })
 
   it('applies default styles when highlighted is false', () => {
     const { container } = renderPlanCard({ highlighted: false })
     const article = container.querySelector('article')
-    expect(article).toHaveClass('border', 'border-background-gray', 'shadow-card')
+    expect(article).toHaveClass('border', 'border-warm-200', 'shadow-soft')
   })
 
   it('CTA button has minimum touch target height', () => {
