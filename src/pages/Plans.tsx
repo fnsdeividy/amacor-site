@@ -1,8 +1,39 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import plans from '../data/plans.json'
 import { PlanCard } from '../components/PlanCard/PlanCard'
+import { SimulationWidget } from '../components/SimulationWidget/SimulationWidget'
+
+type FilterCategory = 'Todos' | 'Individual' | 'Familiar' | 'Empresarial'
+
+const FILTER_TABS: FilterCategory[] = ['Todos', 'Individual', 'Familiar', 'Empresarial']
+
+function formatPrice(price: number | null): string {
+  if (price === null) return 'Sob consulta'
+  return `A partir de R$ ${price.toFixed(2).replace('.', ',')}`
+}
+
+function mapContractTypeLabel(contractType: string): string {
+  switch (contractType) {
+    case 'individual':
+      return 'Individual'
+    case 'familiar':
+      return 'Familiar'
+    case 'empresarial':
+      return 'Empresarial'
+    default:
+      return contractType
+  }
+}
 
 export default function Plans() {
+  const [activeFilter, setActiveFilter] = useState<FilterCategory>('Todos')
+
+  const filteredPlans = plans.filter((plan) => {
+    if (activeFilter === 'Todos') return true
+    return plan.contractType.toLowerCase() === activeFilter.toLowerCase()
+  })
+
   return (
     <div className="w-full">
       {/* Page Header with photo background */}
@@ -23,83 +54,181 @@ export default function Plans() {
         </div>
       </section>
 
-      {/* Plans Grid */}
-      <section className="px-4 py-20 tablet:py-28 tablet:px-8 max-w-7xl mx-auto">
-        <h2 className="sr-only">Planos disponíveis</h2>
-        <div className="grid grid-cols-1 tablet:grid-cols-3 gap-8">
-          {plans.map((plan) => (
+      {/* Simulation Widget */}
+      <section className="px-4 tablet:px-8 max-w-7xl mx-auto -mt-12 relative z-20">
+        <SimulationWidget className="border border-warm-200" />
+      </section>
+
+      {/* Filter Tabs + Plans Grid */}
+      <section className="px-4 py-16 tablet:py-20 tablet:px-8 max-w-7xl mx-auto">
+        <h2 className="text-heading-md tablet:text-heading-lg text-primary-900 text-center mb-8">
+          Escolha o plano ideal
+        </h2>
+
+        {/* Filter Tabs */}
+        <div className="flex flex-wrap justify-center gap-2 mb-12" role="tablist" aria-label="Filtrar planos por categoria">
+          {FILTER_TABS.map((tab) => (
+            <button
+              key={tab}
+              type="button"
+              role="tab"
+              aria-selected={activeFilter === tab}
+              onClick={() => setActiveFilter(tab)}
+              className={`min-h-touch px-6 py-3 rounded-xl font-semibold text-body transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-primary-300 ${activeFilter === tab
+                  ? 'bg-primary-600 text-white shadow-sm'
+                  : 'bg-white text-warm-600 border border-warm-300 hover:bg-primary-50 hover:text-primary-700'
+                }`}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+
+        {/* Plans Grid */}
+        <div
+          className="grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-4 gap-6"
+          role="tabpanel"
+          aria-label={`Planos: ${activeFilter}`}
+        >
+          {filteredPlans.map((plan) => (
             <PlanCard
               key={plan.id}
               name={plan.name}
+              slug={plan.slug}
+              tagline={plan.tagline}
+              startingPrice={formatPrice(plan.startingPrice)}
+              contractType={mapContractTypeLabel(plan.contractType)}
               description={plan.description}
-              benefits={plan.benefits}
-              ctaText="Saiba mais"
+              benefits={plan.benefits.slice(0, 5)}
+              ctaText="Ver detalhes"
               ctaLink={`/planos/${plan.slug}`}
               highlighted={plan.highlighted}
+              whatsappNumber="5521999999999"
             />
           ))}
         </div>
+
+        {filteredPlans.length === 0 && (
+          <p className="text-center text-body text-warm-500 mt-8">
+            Nenhum plano encontrado para esta categoria.
+          </p>
+        )}
       </section>
 
-      {/* Trust Section - Por que escolher a Amacor? */}
-      <section className="w-full py-20 tablet:py-28 px-4 tablet:px-8 bg-warm-50">
+      {/* Plan Comparison Table */}
+      <section className="w-full py-16 tablet:py-20 px-4 tablet:px-8 bg-warm-50">
         <div className="mx-auto max-w-7xl">
-          <div className="text-center mb-14">
-            <span className="inline-block text-sm font-semibold text-accent-500 uppercase tracking-wider mb-3">
-              Diferenciais
-            </span>
+          <div className="text-center mb-10">
             <h2 className="text-heading-md tablet:text-heading-lg text-primary-900">
-              Por que escolher a Amacor?
+              Compare os planos
             </h2>
-            <p className="mt-4 text-body text-warm-600 max-w-2xl mx-auto">
-              Oferecemos planos acessíveis com atendimento humanizado e uma rede credenciada de qualidade no Rio de Janeiro.
+            <p className="mt-3 text-body text-warm-600 max-w-2xl mx-auto">
+              Veja as diferenças entre os planos e escolha o que mais se encaixa nas suas necessidades.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-4 gap-8">
-            {/* Trust indicator 1 */}
-            <div className="bg-white rounded-2xl border border-warm-200 p-8 text-center hover:shadow-card-hover transition-all duration-300">
-              <div className="w-14 h-14 mx-auto mb-5 rounded-xl bg-primary-50 flex items-center justify-center">
-                <svg className="w-7 h-7 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-              </div>
-              <h3 className="text-[17px] font-semibold text-primary-900 mb-2">Registro ANS</h3>
-              <p className="text-body text-warm-600">Operadora registrada e regulamentada pela Agência Nacional de Saúde Suplementar.</p>
-            </div>
+          <div className="overflow-x-auto rounded-2xl border border-warm-200 shadow-soft bg-white">
+            <table className="w-full min-w-[640px] text-left">
+              <thead>
+                <tr className="border-b border-warm-200 bg-primary-50">
+                  <th className="px-6 py-4 text-body font-semibold text-warm-700">
+                    Característica
+                  </th>
+                  {plans.map((plan) => (
+                    <th
+                      key={plan.id}
+                      className="px-6 py-4 text-body font-bold text-primary-900 text-center"
+                    >
+                      {plan.name}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-warm-100">
+                {/* Price Range */}
+                <tr className="hover:bg-warm-50 transition-colors">
+                  <td className="px-6 py-4 text-body font-medium text-warm-700">
+                    Faixa de preço
+                  </td>
+                  {plans.map((plan) => (
+                    <td key={plan.id} className="px-6 py-4 text-body text-warm-600 text-center">
+                      {plan.startingPrice !== null
+                        ? `A partir de R$ ${plan.startingPrice.toFixed(2).replace('.', ',')}`
+                        : 'Sob consulta'}
+                    </td>
+                  ))}
+                </tr>
 
-            {/* Trust indicator 2 */}
-            <div className="bg-white rounded-2xl border border-warm-200 p-8 text-center hover:shadow-card-hover transition-all duration-300">
-              <div className="w-14 h-14 mx-auto mb-5 rounded-xl bg-primary-50 flex items-center justify-center">
-                <svg className="w-7 h-7 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </div>
-              <h3 className="text-[17px] font-semibold text-primary-900 mb-2">Atendimento humanizado</h3>
-              <p className="text-body text-warm-600">Equipe dedicada para acolher você em cada etapa do seu cuidado com a saúde.</p>
-            </div>
+                {/* Contract Type */}
+                <tr className="hover:bg-warm-50 transition-colors">
+                  <td className="px-6 py-4 text-body font-medium text-warm-700">
+                    Tipo de contrato
+                  </td>
+                  {plans.map((plan) => (
+                    <td key={plan.id} className="px-6 py-4 text-body text-warm-600 text-center">
+                      {mapContractTypeLabel(plan.contractType)}
+                    </td>
+                  ))}
+                </tr>
 
-            {/* Trust indicator 3 */}
-            <div className="bg-white rounded-2xl border border-warm-200 p-8 text-center hover:shadow-card-hover transition-all duration-300">
-              <div className="w-14 h-14 mx-auto mb-5 rounded-xl bg-primary-50 flex items-center justify-center">
-                <svg className="w-7 h-7 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                </svg>
-              </div>
-              <h3 className="text-[17px] font-semibold text-primary-900 mb-2">Rede ampla</h3>
-              <p className="text-body text-warm-600">Hospitais, clínicas e laboratórios de referência em todo o Rio de Janeiro.</p>
-            </div>
+                {/* Coverage */}
+                <tr className="hover:bg-warm-50 transition-colors">
+                  <td className="px-6 py-4 text-body font-medium text-warm-700">
+                    Cobertura
+                  </td>
+                  {plans.map((plan) => (
+                    <td key={plan.id} className="px-6 py-4 text-sm text-warm-600 text-center">
+                      {plan.coverageDetails.slice(0, 3).join(', ')}
+                    </td>
+                  ))}
+                </tr>
 
-            {/* Trust indicator 4 */}
-            <div className="bg-white rounded-2xl border border-warm-200 p-8 text-center hover:shadow-card-hover transition-all duration-300">
-              <div className="w-14 h-14 mx-auto mb-5 rounded-xl bg-primary-50 flex items-center justify-center">
-                <svg className="w-7 h-7 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="text-[17px] font-semibold text-primary-900 mb-2">Preços acessíveis</h3>
-              <p className="text-body text-warm-600">Planos com valores justos e transparentes, sem surpresas na hora de pagar.</p>
-            </div>
+                {/* Telemedicine */}
+                <tr className="hover:bg-warm-50 transition-colors">
+                  <td className="px-6 py-4 text-body font-medium text-warm-700">
+                    Telemedicina
+                  </td>
+                  {plans.map((plan) => (
+                    <td key={plan.id} className="px-6 py-4 text-body text-center">
+                      {plan.includesTelemedicine ? (
+                        <span className="inline-flex items-center gap-1 text-primary-600 font-semibold">
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                          </svg>
+                          Sim
+                        </span>
+                      ) : (
+                        <span className="text-warm-400">Não</span>
+                      )}
+                    </td>
+                  ))}
+                </tr>
+
+                {/* Network Type */}
+                <tr className="hover:bg-warm-50 transition-colors">
+                  <td className="px-6 py-4 text-body font-medium text-warm-700">
+                    Rede
+                  </td>
+                  {plans.map((plan) => (
+                    <td key={plan.id} className="px-6 py-4 text-sm text-warm-600 text-center">
+                      {plan.networkInfo}
+                    </td>
+                  ))}
+                </tr>
+
+                {/* Co-participation */}
+                <tr className="hover:bg-warm-50 transition-colors">
+                  <td className="px-6 py-4 text-body font-medium text-warm-700">
+                    Coparticipação
+                  </td>
+                  {plans.map((plan) => (
+                    <td key={plan.id} className="px-6 py-4 text-sm text-warm-600 text-center">
+                      {plan.coParticipation}
+                    </td>
+                  ))}
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
