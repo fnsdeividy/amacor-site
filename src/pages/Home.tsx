@@ -94,8 +94,8 @@ export default function Home() {
         subtitle="A Amacor oferece planos individuais e empresariais com ampla rede credenciada no Rio de Janeiro. Simule agora e encontre o plano ideal para você."
         primaryCTA={{
           text: 'Simular meu plano',
-          link: '#simulacao',
-          variant: 'scroll',
+          link: 'https://amacorsaude.com.br/simulador/',
+          variant: 'button',
         }}
         secondaryCTA={{
           text: 'Falar no WhatsApp',
