@@ -20,7 +20,7 @@
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
-    @apply text-primary-900;
+    @apply text-primary-950;
     letter-spacing: -0.03em;
   }
 
@@ -72,9 +72,9 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-primary-600 text-white font-semibold px-8 py-4 rounded-xl
+    @apply bg-primary-500 text-white font-semibold px-8 py-4 rounded-xl
       inline-flex items-center justify-center
-      hover:bg-primary-700 active:bg-primary-800
+      hover:bg-primary-600 active:bg-primary-700
       focus-visible:outline-primary-700
       transition-all duration-200 shadow-sm hover:shadow-md;
     min-height: 48px;
@@ -99,7 +99,7 @@
   }
 
   .btn-outline {
-    @apply border-2 border-primary-200 text-primary-700 font-medium px-8 py-4 rounded-xl
+    @apply border-2 border-primary-300 text-primary-600 font-medium px-8 py-4 rounded-xl
       inline-flex items-center justify-center
       hover:bg-primary-50 hover:border-primary-300
       focus-visible:outline-primary-500

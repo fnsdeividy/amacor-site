@@ -1,727 +1,756 @@
-# Design Document: Amacor Website
+# Design Document: Amacor Website Redesign
 
 ## Overview
 
-The Amacor Planos de Saúde website is a single-page application (SPA) built with React 18, TypeScript 5, and Tailwind CSS 3. It serves as the digital presence for a health insurance operator targeting users aged 50+, requiring exceptional accessibility, large interactive elements, and clear navigation.
+This design describes the technical architecture for the Amacor Planos de Saúde website redesign — a React + TypeScript + Tailwind CSS application targeting conversion optimization, institutional trust, and self-service for beneficiaries. The redesign builds on the existing infrastructure (React Router, custom hooks, utilities, types, contexts) while introducing new components (SimulationWidget, BenefitsGrid, TrustSection, TestimonialsSection), new pages (Telemedicine, Institutional, Exclusivo I detail, Amacor Mais com Franquia detail), and enhanced versions of existing components (PlanCard with pricing, WhatsAppButton/CTA with contextual messages).
 
-The application consists of 11 pages connected via client-side routing (React Router v6), a set of reusable UI components, and a mock data layer structured for future API integration. The most complex feature is the Provider Network page (Rede Credenciada), which combines geolocation, multi-criteria filtering, sorting, pagination, and multiple view modes (list, map, combined).
+The primary audience is 50+ years old, requiring large touch targets (min 48×48px), high contrast (4.5:1+), generous whitespace, and clear hierarchy. The visual identity uses a blue/green health palette with rounded cards, soft shadows, human photography, and medical icons.
 
 ### Key Design Decisions
 
-1. **Vite as build tool** — Fast development experience, native TypeScript/React support, optimized production builds.
-2. **React Router v6** — Industry-standard client-side routing with nested layouts.
-3. **Tailwind CSS with custom theme** — Utility-first styling with brand colors, accessibility-focused spacing/sizing tokens, and responsive breakpoints baked into the config.
-4. **Mock data in JSON files** — Clean separation between data and UI; JSON files can be swapped for API calls with minimal refactoring.
-5. **Component-driven architecture** — Reusable, typed components with props interfaces; no page-specific hardcoded content in shared components.
-6. **Geolocation with graceful degradation** — Browser Geolocation API with fallback to CEP/city search when permission is denied or unavailable.
+1. **Extend, don't replace**: Existing hooks (`useProviderSearch`, `useFormValidation`, `useGeolocation`, `usePagination`), utilities, and types remain in place. New features augment the current architecture.
+2. **Mock-first data layer**: All new data (simulation pricing, testimonials, telemedicine info) lives in `src/data/` JSON files with typed interfaces, ready for API replacement via `src/services/api.ts`.
+3. **Component-driven**: Each visual block maps to a reusable component with a typed props interface. Pages compose components without hardcoded content.
+4. **Contextual WhatsApp**: A `WhatsAppCTA` component (distinct from the floating `WhatsAppButton`) accepts page context and plan info to generate pre-filled messages.
 
 ## Architecture
 
-### High-Level Architecture
+### System Architecture Diagram
 
 ```mermaid
-graph TD
-    subgraph Browser
-        A[React App - SPA]
-        B[React Router v6]
-        C[Component Library]
-        D[Mock Data Layer]
-        E[Geolocation Service]
+graph TB
+    subgraph "Browser"
+        App[App.tsx - BrowserRouter]
+        Auth[AuthContext]
+        AdminAuth[AdminAuthContext]
     end
 
-    A --> B
-    B --> Pages[11 Page Components]
-    Pages --> C
-    Pages --> D
-    Pages --> E
-
-    subgraph Pages
-        P1[Home]
-        P2[About]
-        P3[Plans Overview]
-        P4[Exclusivo II Detail]
-        P5[Corporate Plan Detail]
-        P6[Provider Network]
-        P7[Individual Waiting Periods]
-        P8[Corporate Waiting Periods]
-        P9[IDSS Performance]
-        P10[TISS Manual]
-        P11[Contact]
+    subgraph "Pages Layer"
+        Home[Home Page]
+        Plans[Plans Page]
+        PlanDetail[Plan Detail Pages]
+        Telemedicine[Telemedicine Page]
+        Institutional[Institutional Page]
+        ProviderNetwork[Provider Network Page]
+        BeneficiaryArea[Beneficiary Area Page]
+        WaitingPeriods[Waiting Periods Pages]
+        IDSS[IDSS Page]
+        Contact[Contact Page]
+        TISS[TISS Manual Page]
     end
+
+    subgraph "Component Library"
+        Header[Header]
+        Footer[Footer]
+        HeroSection[HeroSection]
+        SimWidget[SimulationWidget]
+        BenefitsGrid[BenefitsGrid]
+        PlanCard[PlanCard]
+        TrustSection[TrustSection]
+        Testimonials[TestimonialsSection]
+        WhatsAppBtn[WhatsAppButton]
+        WhatsAppCTA[WhatsAppCTA]
+        CTASection[CTASection]
+        ProviderCard[ProviderCard]
+        SearchFilters[SearchFilters]
+        Accordion[Accordion]
+        ContactForm[ContactForm]
+        ProviderMap[ProviderMap]
+    end
+
+    subgraph "Data Layer"
+        PlansData[plans.json]
+        ProvidersData[providers.json]
+        SimulationData[simulationPricing.json]
+        TestimonialsData[testimonials.json]
+        TelemedicineData[telemedicine.json]
+        InstitutionalData[institutional.json]
+        BenefitsData[benefits.json]
+    end
+
+    subgraph "Hooks & Utils"
+        useProviderSearch[useProviderSearch]
+        useFormValidation[useFormValidation]
+        useGeolocation[useGeolocation]
+        usePagination[usePagination]
+        useSimulation[useSimulation]
+        Validation[validation.ts]
+        Filters[filters.ts]
+        Distance[distance.ts]
+        Formatters[formatters.ts]
+    end
+
+    App --> Auth
+    App --> AdminAuth
+    App --> Home
+    App --> Plans
+    App --> PlanDetail
+    App --> Telemedicine
+    App --> Institutional
+    App --> ProviderNetwork
+    App --> BeneficiaryArea
+
+    Home --> HeroSection
+    Home --> SimWidget
+    Home --> BenefitsGrid
+    Home --> PlanCard
+    Home --> TrustSection
+    Home --> Testimonials
+    Home --> CTASection
+    Home --> WhatsAppCTA
+
+    Plans --> PlanCard
+    Plans --> SimWidget
+
+    PlanDetail --> ContactForm
+    PlanDetail --> WhatsAppCTA
+
+    ProviderNetwork --> SearchFilters
+    ProviderNetwork --> ProviderCard
+    ProviderNetwork --> ProviderMap
+    ProviderNetwork --> useProviderSearch
+
+    SimWidget --> useSimulation
+    useSimulation --> SimulationData
+    useProviderSearch --> Filters
+    useProviderSearch --> Distance
+    ContactForm --> useFormValidation
+    useFormValidation --> Validation
 ```
 
-### Application Layers
+### Routing Updates
 
-```mermaid
-graph LR
-    subgraph Presentation
-        Pages2[Page Components]
-        Shared[Shared Components]
-    end
+New routes to add to `App.tsx`:
 
-    subgraph Logic
-        Hooks[Custom Hooks]
-        Utils[Utility Functions]
-        Validation[Form Validation]
-    end
+| Route | Page Component | Description |
+|-------|---------------|-------------|
+| `/planos/exclusivo-i` | `PlanExclusivoI` | Exclusivo I plan detail |
+| `/planos/mais-com-franquia` | `PlanMaisComFranquia` | Amacor Mais com Franquia detail |
+| `/telemedicina` | `Telemedicine` | Telemedicine explanation page |
+| `/institucional` | `Institutional` | History, ANS, IDSS, values |
 
-    subgraph Data
-        MockJSON[JSON Mock Data]
-        Types[TypeScript Interfaces]
-    end
+Existing routes remain unchanged. The `/sobre` (About) route will be redirected to `/institucional` or deprecated in favor of the new Institutional page.
 
-    Pages2 --> Shared
-    Pages2 --> Hooks
-    Hooks --> MockJSON
-    Hooks --> Utils
-    Pages2 --> Validation
-    MockJSON --> Types
-```
+### Navigation Structure Update
 
-### Project Structure
+The Header navigation items change to:
 
 ```
-src/
-├── components/          # Reusable UI components
-│   ├── Header/
-│   │   ├── Header.tsx
-│   │   └── MobileMenu.tsx
-│   ├── Footer/
-│   │   └── Footer.tsx
-│   ├── WhatsAppButton/
-│   │   └── WhatsAppButton.tsx
-│   ├── HeroSection/
-│   │   └── HeroSection.tsx
-│   ├── PlanCard/
-│   │   └── PlanCard.tsx
-│   ├── InfoCard/
-│   │   └── InfoCard.tsx
-│   ├── ProviderCard/
-│   │   └── ProviderCard.tsx
-│   ├── SearchFilters/
-│   │   └── SearchFilters.tsx
-│   ├── Accordion/
-│   │   └── Accordion.tsx
-│   ├── ContactForm/
-│   │   └── ContactForm.tsx
-│   └── CTASection/
-│       └── CTASection.tsx
-├── pages/               # Page-level components
-│   ├── Home.tsx
-│   ├── About.tsx
-│   ├── Plans.tsx
-│   ├── PlanExclusivoII.tsx
-│   ├── PlanCorporate.tsx
-│   ├── ProviderNetwork.tsx
-│   ├── WaitingPeriodsIndividual.tsx
-│   ├── WaitingPeriodsCorporate.tsx
-│   ├── IDSS.tsx
-│   ├── TISSManual.tsx
-│   └── Contact.tsx
-├── hooks/               # Custom React hooks
-│   ├── useGeolocation.ts
-│   ├── useProviderSearch.ts
-│   ├── useFormValidation.ts
-│   └── usePagination.ts
-├── data/                # Mock data JSON files
-│   ├── providers.json
-│   ├── plans.json
-│   ├── waitingPeriodsIndividual.json
-│   ├── waitingPeriodsCorporate.json
-│   └── idssData.json
-├── types/               # TypeScript type definitions
-│   ├── provider.ts
-│   ├── plan.ts
-│   ├── waitingPeriod.ts
-│   ├── idss.ts
-│   └── forms.ts
-├── utils/               # Utility functions
-│   ├── validation.ts
-│   ├── geolocation.ts
-│   ├── distance.ts
-│   ├── formatters.ts
-│   └── filters.ts
-├── App.tsx              # Root component with router
-├── main.tsx             # Entry point
-└── index.css            # Tailwind directives + global styles
+Início | Planos ▾ | Telemedicina | Rede Credenciada | Área do Beneficiário | Institucional | Contato
+              └── Exclusivo I
+              └── Exclusivo II
+              └── Mais com Franquia
+              └── Empresarial
 ```
+
+Only one level of dropdown (Plans submenu). No nested menus beyond that.
 
 ## Components and Interfaces
 
-### Layout Components
+### New Components
 
-#### Header
+#### 1. SimulationWidget
+
+Allows users to select age range and number of dependents to estimate monthly plan pricing.
 
 ```typescript
-interface HeaderProps {
-  currentPath: string;
+interface SimulationWidgetProps {
+  onSimulationComplete?: (result: SimulationResult) => void;
+  className?: string;
+}
+
+interface SimulationResult {
+  ageRange: AgeRange;
+  dependents: number;
+  plans: SimulatedPlan[];
+}
+
+interface SimulatedPlan {
+  planId: string;
+  planName: string;
+  estimatedPrice: number;
+  priceFormatted: string;
+}
+
+type AgeRange = '0-18' | '19-23' | '24-28' | '29-33' | '34-38' | '39-43' | '44-48' | '49-53' | '54-58' | '59+';
+```
+
+**Behavior**: On selection of age range + dependents, calculates estimated price from a pricing matrix in `simulationPricing.json`. Displays results with a WhatsApp CTA pre-filled with the simulated plan details.
+
+#### 2. BenefitsGrid
+
+Displays 6 icon-based rounded cards with benefit highlights.
+
+```typescript
+interface BenefitsGridProps {
+  benefits: BenefitItem[];
+  className?: string;
+}
+
+interface BenefitItem {
+  id: string;
+  icon: string; // Icon component name or SVG path
+  title: string;
+  description: string;
 }
 ```
 
-Fixed-position navigation bar. On desktop (>1024px), displays horizontal nav links. On mobile (<768px), collapses into a hamburger menu with a slide-out panel. Active link is visually distinguished via brand color underline. All nav items use minimum 16px font size and 48x48px tap targets on mobile.
+#### 3. TrustSection
 
-#### Footer
+Displays institutional stats and credentials.
 
 ```typescript
-interface FooterProps {
-  // No required props — content is static regulatory/contact info
+interface TrustSectionProps {
+  title: string;
+  stats: TrustStat[];
+  className?: string;
+}
+
+interface TrustStat {
+  id: string;
+  value: string;
+  label: string;
+  icon?: string;
 }
 ```
 
-Full-width footer with regulatory information (ANS registry number), contact details, secondary navigation links, and copyright. Consistent across all pages.
+#### 4. TestimonialsSection
 
-#### WhatsAppButton
+Displays customer testimonials or trust indicators.
 
 ```typescript
-interface WhatsAppButtonProps {
+interface TestimonialsSectionProps {
+  title?: string;
+  testimonials: Testimonial[];
+  className?: string;
+}
+
+interface Testimonial {
+  id: string;
+  name: string;
+  location?: string;
+  quote: string;
+  rating?: number; // 1-5
+  avatar?: string;
+}
+```
+
+#### 5. WhatsAppCTA (Inline)
+
+Distinct from the floating WhatsAppButton. An inline CTA with contextual pre-filled messages.
+
+```typescript
+interface WhatsAppCTAProps {
   phoneNumber: string;
-  message?: string;
+  message: string;
+  label?: string;        // Button text, defaults to "Contratar pelo WhatsApp"
+  variant?: 'primary' | 'secondary' | 'compact';
+  className?: string;
 }
 ```
 
-Floating action button, fixed bottom-right, 56x56px minimum. Opens WhatsApp Web/app link in new tab. Green background color (reserved exclusively for WhatsApp/confirmation per brand guidelines).
+**Message templating**: Each page passes a context-specific message. Example:
+- Plans page: `"Olá! Tenho interesse no plano {planName}. Gostaria de mais informações."`
+- Simulation result: `"Olá! Simulei o plano {planName} para {dependents} dependente(s), faixa {ageRange}. Preço estimado: {price}. Gostaria de contratar."`
+- Generic: `"Olá! Estou no site da Amacor e gostaria de mais informações."`
 
-### Content Components
+### Enhanced Existing Components
 
-#### HeroSection
+#### PlanCard (Enhanced)
+
+The existing `PlanCard` needs additional props for pricing and dual CTAs:
+
+```typescript
+interface PlanCardProps {
+  name: string;
+  slug: string;
+  tagline: string;         // max 80 chars
+  startingPrice: string;   // "A partir de R$ 89,90"
+  contractType: string;    // "Individual", "Familiar", "Empresarial"
+  benefits: string[];      // 3-5 items
+  highlighted?: boolean;
+  whatsappNumber: string;
+  whatsappMessage?: string;
+}
+```
+
+Renders two CTAs: "Ver detalhes" (navigates to `/planos/{slug}`) and "Contratar pelo WhatsApp".
+
+#### HeroSection (Enhanced)
+
+The existing `HeroSection` needs support for dual CTAs:
 
 ```typescript
 interface HeroSectionProps {
   headline: string;
   subtitle: string;
-  ctaText: string;
-  ctaLink: string;
+  primaryCTA: {
+    text: string;
+    link: string;
+    variant?: 'button' | 'scroll'; // scroll for anchor on same page
+  };
+  secondaryCTA?: {
+    text: string;
+    link: string;
+    variant?: 'whatsapp' | 'phone' | 'link';
+  };
   backgroundImage?: string;
 }
 ```
 
-Full-width banner with headline, subtitle (≤150 chars), and CTA button. Responsive: stacks vertically on mobile, side-by-side on desktop.
+#### Header (Enhanced)
 
-#### PlanCard
-
-```typescript
-interface PlanCardProps {
-  name: string;
-  description: string;
-  benefits: string[];
-  ctaText: string;
-  ctaLink: string;
-  highlighted?: boolean;
-}
-```
-
-Card component for plan summaries. Displays name, description (≤150 chars), 3-5 benefit items as a list, and CTA button. Grid layout on desktop, stacked on mobile.
-
-#### InfoCard
+Navigation restructured with single-level dropdown for Plans:
 
 ```typescript
-interface InfoCardProps {
-  title: string;
-  description: string;
-  icon?: React.ReactNode;
-  link?: string;
-  linkText?: string;
-}
-```
-
-Generic card for displaying information blocks (values, highlights, benefits). Rounded corners, soft shadow, consistent padding.
-
-#### ProviderCard
-
-```typescript
-interface ProviderCardProps {
-  provider: Provider;
-  userLocation?: { lat: number; lng: number } | null;
-  onShowOnMap?: (providerId: string) => void;
-}
-```
-
-Displays full provider information: name, type badge, specialties, address, phone (tap-to-call), WhatsApp (tap-to-chat), operating hours, accepted plans, and distance in km. Action buttons for call, WhatsApp, directions (opens maps app), and show on map.
-
-#### SearchFilters
-
-```typescript
-interface SearchFiltersProps {
-  specialties: string[];
-  plans: string[];
-  providerTypes: string[];
-  onFiltersChange: (filters: ProviderFilters) => void;
-  onGeolocationRequest: () => void;
-  isGeolocating?: boolean;
-  geolocationError?: string | null;
-}
-```
-
-Filter panel for Provider Network page. Contains: geolocation button, CEP input (8-digit validation), city/neighborhood text input, specialty dropdown, plan dropdown, provider type dropdown. Full-width on mobile, horizontal layout on desktop.
-
-#### Accordion
-
-```typescript
-interface AccordionProps {
-  items: AccordionItem[];
-  allowMultiple?: boolean;
+interface HeaderProps {
+  currentPath: string;
 }
 
-interface AccordionItem {
-  id: string;
-  title: string;
-  content: React.ReactNode;
-}
-```
-
-Collapsible content sections. Default behavior: single-open (clicking one closes others). Optional `allowMultiple` for multi-open mode. Used for waiting period pages.
-
-#### ContactForm
-
-```typescript
-interface ContactFormProps {
-  fields: FormFieldConfig[];
-  onSubmit: (data: Record<string, string>) => Promise<void>;
-  submitButtonText?: string;
-  successMessage?: string;
-}
-
-interface FormFieldConfig {
-  name: string;
+interface NavItem {
   label: string;
-  type: 'text' | 'email' | 'tel' | 'number' | 'textarea';
-  required: boolean;
-  maxLength?: number;
-  min?: number;
-  max?: number;
-  placeholder?: string;
-  validation?: ValidationRule[];
+  href: string;
+  children?: NavItem[];  // max 1 level deep
 }
 ```
 
-Reusable form component. Handles validation, error display (inline red text), success state (green confirmation), and error state (submission failure with data preservation). All fields render at full width on mobile with 48px minimum height.
+### Hook: useSimulation
 
-#### CTASection
-
-```typescript
-interface CTASectionProps {
-  title: string;
-  description?: string;
-  primaryAction: {
-    text: string;
-    link: string;
-    variant?: 'whatsapp' | 'phone' | 'default';
-  };
-  secondaryAction?: {
-    text: string;
-    link: string;
-    variant?: 'whatsapp' | 'phone' | 'default';
-  };
-}
-```
-
-Call-to-action block with title, optional description, and 1-2 action buttons. Button variants control color (green for WhatsApp, blue for default, etc.). Minimum 48x48px touch targets.
-
-### Custom Hooks
-
-#### useGeolocation
+New hook encapsulating pricing calculation logic.
 
 ```typescript
-interface GeolocationState {
-  position: { lat: number; lng: number } | null;
-  error: string | null;
-  isLoading: boolean;
-  isPermissionDenied: boolean;
-}
-
-function useGeolocation(): GeolocationState & { requestLocation: () => void };
-```
-
-Wraps the browser Geolocation API. Handles permission states, errors, and loading. Returns coordinates or error state for graceful degradation.
-
-#### useProviderSearch
-
-```typescript
-interface UseProviderSearchOptions {
-  providers: Provider[];
-  userLocation?: { lat: number; lng: number } | null;
-}
-
-interface UseProviderSearchReturn {
-  results: Provider[];
-  totalResults: number;
-  filters: ProviderFilters;
-  setFilters: (filters: Partial<ProviderFilters>) => void;
-  sortBy: SortOption;
-  setSortBy: (sort: SortOption) => void;
-  currentPage: number;
-  setCurrentPage: (page: number) => void;
-  totalPages: number;
-}
-
-function useProviderSearch(options: UseProviderSearchOptions): UseProviderSearchReturn;
-```
-
-Encapsulates all provider filtering, sorting, and pagination logic. Computes distance from user location, applies multi-criteria filters, sorts results, and paginates (20 per page).
-
-#### useFormValidation
-
-```typescript
-interface UseFormValidationReturn<T> {
-  values: T;
-  errors: Partial<Record<keyof T, string>>;
-  touched: Partial<Record<keyof T, boolean>>;
-  handleChange: (field: keyof T, value: string) => void;
-  handleBlur: (field: keyof T) => void;
-  handleSubmit: () => boolean;
+interface UseSimulationReturn {
+  ageRange: AgeRange | null;
+  dependents: number;
+  setAgeRange: (range: AgeRange) => void;
+  setDependents: (count: number) => void;
+  results: SimulatedPlan[] | null;
+  isCalculating: boolean;
   reset: () => void;
-  isValid: boolean;
 }
-
-function useFormValidation<T>(config: FormFieldConfig[]): UseFormValidationReturn<T>;
 ```
 
-Generic form validation hook. Validates on blur and submit. Returns field-level errors, touched state, and overall validity.
-
-#### usePagination
-
-```typescript
-interface UsePaginationReturn {
-  currentPage: number;
-  totalPages: number;
-  goToPage: (page: number) => void;
-  nextPage: () => void;
-  prevPage: () => void;
-  startIndex: number;
-  endIndex: number;
-}
-
-function usePagination(totalItems: number, itemsPerPage: number): UsePaginationReturn;
-```
-
-Generic pagination logic. Used by Provider Network page (20 items per page).
+**Logic**: Reads `simulationPricing.json` pricing matrix. For each plan, looks up base price by age range, multiplies by (1 + dependents × dependent_factor). Returns formatted results. Pure computation, no side effects.
 
 ## Data Models
 
-### Provider
+### Simulation Pricing Data (`src/data/simulationPricing.json`)
 
 ```typescript
-interface Provider {
-  id: string;
-  name: string;
-  type: ProviderType;
-  specialties: Specialty[];
-  address: {
-    street: string;
-    number: string;
-    complement?: string;
-    neighborhood: string;
-    city: string;
-    state: string;
-    cep: string;
-  };
-  coordinates: {
-    lat: number;
-    lng: number;
-  };
-  phone: string;
-  whatsapp?: string;
-  operatingHours: {
-    weekdays: string;
-    saturday?: string;
-    sunday?: string;
-  };
-  acceptedPlans: PlanType[];
+interface SimulationPricingData {
+  plans: PlanPricing[];
+  dependentFactor: number; // e.g., 0.85 — each dependent adds 85% of base
 }
 
-type ProviderType = 'Hospital' | 'Clínica' | 'Laboratório' | 'Consultório' | 'Pronto-Socorro';
-
-type Specialty =
-  | 'Clínica médica'
-  | 'Cardiologia'
-  | 'Dermatologia'
-  | 'Ginecologia'
-  | 'Pediatria'
-  | 'Ortopedia'
-  | 'Oftalmologia'
-  | 'Laboratório'
-  | 'Fisioterapia'
-  | 'Psicologia'
-  | 'Exames'
-  | 'Urgência'
-  | 'Telemedicina';
-
-type PlanType = 'Exclusivo I' | 'Exclusivo II' | 'Empresarial';
+interface PlanPricing {
+  planId: string;
+  planName: string;
+  slug: string;
+  priceByAge: Record<AgeRange, number>; // base monthly price per age range
+}
 ```
 
-### Plan
+Example structure:
+```json
+{
+  "dependentFactor": 0.85,
+  "plans": [
+    {
+      "planId": "plan-exclusivo-i",
+      "planName": "Exclusivo I",
+      "slug": "exclusivo-i",
+      "priceByAge": {
+        "0-18": 89.90,
+        "19-23": 99.90,
+        "24-28": 119.90,
+        "29-33": 139.90,
+        "34-38": 169.90,
+        "39-43": 199.90,
+        "44-48": 249.90,
+        "49-53": 319.90,
+        "54-58": 399.90,
+        "59+": 499.90
+      }
+    }
+  ]
+}
+```
+
+### Enhanced Plan Type (`src/types/plan.ts`)
 
 ```typescript
-interface Plan {
+export interface Plan {
   id: string;
   name: string;
   slug: string;
+  tagline: string;          // NEW: max 80 chars
   description: string;
+  startingPrice: number;    // NEW: lowest price across age ranges
+  contractType: PlanContractType; // NEW
   benefits: string[];
+  detailedBenefits: PlanBenefit[]; // NEW: for detail page
+  coverageDetails: string[];       // NEW
+  coParticipation?: string;        // NEW
+  networkInfo: string;             // NEW
   type: 'individual' | 'corporate';
   highlighted?: boolean;
+  includesTelemedicine: boolean;   // NEW
+}
+
+export type PlanContractType = 'individual' | 'familiar' | 'empresarial';
+
+export interface PlanBenefit {
+  icon: string;
+  title: string;
+  description: string;
 }
 ```
 
-### Waiting Period
+### Enhanced Provider Type (`src/types/provider.ts`)
+
+Add `'Amacor Mais com Franquia'` to the `PlanType` union:
 
 ```typescript
-interface WaitingPeriod {
+export type PlanType = 'Exclusivo I' | 'Exclusivo II' | 'Amacor Mais com Franquia' | 'Empresarial';
+```
+
+### Testimonials Data (`src/data/testimonials.json`)
+
+```typescript
+interface Testimonial {
   id: string;
-  procedure: string;
-  durationDays: number;
-  category?: string;
+  name: string;
+  location: string;
+  quote: string;
+  rating: number;
+  avatar?: string;
 }
 ```
 
-### IDSS Data
+### Benefits Data (`src/data/benefits.json`)
 
 ```typescript
-interface IDSSYearData {
+interface BenefitItem {
+  id: string;
+  icon: string;
+  title: string;
+  description: string;
+}
+```
+
+Six items: Telemedicina 24h, Atendimento ambulatorial, Consultas e exames, Ambulância e aconselhamento médico, Mais de 2 mil procedimentos, Área do beneficiário e 2ª via de boleto.
+
+### Telemedicine Data (`src/data/telemedicine.json`)
+
+```typescript
+interface TelemedicineData {
+  hero: {
+    headline: string;
+    subtitle: string;
+  };
+  steps: TelemedicineStep[];
+  benefits: TelemedicineBenefit[];
+  faq: FAQItem[];
+  plansWithTelemedicine: string[]; // plan IDs
+  platformUrl: string;
+}
+
+interface TelemedicineStep {
+  number: number;
+  title: string;
+  description: string;
+  icon: string;
+}
+
+interface TelemedicineBenefit {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+```
+
+### Institutional Data (`src/data/institutional.json`)
+
+```typescript
+interface InstitutionalData {
+  history: {
+    title: string;
+    content: string;
+    milestones: Milestone[];
+  };
+  mission: string;
+  vision: string;
+  values: ValueItem[];
+  ans: {
+    registryNumber: string;
+    status: string;
+    verificationUrl: string;
+  };
+  idssLink: string;
+}
+
+interface Milestone {
   year: number;
-  indicators: {
-    IDSS: number;
-    IDQS: number;
-    IDGA: number;
-    IDSM: number;
-    IDGR: number;
+  description: string;
+}
+
+interface ValueItem {
+  title: string;
+  description: string;
+  icon: string;
+}
+```
+
+### Lead Capture Data Structure
+
+For future CRM integration, form submissions stored in a consistent format:
+
+```typescript
+interface LeadCapture {
+  id: string;
+  timestamp: string;
+  source: 'contact_form' | 'plan_form' | 'proposal_form' | 'simulation';
+  page: string;        // route where the lead was captured
+  planContext?: string; // plan name if applicable
+  data: Record<string, string | number>;
+}
+```
+
+### WhatsApp Message Templates
+
+```typescript
+interface WhatsAppMessageConfig {
+  pageContext: string;   // e.g., "home", "plans", "plan-detail"
+  planName?: string;
+  simulationData?: {
+    ageRange: string;
+    dependents: number;
+    estimatedPrice: string;
   };
 }
+
+// Utility function
+function buildWhatsAppMessage(config: WhatsAppMessageConfig): string;
 ```
 
-### Form Types
+### Page Section Order — Home Page
 
-```typescript
-interface ContactFormData {
-  name: string;
-  phone: string;
-  email: string;
-  subject?: string;
-  message?: string;
-}
-
-interface ProposalFormData {
-  companyName: string;
-  contactName: string;
-  phone: string;
-  email: string;
-  numberOfEmployees: number;
-  message?: string;
-}
-
-interface ExclusivoIIFormData {
-  name: string;
-  phone: string;
-  email: string;
-  message?: string;
-}
+```mermaid
+graph TD
+    A[Hero Section] --> B[Simulation Widget]
+    B --> C[Benefits Grid - 6 cards]
+    C --> D[Plan Cards - commercial style]
+    D --> E[Saúde Digital - telemedicine split]
+    E --> F[Trust Section - 6 stats]
+    F --> G[Provider Network CTA]
+    G --> H[Testimonials Section]
+    H --> I[Beneficiary Area cards]
+    I --> J[Contact CTA Section]
 ```
 
-### Filter Types
 
-```typescript
-interface ProviderFilters {
-  searchQuery?: string;
-  cep?: string;
-  city?: string;
-  neighborhood?: string;
-  specialty?: Specialty | null;
-  plan?: PlanType | null;
-  providerType?: ProviderType | null;
-  userLocation?: { lat: number; lng: number } | null;
-  radiusKm?: number;
-}
-
-type SortOption = 'proximity' | 'alphabetical' | 'specialty' | 'city' | 'neighborhood';
-
-type ViewMode = 'list' | 'map' | 'combined';
-```
-
-### Validation Types
-
-```typescript
-interface ValidationRule {
-  type: 'required' | 'email' | 'phone' | 'minLength' | 'maxLength' | 'min' | 'max' | 'pattern' | 'cep';
-  value?: number | string | RegExp;
-  message: string;
-}
-
-interface ValidationResult {
-  isValid: boolean;
-  errors: Record<string, string>;
-}
-```
 
 ## Correctness Properties
 
 *A property is a characteristic or behavior that should hold true across all valid executions of a system — essentially, a formal statement about what the system should do. Properties serve as the bridge between human-readable specifications and machine-verifiable correctness guarantees.*
 
-### Property 1: Form validation correctness
+### Property 1: WhatsApp URL Construction
 
-*For any* form field configuration and any input value, the validation function SHALL return `isValid: true` if and only if all required fields are non-empty and all field values satisfy their declared constraints (email format, phone digit count, max length, numeric range), and SHALL return specific error messages for each field that fails validation.
+*For any* valid phone number and any contextual message string (including plan name, page origin, simulation data), the `buildWhatsAppUrl` function SHALL produce a URL of the form `https://wa.me/{phoneNumber}?text={encodedMessage}` where the message is correctly URI-encoded and the phone number contains only digits.
 
-**Validates: Requirements 5.2, 5.4, 6.2, 6.4, 12.1, 12.5**
+**Validates: Requirements 1.4, 2.3, 3.7, 4.3, 14.3, 14.5**
 
-### Property 2: CEP format validation
+### Property 2: Form Validation Correctness
 
-*For any* string input, the CEP validation function SHALL accept the input if and only if it consists of exactly 8 numeric digits (after removing formatting characters), and SHALL reject all other inputs with an appropriate error message.
+*For any* form field configuration and any input data, the `validateForm` function SHALL return `isValid: true` with empty errors when all required fields are non-empty and all format rules pass, AND SHALL return `isValid: false` with errors keyed to exactly the invalid fields when any field violates its validation rules. Additionally, *for any* string that does not match the 8-digit numeric CEP pattern, `validateCep` SHALL return false.
 
-**Validates: Requirements 7.18**
+**Validates: Requirements 4.4, 4.5, 8.18, 13.5, 13.6**
 
-### Property 3: Distance-based provider filtering
+### Property 3: Simulation Pricing Calculation
 
-*For any* center point (lat, lng) and set of providers with coordinates, the radius filter function SHALL return only providers whose Haversine distance from the center point is less than or equal to the specified radius (10 km), and SHALL exclude all providers beyond that radius.
+*For any* valid age range and any non-negative integer number of dependents, the `calculateSimulationPrice` function SHALL return a price equal to `basePriceForAgeRange + (dependents × basePriceForAgeRange × dependentFactor)` for each plan in the pricing matrix, and the result SHALL always be a positive number formatted to 2 decimal places.
 
-**Validates: Requirements 7.3**
+**Validates: Requirements 2.4**
 
-### Property 4: Provider sorting invariant
+### Property 4: Plan Filtering by Category
 
-*For any* non-empty list of providers and any sort option (alphabetical, proximity, specialty, city, neighborhood), the sort function SHALL return a list where each adjacent pair of elements satisfies the ordering relation for the selected sort criterion (e.g., for alphabetical: name[i] ≤ name[i+1]).
+*For any* list of plans and any filter category from {Todos, Individual, Familiar, Empresarial}, filtering SHALL return all plans when category is "Todos", and SHALL return only plans whose `contractType` matches the selected category otherwise. The result set SHALL be a subset of the original list, and filtering SHALL not modify the original list.
 
-**Validates: Requirements 7.8**
+**Validates: Requirements 3.9**
 
-### Property 5: Pagination calculation correctness
+### Property 5: Provider Distance Filtering
 
-*For any* total item count ≥ 0 and page size of 20, the pagination function SHALL compute `totalPages = Math.ceil(totalItems / 20)`, and for any valid page number p (1 ≤ p ≤ totalPages), SHALL compute `startIndex = (p - 1) * 20` and `endIndex = Math.min(p * 20, totalItems)`.
+*For any* set of providers with coordinates and any center point (lat, lng) with a radius of 10km, the `filterProviders` function with a radius constraint SHALL include only providers whose Haversine distance from the center is less than or equal to 10km, and SHALL exclude all providers beyond that distance.
 
-**Validates: Requirements 7.19**
+**Validates: Requirements 8.3**
 
-### Property 6: Case-insensitive substring filter
+### Property 6: Provider Sorting Correctness
 
-*For any* list of items with text labels and any search string, the filter function SHALL return exactly those items whose label contains the search string as a case-insensitive substring, and SHALL exclude all items that do not contain it.
+*For any* list of providers, sorting by "alphabetical" SHALL produce providers in non-decreasing lexicographic order by name, sorting by "proximity" (given a user location) SHALL produce providers in non-decreasing distance order, and sorting by "city" SHALL produce providers in non-decreasing lexicographic order by city name. The sorted result SHALL contain exactly the same elements as the input (no additions or removals).
 
-**Validates: Requirements 8.3, 9.3**
+**Validates: Requirements 8.8**
 
-### Property 7: PlanCard renders all required fields
+### Property 7: Pagination Invariant
 
-*For any* valid Plan object, the PlanCard component SHALL render the plan name, description, all benefit items, and a CTA button in its output.
+*For any* non-negative total result count and a page size of 20, each page SHALL contain at most 20 items, `totalPages` SHALL equal `Math.ceil(totalResults / 20)`, and the sum of items across all pages SHALL equal `totalResults`. For any valid page number `p` (1 ≤ p ≤ totalPages), `startIndex` SHALL equal `(p - 1) * 20` and `endIndex` SHALL equal `min(p * 20, totalResults)`.
 
-**Validates: Requirements 4.2**
+**Validates: Requirements 8.19**
 
-### Property 8: ProviderCard renders all required fields
+### Property 8: Procedure Search Filtering
 
-*For any* valid Provider object, the ProviderCard component SHALL render the provider name, type, specialties, full address, phone number, operating hours, and accepted plans in its output.
+*For any* search string and any list of procedure names with waiting periods, the case-insensitive substring filter SHALL return exactly those items where `procedureName.toLowerCase().includes(searchString.toLowerCase())`. When the search string is empty, all items SHALL be returned. The filter SHALL not modify the original list.
 
-**Validates: Requirements 7.9**
+**Validates: Requirements 9.3, 10.3**
 
-### Property 9: IDSS indicator formatting
+### Property 9: Accordion Mutual Exclusion
 
-*For any* valid IDSSYearData object, the rendering function SHALL display all 5 indicator acronyms (IDSS, IDQS, IDGA, IDSM, IDGR) each with its numeric value formatted to exactly 4 decimal places.
+*For any* accordion component state and any sequence of item clicks, at most one accordion item SHALL be in the expanded state at any given time. Clicking a collapsed item SHALL expand it and collapse any currently expanded item. Clicking an already-expanded item SHALL collapse it, resulting in zero expanded items.
 
-**Validates: Requirements 10.3**
+**Validates: Requirements 9.4, 10.6**
+
+### Property 10: IDSS Data Rendering Completeness
+
+*For any* valid IDSSYearData object containing indicator values, the rendering function SHALL produce output containing all five indicator labels (IDSS, IDQS, IDGA, IDSM, IDGR) each paired with its corresponding numeric value formatted to 4 decimal places.
+
+**Validates: Requirements 11.3**
+
+### Property 11: Navigation Uniqueness and Depth
+
+*For any* valid navigation configuration, no two navigation items SHALL share the same `href` value, and no navigation item SHALL have children that themselves have children (maximum depth of 1 level of nesting).
+
+**Validates: Requirements 1.9**
+
+### Property 12: Design System Color Contrast
+
+*For any* (text color, background color) pair used in the application's design token system, the computed WCAG contrast ratio SHALL be at least 4.5:1 for text below 24px, and at least 3:1 for text at 24px or larger.
+
+**Validates: Requirements 15.3**
+
+### Property 13: Lead Capture Data Integrity
+
+*For any* valid form submission, the resulting LeadCapture object SHALL contain a non-empty `id`, a valid ISO timestamp, a `source` matching one of the allowed values, a `page` matching the current route, and a `data` object containing all submitted field values without data loss or transformation.
+
+**Validates: Requirements 14.4**
 
 ## Error Handling
 
 ### Form Submission Errors
 
-| Scenario | Behavior |
-|----------|----------|
-| Missing required fields | Inline red error text next to each empty required field; form data preserved |
-| Invalid field format (email, phone, CEP) | Inline red error text with specific guidance; form data preserved |
-| Network/server error on submit | Global error banner below form; all entered data preserved; user can retry |
-| Successful submission | Green confirmation message; all fields cleared |
+| Error Scenario | User Feedback | Data Preservation |
+|---|---|---|
+| Required field empty | Red inline error below field: "{FieldLabel} é obrigatório." | All entered data preserved |
+| Invalid email format | Red inline error: "Formato de e-mail inválido." | All entered data preserved |
+| Invalid phone format | Red inline error: "Telefone inválido. Use DDD + número." | All entered data preserved |
+| Invalid CEP format | Red inline error: "CEP deve conter 8 dígitos numéricos." | All entered data preserved |
+| Server/network error | Green area replaced with red banner: "Não foi possível enviar sua mensagem. Tente novamente." | All entered data preserved |
+| Successful submission | Green confirmation: "Mensagem enviada com sucesso!" | All fields cleared |
 
 ### Geolocation Errors
 
-| Scenario | Behavior |
-|----------|----------|
-| Permission denied | Message: "Localização indisponível. Busque por CEP ou cidade." |
-| Geolocation API unavailable | Same fallback message; CEP/city inputs highlighted |
-| Timeout or position unavailable | Same fallback message with retry option |
+| Error Scenario | User Feedback | Fallback |
+|---|---|---|
+| Permission denied | "Localização não disponível. Busque por CEP ou cidade." | Show CEP/city search prominently |
+| API unavailable | Same message as permission denied | Same fallback |
+| Timeout | Same message as permission denied | Same fallback |
 
 ### Provider Network Edge Cases
 
 | Scenario | Behavior |
-|----------|----------|
-| No providers match filters | Empty state: "Nenhum prestador encontrado. Tente ampliar os filtros." |
-| Invalid CEP format | Inline validation: "Informe um CEP válido com 8 dígitos." |
-| Zero results for CEP radius | Same empty state message with suggestion to increase radius or try different CEP |
+|---|---|
+| No providers match filters | "Nenhum prestador encontrado. Tente ampliar seus filtros." |
+| Zero results after CEP search | "Nenhum prestador encontrado próximo a este CEP. Tente outro CEP ou remova filtros." |
+| Invalid CEP format | Inline validation prevents search submission |
 
-### Download Errors (TISS)
+### TISS Download Errors
 
 | Scenario | Behavior |
-|----------|----------|
-| File unavailable | Error message: "Arquivo indisponível. Tente novamente mais tarde." |
-| Network failure during download | Same error message with retry suggestion |
+|---|---|
+| File unavailable | "Arquivo indisponível no momento. Tente novamente mais tarde." |
+| Download fails | Same error message with retry suggestion |
 
-### General Error Principles
+### General Error Patterns
 
-1. **Never lose user data** — form inputs are always preserved on error.
-2. **Specific guidance** — error messages tell the user what to fix, not just that something is wrong.
-3. **Graceful degradation** — if a feature (geolocation, map) fails, alternative paths are offered.
-4. **No silent failures** — every error state has visible user feedback.
-5. **Portuguese language** — all user-facing error messages in Brazilian Portuguese.
+- All error messages use plain Portuguese at ≤ 8th-grade reading level
+- Error text is red (`text-error`) with `error-light` background for banners
+- Confirmation text is green (`text-whatsapp`) with `confirmation-light` background
+- Forms never lose user data on error — only clear on success
+- WhatsApp fallback provided on any critical form failure
 
 ## Testing Strategy
 
-### Testing Framework
+### Unit Tests (Example-Based)
 
-- **Unit/Component tests**: Vitest + React Testing Library
-- **Property-based tests**: fast-check (with Vitest as runner)
-- **Accessibility audits**: axe-core (via @axe-core/react or jest-axe)
-- **End-to-end (optional future)**: Playwright
+Unit tests cover specific rendering scenarios, edge cases, and integration points:
 
-### Unit Tests
-
-Unit tests cover specific examples, edge cases, and integration points:
-
-- **Component rendering**: Each reusable component renders correctly with required props
-- **Navigation**: React Router routes resolve to correct page components
-- **Responsive behavior**: Components adapt at breakpoint boundaries
-- **Interactions**: Button clicks, form submissions, accordion expand/collapse
-- **Error states**: Empty states, failed submissions, denied permissions
-- **Accessibility**: Focus management, ARIA attributes, keyboard navigation
+- **Page rendering**: Each page renders correct sections in correct order
+- **Component rendering**: Each component renders with required props without errors
+- **Responsive behavior**: Components adapt at breakpoint boundaries (768px, 1024px)
+- **Navigation**: Links navigate to correct routes
+- **Accessibility**: Focus management, ARIA labels, touch target sizes
+- **Edge cases**: Empty states, error states, fallback behaviors
 
 ### Property-Based Tests
 
-Property-based tests validate universal correctness properties using fast-check:
+Property-based tests validate universal correctness properties using [fast-check](https://github.com/dubzzz/fast-check) (already compatible with the project's Vitest setup).
 
-- **Minimum 100 iterations** per property test
-- **Each test references its design property** via tag comment
-- **Tag format**: `Feature: amacor-website, Property {number}: {property_text}`
+**Configuration**: Minimum 100 iterations per property test.
 
-Properties tested:
-1. Form validation engine (all form types share the same validation utility)
-2. CEP format validation
-3. Haversine distance calculation and radius filtering
-4. Provider list sorting (all 5 sort options)
-5. Pagination arithmetic
-6. Case-insensitive substring filtering (accordion search)
-7. PlanCard rendering completeness
-8. ProviderCard rendering completeness
-9. IDSS indicator formatting
+**Tag format**: `Feature: amacor-website, Property {number}: {title}`
+
+| Property | Test File | What it validates |
+|---|---|---|
+| 1: WhatsApp URL Construction | `src/__tests__/properties/whatsapp-url.property.test.ts` | URL format, encoding, phone digits |
+| 2: Form Validation Correctness | `src/__tests__/properties/form-validation.property.test.ts` | Valid/invalid detection, error keys, CEP validation |
+| 3: Simulation Pricing | `src/__tests__/properties/simulation-pricing.property.test.ts` | Formula correctness, positive results, formatting |
+| 4: Plan Filtering | `src/__tests__/properties/plan-filtering.property.test.ts` | Category match, subset invariant |
+| 5: Provider Distance Filtering | `src/__tests__/properties/provider-distance.property.test.ts` | Haversine boundary, inclusion/exclusion |
+| 6: Provider Sorting | `src/__tests__/properties/provider-sorting.property.test.ts` | Order invariants, element preservation |
+| 7: Pagination Invariant | `src/__tests__/properties/pagination.property.test.ts` | Page size bounds, index calculation |
+| 8: Procedure Search | `src/__tests__/properties/procedure-search.property.test.ts` | Case-insensitive substring, empty search |
+| 9: Accordion Mutual Exclusion | `src/__tests__/properties/accordion-state.property.test.ts` | Single expanded item, toggle behavior |
+| 10: IDSS Rendering | `src/__tests__/properties/idss-rendering.property.test.ts` | Label/value pairing, decimal formatting |
+| 11: Navigation Uniqueness | `src/__tests__/properties/navigation.property.test.ts` | No duplicate hrefs, max depth 1 |
+| 12: Color Contrast | `src/__tests__/properties/color-contrast.property.test.ts` | WCAG ratios for design token pairs |
+| 13: Lead Capture Integrity | `src/__tests__/properties/lead-capture.property.test.ts` | Schema completeness, no data loss |
+
+### Integration Tests
+
+- Form submission flow (mock API): submit → loading → success/error
+- Provider search flow: filter → sort → paginate → display
+- Simulation flow: select age → select dependents → view results → WhatsApp CTA
+- Navigation flow: page transitions, scroll behavior, back/forward
+
+### Accessibility Tests
+
+- WCAG 2.1 AA compliance verification with axe-core
+- Keyboard navigation paths through all interactive elements
+- Screen reader announcements for dynamic content (form errors, accordion expansion, simulation results)
+- Color contrast automated checks against design tokens
 
 ### Test Organization
 
 ```
-src/
-├── __tests__/
-│   ├── properties/           # Property-based tests
-│   │   ├── validation.property.test.ts
-│   │   ├── cep.property.test.ts
-│   │   ├── distance.property.test.ts
-│   │   ├── sorting.property.test.ts
-│   │   ├── pagination.property.test.ts
-│   │   ├── filter.property.test.ts
-│   │   ├── planCard.property.test.tsx
-│   │   ├── providerCard.property.test.tsx
-│   │   └── idss.property.test.tsx
-│   ├── components/           # Component unit tests
-│   │   ├── Header.test.tsx
-│   │   ├── Footer.test.tsx
-│   │   ├── Accordion.test.tsx
-│   │   ├── ContactForm.test.tsx
-│   │   └── ...
-│   └── pages/                # Page-level integration tests
-│       ├── Home.test.tsx
-│       ├── ProviderNetwork.test.tsx
-│       └── ...
+src/__tests__/
+├── properties/           # Property-based tests (fast-check)
+│   ├── whatsapp-url.property.test.ts
+│   ├── form-validation.property.test.ts
+│   ├── simulation-pricing.property.test.ts
+│   ├── plan-filtering.property.test.ts
+│   ├── provider-distance.property.test.ts
+│   ├── provider-sorting.property.test.ts
+│   ├── pagination.property.test.ts
+│   ├── procedure-search.property.test.ts
+│   ├── accordion-state.property.test.ts
+│   ├── idss-rendering.property.test.ts
+│   ├── navigation.property.test.ts
+│   ├── color-contrast.property.test.ts
+│   └── lead-capture.property.test.ts
+├── pages/                # Page-level rendering tests
+├── accessibility/        # a11y tests
+└── responsive/           # Responsive layout tests
 ```
-
-### Accessibility Testing
-
-- Run axe-core on each page component to catch contrast, ARIA, and structure issues
-- Verify focus indicators on all interactive elements
-- Test keyboard navigation flow through forms and accordions
-- Verify screen reader compatibility for dynamic content (accordion, filter results)
-

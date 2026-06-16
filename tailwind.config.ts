@@ -9,35 +9,47 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          50: '#f0f4ff',
-          100: '#dbe4fe',
-          200: '#bfcffc',
-          300: '#93aef8',
-          400: '#6085f2',
-          500: '#3b5eeb',
-          600: '#1e3a8a',
-          700: '#1a3278',
-          800: '#172b66',
-          900: '#142354',
-          950: '#0d1733',
+          50: '#e6f2ff',
+          100: '#b3d9ff',
+          200: '#80bfff',
+          300: '#4da6ff',
+          400: '#1a8cff',
+          500: '#0077ff',   // Blue Sparkle (base)
+          600: '#0062d1',   // Darker for text-on-white (contrast-safe)
+          700: '#004da3',
+          800: '#003875',
+          900: '#002347',
+          950: '#001b48',   // Oxford Blue
         },
         accent: {
-          50: '#fffbeb',
-          100: '#fef3c7',
-          200: '#fde68a',
-          300: '#fcd34d',
-          400: '#f59e0b',
-          500: '#d97706',
-          600: '#b45309',
-          700: '#92400e',
-          800: '#78350f',
-          900: '#451a03',
+          50: '#fff4ed',
+          100: '#ffe4d4',
+          200: '#ffc9a8',
+          300: '#ffab77',
+          400: '#fea734',   // Bee Cluster
+          500: '#fe7235',   // Crayola Orange (base)
+          600: '#e55a1f',
+          700: '#bf4316',
+          800: '#993614',
+          900: '#7a2d13',
+        },
+        cyan: {
+          50: '#edfdfb',
+          100: '#d0f9f3',
+          200: '#a4f3e8',
+          300: '#72eadb',
+          400: '#60efdd',   // Near Moon
+          500: '#38d9c7',
+          600: '#25b3a4',
+          700: '#1e8f84',
+          800: '#1b6f68',
+          900: '#195b55',
         },
         warm: {
           50: '#fafaf9',
           100: '#f5f5f4',
           200: '#e7e5e4',
-          300: '#d6d3d1',
+          300: '#d1d1d1',   // Ancestral Water
           400: '#a8a29e',
           500: '#78716c',
           600: '#57534e',
@@ -99,6 +111,11 @@ const config: Config = {
         'card-hover': '0 12px 32px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04)',
         'elevated': '0 24px 48px rgba(0, 0, 0, 0.1), 0 8px 24px rgba(0, 0, 0, 0.06)',
         'soft': '0 2px 8px rgba(0, 0, 0, 0.04)',
+      },
+      backgroundImage: {
+        'gradient-brand': 'linear-gradient(135deg, #0077ff 0%, #60efdd 100%)',
+        'gradient-accent': 'linear-gradient(135deg, #fe7235 0%, #fea734 100%)',
+        'gradient-brand-overlay': 'linear-gradient(to right, rgba(0,119,255,0.9), rgba(96,239,221,0.5))',
       },
       fontFamily: {
         'sans': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],

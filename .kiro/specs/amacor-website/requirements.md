@@ -2,110 +2,156 @@
 
 ## Introduction
 
-This document defines the requirements for the Amacor Planos de Saúde website — a modern, responsive, and accessible web application built with React, TypeScript, and Tailwind CSS. The website serves as the primary digital presence for Amacor, a health insurance operator focused on outpatient care offering individual, family, and corporate plans. The target audience is primarily people aged 50+, requiring exceptional accessibility, large interactive elements, clear language, and simple navigation paths to key actions (WhatsApp contact, phone calls, plan simulation, and provider network search).
+This document defines the requirements for the Amacor Planos de Saúde website — a complete redesign focused on conversion optimization, institutional confidence, and self-service for beneficiaries. The website is built with React, TypeScript, and Tailwind CSS, serving as the primary digital presence for Amacor, a health insurance operator with 30+ years in Campo Grande and the Zona Oeste region of Rio de Janeiro. The central message is: "Planos inteligentes, acessíveis e próximos de você." The target audience is primarily people aged 50+, requiring exceptional accessibility, large interactive elements, clear language, and simple navigation paths to key actions (WhatsApp contact, plan simulation, beneficiary self-service, and provider network search). The visual identity follows a clean, modern digital health aesthetic — white/light gray backgrounds, rounded cards, blue/green palette tied to health and trust, medical icons, human photography, and premium composition with generous whitespace.
 
 ## Glossary
 
 - **Website**: The Amacor Planos de Saúde web application built with React, TypeScript, and Tailwind CSS
 - **User**: A visitor to the Amacor website, primarily aged 50+
-- **Provider_Network_Page**: The Rede Credenciada page — the most critical page of the website — displaying a searchable, filterable list of healthcare providers
+- **Beneficiary**: An existing Amacor plan holder accessing self-service features
+- **Lead**: A potential customer expressing interest through simulation, form, or WhatsApp contact
+- **Provider_Network_Page**: The Rede Credenciada page displaying a searchable, filterable list of healthcare providers
 - **Provider_Card**: A UI component displaying a single healthcare provider's information including name, type, specialties, address, contact options, hours, accepted plans, and distance
-- **Plan_Card**: A UI component displaying summary information about a health insurance plan
-- **Header**: The fixed navigation component present on all pages
-- **Footer**: The complete footer component with regulatory information present on all pages
+- **Plan_Card**: A UI component displaying plan summary with starting price, contract type, main benefits, and CTAs
+- **Simulation_Widget**: An interactive component allowing users to simulate plan pricing based on age range and number of dependents
+- **Header**: The fixed navigation component present on all pages with organized, non-cluttered navigation
+- **Footer**: The complete footer component with regulatory information, social media links, and secondary navigation
 - **WhatsApp_Button**: A floating action button present on all pages providing quick access to WhatsApp contact
+- **WhatsApp_CTA**: An inline call-to-action button directing users to WhatsApp for plan contracting or support
 - **Search_Filters**: The filtering and search component on the Provider Network Page
 - **Accordion**: A collapsible content component used for displaying waiting period information
 - **Contact_Form**: A reusable form component for user inquiries and proposal requests
 - **CTA_Section**: A call-to-action section component used across multiple pages
-- **Hero_Section**: A prominent banner section at the top of pages with key messaging
+- **Hero_Section**: A prominent banner section at the top of pages with key messaging and primary CTAs
+- **Benefits_Grid**: A grid of icon-based cards highlighting plan benefits (Telemedicina 24h, Atendimento ambulatorial, etc.)
+- **Trust_Section**: A section displaying institutional stats and credentials (30+ anos, Região Oeste, ANS, IDSS)
+- **Testimonials_Section**: A section displaying social proof through customer testimonials or trust indicators
+- **Beneficiary_Area**: A dedicated section/page for existing beneficiaries with self-service quick-access cards
 - **CEP**: Brazilian postal code (Código de Endereçamento Postal)
 - **IDSS**: Índice de Desempenho da Saúde Suplementar — health insurance performance index
 - **TISS**: Troca de Informações na Saúde Suplementar — health information exchange standard
+- **ANS**: Agência Nacional de Saúde Suplementar — the regulatory body for health insurance in Brazil
 - **Geolocation_API**: The browser's built-in geolocation interface for determining user position
 - **Mock_Data**: Static JSON data structures simulating API responses, ready for future backend integration
 - **Provider_Type**: Classification of a healthcare provider (e.g., clinic, laboratory, hospital)
 - **Specialty**: Medical specialty offered by a provider (e.g., Cardiologia, Dermatologia, Pediatria)
+- **Telemedicine_Page**: The dedicated page explaining the telemedicine service and its access
+- **Plans_Page**: The page displaying all available plans with comparison and contracting CTAs
+- **Institutional_Page**: The page presenting Amacor's history, tradition, regulatory data, and credentials
 
 ## Requirements
 
 ### Requirement 1: Global Layout and Navigation
 
-**User Story:** As a user, I want a consistent, easy-to-navigate layout across all pages, so that I can find information without confusion.
+**User Story:** As a user, I want a consistent, organized, and clutter-free layout across all pages, so that I can find information without confusion or structural repetition.
 
 #### Acceptance Criteria
 
-1. THE Website SHALL render a fixed Header component at the top of every page that remains visible while the user scrolls, with navigation links to all main sections
-2. THE Website SHALL render a Footer component at the bottom of every page containing regulatory information, contact details, and secondary navigation links
+1. THE Website SHALL render a fixed Header component at the top of every page that remains visible while the user scrolls, with navigation links organized into the following main sections: Início, Planos, Telemedicina, Rede Credenciada, Área do Beneficiário, Institucional, Contato
+2. THE Website SHALL render a Footer component at the bottom of every page containing regulatory information (ANS registry number), contact details, social media links, and secondary navigation links
 3. THE Website SHALL render a floating WhatsApp_Button component on all pages, positioned in the bottom-right corner with a minimum touch target of 56x56 pixels
 4. WHEN a User taps the WhatsApp_Button, THE Website SHALL open a WhatsApp conversation link in a new browser tab within 1 second
 5. THE Header SHALL display navigation items using text with a minimum font size of 16 pixels and SHALL visually distinguish the currently active section from other navigation items
 6. WHEN the viewport width is less than 768 pixels, THE Header SHALL collapse navigation into a hamburger menu with large tap targets of at least 48x48 pixels
 7. WHEN a User taps the hamburger menu icon, THE Header SHALL expand a navigation panel displaying all main section links, and WHEN the User taps the icon again or selects a link, THE Header SHALL collapse the navigation panel
-8. THE Website SHALL use only the brand color palette: blue as primary, orange as accent, white and light gray as backgrounds, and green exclusively for WhatsApp and confirmation elements
+8. THE Website SHALL use only the brand color palette: blue as primary color for trust and professionalism, green as secondary for health and WhatsApp elements, white and light gray as backgrounds, with no structural repetition or duplicate navigation paths between Header and page content
+9. THE Header SHALL NOT contain duplicate links to the same destination, and navigation grouping SHALL avoid nested dropdowns deeper than one level to maintain simplicity for the 50+ audience
 
-### Requirement 2: Home Page
+### Requirement 2: Home Page — Hero and Conversion
 
-**User Story:** As a user, I want a welcoming home page that quickly shows me what Amacor offers and guides me to key actions, so that I can find what I need without scrolling excessively.
-
-#### Acceptance Criteria
-
-1. THE Website SHALL render the Home page with a Hero_Section containing a headline, a subtitle of no more than 150 characters, and a CTA button for plan simulation with a minimum touch target of 48x48 pixels
-2. THE Website SHALL display exactly 3 highlight cards on the Home page summarizing key offerings (individual plans, corporate plans, provider network), each containing a title, a short description of no more than 80 characters, and a link navigating to the corresponding detail page
-3. THE Website SHALL display an institutional text section on the Home page describing Amacor's mission in no more than 300 characters
-4. THE Website SHALL display a Provider Network CTA_Section on the Home page with a direct link to the Provider_Network_Page
-5. THE Website SHALL display a final CTA_Section on the Home page containing a WhatsApp contact button and a phone contact button, each with a minimum touch target of 48x48 pixels
-6. WHEN a User clicks any CTA button on the Home page, THE Website SHALL navigate to the corresponding target page or open the corresponding contact channel within 1 second
-7. THE Website SHALL render Home page sections in the following top-to-bottom order: Hero_Section, highlight cards, institutional text section, Provider Network CTA_Section, final CTA_Section
-
-### Requirement 3: About Page (A Empresa)
-
-**User Story:** As a user, I want to learn about Amacor's mission, values, and vision, so that I can trust the company before choosing a plan.
+**User Story:** As a user, I want a welcoming home page that immediately communicates what Amacor offers and guides me to simulate a plan or talk to an advisor, so that I can take action without scrolling excessively.
 
 #### Acceptance Criteria
 
-1. THE Website SHALL render the About page with visually distinct sections for mission, values, and vision, each separated by a minimum of 32 pixels of vertical spacing
-2. THE Website SHALL display each section (mission, values, vision) with a descriptive heading and body text using a minimum font size of 18 pixels for body content
-3. THE Website SHALL use rounded cards with soft shadows to present each value item, displaying at least 3 value items
-4. THE Website SHALL display a CTA_Section at the bottom of the About page guiding the User to the Plans page or a contact channel
+1. THE Website SHALL render the Home page with a Hero_Section containing the headline "Planos de saúde inteligentes para cuidar de você e da sua família", a subtitle "Consultas, exames, telemedicina e atendimento ambulatorial com praticidade em Campo Grande e região.", and two primary CTA buttons: "Simular meu plano" and "Falar no WhatsApp", each with a minimum touch target of 48x48 pixels
+2. WHEN a User clicks the "Simular meu plano" CTA, THE Website SHALL scroll smoothly to the Simulation_Widget section on the Home page or navigate to the Plans_Page simulation section
+3. WHEN a User clicks the "Falar no WhatsApp" CTA, THE Website SHALL open a WhatsApp conversation link with a pre-filled message in a new browser tab within 1 second
+4. THE Website SHALL render a Simulation_Widget section below the Hero_Section allowing Users to select age range and number of dependents to receive an estimated monthly price, with a CTA to "Contratar pelo WhatsApp" after simulation
+5. THE Website SHALL display a Benefits_Grid section with exactly 6 icon-based rounded cards: Telemedicina 24h, Atendimento ambulatorial, Consultas e exames, Ambulância e aconselhamento médico, Mais de 2 mil procedimentos, and Área do beneficiário e 2ª via de boleto
+6. THE Website SHALL display Plan_Card components in a commercial style showing: plan name, starting price ("A partir de R$..."), contract type (individual/familiar/empresarial), list of 3 to 5 main benefits, and two CTAs: "Ver detalhes" and "Contratar pelo WhatsApp"
+7. THE Website SHALL display a "Saúde Digital" section with a split layout: explanatory text about telemedicine on the left and a phone mockup illustration on the right, with a CTA linking to the Telemedicine_Page
+8. THE Website SHALL display a Trust_Section titled "Mais de 30 anos cuidando da saúde da Zona Oeste" with at least 6 stat items: +30 anos de tradição, Região Oeste do RJ, Atendimento ambulatorial, Registro ANS ativo, Rede própria e credenciada, and IDSS avaliado
+9. THE Website SHALL display a Provider Network CTA_Section with a direct link to the Provider_Network_Page
+10. THE Website SHALL display a Testimonials_Section with at least 3 trust indicators or customer testimonial cards
+11. THE Website SHALL display a Beneficiary_Area section with large quick-access cards for: 2ª via de boleto, Manual do associado, Telemedicina, and Ouvidoria
+12. THE Website SHALL display a final Contact CTA_Section containing a WhatsApp contact button and a phone contact button, each with a minimum touch target of 48x48 pixels
+13. THE Website SHALL render Home page sections in the following top-to-bottom order: Hero_Section, Simulation_Widget, Benefits_Grid, Plan_Cards, Saúde Digital section, Trust_Section, Provider Network CTA_Section, Testimonials_Section, Beneficiary_Area section, Contact CTA_Section
 
-### Requirement 4: Plans Overview Page (Planos de Saúde)
+### Requirement 3: Plans Page
 
-**User Story:** As a user, I want to see all available health plans at a glance, so that I can compare options and choose the best fit.
-
-#### Acceptance Criteria
-
-1. THE Website SHALL render the Plans page with Plan_Card components for Exclusivo I, Exclusivo II, and Empresarial plans
-2. THE Website SHALL display each Plan_Card with the plan name, a description of no more than 150 characters, a list of 3 to 5 benefit items, and a CTA button linking to the plan detail page
-3. WHEN the viewport width is 768 pixels or greater, THE Website SHALL display Plan_Card components in a multi-column grid layout showing all cards side by side
-4. WHEN the viewport width is less than 768 pixels, THE Website SHALL display Plan_Card components in a single-column stacked layout
-5. WHEN a User clicks a Plan_Card CTA button, THE Website SHALL navigate to the corresponding plan detail page within 1 second
-
-### Requirement 5: Individual Plan Detail Page (Plano Individual Amacor Exclusivo II)
-
-**User Story:** As a user, I want to see detailed benefits of the Exclusivo II plan and easily request contact, so that I can make an informed decision.
+**User Story:** As a user, I want to see all available health plans with pricing, compare them side by side, and easily start contracting, so that I can choose the best plan for my situation.
 
 #### Acceptance Criteria
 
-1. THE Website SHALL render the Exclusivo II detail page with benefit cards displaying individual coverage items and a CTA_Section encouraging the User to request contact
-2. THE Website SHALL render a Contact_Form on the Exclusivo II detail page with required fields for name (maximum 120 characters), phone (maximum 15 digits, Brazilian format), and email (maximum 254 characters, valid email format), and an optional message field (maximum 1000 characters)
-3. WHEN a User submits the Contact_Form with all required fields filled and valid, THE Website SHALL display a green confirmation message below the form indicating the request was received, and SHALL clear all form fields
-4. IF a User submits the Contact_Form with missing required fields or invalid field formats, THEN THE Website SHALL display inline validation errors in red text next to each invalid or incomplete field, indicating what correction is needed, and SHALL preserve the User's entered data
-5. IF a User submits the Contact_Form and the submission fails due to a system error, THEN THE Website SHALL display an error message indicating the submission could not be completed and SHALL preserve all entered form data
+1. THE Website SHALL render the Plans_Page with Plan_Card components for: Amacor Exclusivo I (individual/familiar), Amacor Exclusivo II (mais cobertura), Amacor Mais com Franquia (mais acessível), and Empresarial (empresas e colaboradores)
+2. THE Website SHALL display each Plan_Card with: plan name, a tagline of no more than 80 characters, starting price ("A partir de R$..."), contract type, a list of 3 to 5 main benefit items, and two CTA buttons: "Ver detalhes" and "Contratar pelo WhatsApp"
+3. THE Website SHALL display a plan comparison table showing all plans side by side with rows for: price range, contract type, coverage items, telemedicine access, network type, and co-participation details
+4. WHEN the viewport width is 768 pixels or greater, THE Website SHALL display Plan_Card components in a multi-column grid layout showing all cards side by side
+5. WHEN the viewport width is less than 768 pixels, THE Website SHALL display Plan_Card components in a single-column stacked layout and the comparison table SHALL scroll horizontally
+6. WHEN a User clicks a "Ver detalhes" CTA button on a Plan_Card, THE Website SHALL navigate to the corresponding plan detail page within 1 second
+7. WHEN a User clicks a "Contratar pelo WhatsApp" CTA button, THE Website SHALL open a WhatsApp conversation link with the plan name pre-filled in the message
+8. THE Website SHALL display a Simulation_Widget at the top of the Plans_Page allowing Users to select age range and number of dependents to view estimated pricing for each plan
+9. THE Website SHALL organize the Plans_Page with filter tabs for: Todos, Individual, Familiar, and Empresarial, allowing Users to filter visible Plan_Card components by category
 
-### Requirement 6: Corporate Plan Detail Page (Plano Empresarial Amacor Mais com Franquia)
+### Requirement 4: Plan Detail Pages
 
-**User Story:** As a user, I want to see detailed benefits of the corporate plan and request a proposal, so that I can evaluate it for my company.
+**User Story:** As a user, I want to see detailed benefits of a specific plan and easily request contact or contract via WhatsApp, so that I can make an informed decision.
 
 #### Acceptance Criteria
 
-1. THE Website SHALL render the Corporate Plan detail page with at least one benefit card, where each card displays a corporate coverage item with a title and description
-2. THE Website SHALL render a proposal Contact_Form on the Corporate Plan detail page with the following required fields: company name (maximum 100 characters), contact name (maximum 80 characters), phone (maximum 20 characters, digits and formatting only), email (maximum 120 characters, must match standard email format), number of employees (numeric input, range 1 to 99999), and an optional message field (maximum 500 characters)
-3. WHEN a User submits the proposal Contact_Form with all required fields filled with valid values (non-empty company name, non-empty contact name, phone containing at least 10 digits, email matching a valid email format, and number of employees within 1 to 99999), THE Website SHALL display a green confirmation message and clear the form fields
-4. IF a User submits the proposal Contact_Form with any required field empty or containing an invalid value, THEN THE Website SHALL display inline validation errors next to each field that is empty or invalid, indicating the specific validation failure
-5. IF a User submits the proposal Contact_Form and the submission fails due to a network or server error, THEN THE Website SHALL display an error message indicating the submission could not be completed and SHALL preserve the entered form data
+1. THE Website SHALL render individual plan detail pages for Exclusivo I, Exclusivo II, and Amacor Mais com Franquia, each displaying: full plan name, detailed description, complete benefits list with icons, coverage details, co-participation rules, and network information
+2. THE Website SHALL render a Contact_Form on each plan detail page with required fields for name (maximum 120 characters), phone (maximum 15 digits, Brazilian format), and email (maximum 254 characters), and an optional message field (maximum 1000 characters)
+3. THE Website SHALL display a prominent WhatsApp_CTA on each plan detail page with the text "Contratar pelo WhatsApp" that opens a conversation with the plan name pre-filled
+4. WHEN a User submits the Contact_Form with all required fields filled and valid, THE Website SHALL display a green confirmation message below the form indicating the request was received, and SHALL clear all form fields
+5. IF a User submits the Contact_Form with missing required fields or invalid field formats, THEN THE Website SHALL display inline validation errors in red text next to each invalid or incomplete field, indicating what correction is needed, and SHALL preserve the User's entered data
+6. IF a User submits the Contact_Form and the submission fails due to a system error, THEN THE Website SHALL display an error message indicating the submission could not be completed and SHALL preserve all entered form data
+7. THE Website SHALL render a Corporate Plan detail page for the Empresarial plan with a proposal Contact_Form containing required fields: company name (maximum 100 characters), contact name (maximum 80 characters), phone (maximum 20 characters), email (maximum 120 characters), number of employees (numeric, range 1 to 99999), and optional message (maximum 500 characters)
 
-### Requirement 7: Provider Network Page (Rede Credenciada)
+### Requirement 5: Telemedicine Page
+
+**User Story:** As a user, I want to understand how Amacor's telemedicine service works and how to access it, so that I can get medical attention from home when needed.
+
+#### Acceptance Criteria
+
+1. THE Website SHALL render the Telemedicine_Page with a Hero_Section containing the headline "Atendimento médico na palma da mão" and a subtitle explaining 24-hour access to medical consultations via smartphone
+2. THE Website SHALL display a "Como funciona" section with a step-by-step guide (numbered steps with icons) explaining how to access and use the telemedicine service
+3. THE Website SHALL display a Benefits section with at least 4 benefit cards highlighting: 24-hour availability, no waiting room, prescription and referral capability, and access from anywhere
+4. THE Website SHALL display a CTA_Section with buttons to "Acessar Telemedicina" (linking to the telemedicine platform) and "Falar no WhatsApp" for support
+5. THE Website SHALL display which plans include telemedicine access and a brief FAQ section with at least 3 common questions answered using Accordion components
+6. WHEN a User clicks the "Acessar Telemedicina" button, THE Website SHALL open the telemedicine platform link in a new browser tab
+
+### Requirement 6: Beneficiary Area Page
+
+**User Story:** As a beneficiary, I want quick and frictionless access to self-service tools like boleto, manual, reimbursement, and ombudsman, so that I can resolve my needs without calling support.
+
+#### Acceptance Criteria
+
+1. THE Website SHALL render the Beneficiary_Area page with large, visually distinct quick-access cards for the following services: 2ª via de boleto, Manual do associado, Ouvidoria, Reembolso, Telemedicina, and Reajuste anual
+2. THE Website SHALL display each quick-access card with an icon, a service title, and a short description of no more than 60 characters explaining the action
+3. WHEN a User clicks the "2ª via de boleto" card, THE Website SHALL navigate to the boleto generation service or display instructions for obtaining the second copy
+4. WHEN a User clicks the "Manual do associado" card, THE Website SHALL open or download the associate manual PDF document
+5. WHEN a User clicks the "Ouvidoria" card, THE Website SHALL navigate to the ombudsman contact section with phone, email, and form access
+6. WHEN a User clicks the "Reembolso" card, THE Website SHALL navigate to a section explaining the reimbursement process with required documentation and submission instructions
+7. WHEN a User clicks the "Telemedicina" card, THE Website SHALL navigate to the Telemedicine_Page or directly to the telemedicine platform access
+8. WHEN a User clicks the "Reajuste anual" card, THE Website SHALL display information about the annual price adjustment including applicable rates and regulatory basis
+9. THE Website SHALL display quick-access cards with a minimum size of 120x120 pixels and a minimum touch target of 48x48 pixels to reduce friction for the 50+ audience
+10. WHILE the viewport width is less than 768 pixels, THE Website SHALL display quick-access cards in a 2-column grid layout, and WHILE the viewport width is 768 pixels or greater, THE Website SHALL display them in a 3-column grid layout
+
+### Requirement 7: Institutional Page
+
+**User Story:** As a user, I want to learn about Amacor's history, tradition, and regulatory standing, so that I can trust the company before choosing a plan.
+
+#### Acceptance Criteria
+
+1. THE Website SHALL render the Institutional_Page with sections for: history and tradition, mission/values/vision, ANS registration, IDSS performance index, and regulatory compliance
+2. THE Website SHALL display the history section emphasizing 30+ years of operation in Campo Grande and the Zona Oeste region of Rio de Janeiro, including founding context and growth milestones
+3. THE Website SHALL display ANS registration information including the registry number, active status, and a link to verify on the ANS website
+4. THE Website SHALL display IDSS performance data with yearly indicators, linking to the dedicated IDSS detail page for full historical data
+5. THE Website SHALL display each section (history, mission, values, vision) with a descriptive heading and body text using a minimum font size of 18 pixels
+6. THE Website SHALL use rounded cards with soft shadows to present each value item, displaying at least 3 value items
+7. THE Website SHALL display a CTA_Section at the bottom of the Institutional_Page guiding the User to the Plans_Page or a WhatsApp contact channel
+
+### Requirement 8: Provider Network Page (Rede Credenciada)
 
 **User Story:** As a user, I want to search and filter healthcare providers by location, specialty, and plan, so that I can quickly find a nearby provider that accepts my plan.
 
@@ -115,7 +161,7 @@ This document defines the requirements for the Amacor Planos de Saúde website �
 2. WHEN a User activates geolocation search, THE Provider_Network_Page SHALL request browser geolocation permission and use the Geolocation_API to determine the User's current position
 3. WHEN a User enters a valid 8-digit CEP, THE Provider_Network_Page SHALL filter providers to show those within a 10 km radius of the CEP's geographic center
 4. THE Provider_Network_Page SHALL provide a specialty filter with the following options: Clínica médica, Cardiologia, Dermatologia, Ginecologia, Pediatria, Ortopedia, Oftalmologia, Laboratório, Fisioterapia, Psicologia, Exames, Urgência, Telemedicina
-5. THE Provider_Network_Page SHALL provide a plan filter allowing Users to select which Amacor plan they hold
+5. THE Provider_Network_Page SHALL provide a plan filter allowing Users to select which Amacor plan they hold (Exclusivo I, Exclusivo II, Amacor Mais com Franquia, Empresarial)
 6. THE Provider_Network_Page SHALL provide a provider type filter with the following classifications: Hospital, Clínica, Laboratório, Consultório, Pronto-Socorro
 7. THE Provider_Network_Page SHALL provide view toggle buttons allowing Users to switch between list view, map view, and combined list-plus-map view
 8. THE Provider_Network_Page SHALL provide sort options for: proximity (nearest first), alphabetical (A-Z), specialty, city, and neighborhood, with alphabetical (A-Z) as the default sort when geolocation is unavailable and proximity as the default when geolocation is available
@@ -131,7 +177,7 @@ This document defines the requirements for the Amacor Planos de Saúde website �
 18. IF a User enters a CEP that is not a valid 8-digit numeric format, THEN THE Provider_Network_Page SHALL display an inline validation message indicating the expected CEP format without submitting the search
 19. THE Provider_Network_Page SHALL display a maximum of 20 Provider_Card components per page and provide pagination controls to navigate additional results
 
-### Requirement 8: Individual Waiting Periods Page (Carência Individual)
+### Requirement 9: Individual Waiting Periods Page (Carência Individual)
 
 **User Story:** As a user, I want to look up waiting periods for individual plan procedures, so that I know when I can access specific services.
 
@@ -143,7 +189,7 @@ This document defines the requirements for the Amacor Planos de Saúde website �
 4. WHEN a User clicks an Accordion item header, THE Website SHALL expand that item to reveal the waiting period duration, and collapse any previously expanded Accordion item
 5. IF the search field text does not match any procedure name, THEN THE Website SHALL display a message indicating no procedures were found and suggesting the User adjust the search term
 
-### Requirement 9: Corporate Waiting Periods Page (Carência Empresarial)
+### Requirement 10: Corporate Waiting Periods Page (Carência Empresarial)
 
 **User Story:** As a user, I want to look up waiting periods for corporate plan procedures, so that I know when my employees can access specific services.
 
@@ -156,7 +202,7 @@ This document defines the requirements for the Amacor Planos de Saúde website �
 5. IF no Accordion items match the search text, THEN THE Website SHALL display a message indicating no procedures were found for the entered search term
 6. WHEN a User clicks an already-expanded Accordion item header, THE Website SHALL collapse that item to hide the waiting period details
 
-### Requirement 10: IDSS Performance Indicators Page
+### Requirement 11: IDSS Performance Indicators Page
 
 **User Story:** As a user, I want to view Amacor's performance indicators by year, so that I can assess the quality of the operator.
 
@@ -168,7 +214,7 @@ This document defines the requirements for the Amacor Planos de Saúde website �
 4. WHEN a User selects a different year, THE Website SHALL display the corresponding performance data for that year within 1 second of selection
 5. IF performance data for a selected year is unavailable, THEN THE Website SHALL display a message indicating that no data is available for the selected year
 
-### Requirement 11: TISS Manual Page (Manual TISS)
+### Requirement 12: TISS Manual Page (Manual TISS)
 
 **User Story:** As a user, I want to access TISS documentation and download relevant files, so that I can comply with health information exchange standards.
 
@@ -179,21 +225,37 @@ This document defines the requirements for the Amacor Planos de Saúde website �
 3. WHEN a User clicks a document download link, THE Website SHALL initiate a file download for the selected document
 4. IF a document file is unavailable or the download fails, THEN THE Website SHALL display an error message indicating the file could not be downloaded and suggesting the User try again later
 
-### Requirement 12: Contact Page (Contato)
+### Requirement 13: Contact Page
 
-**User Story:** As a user, I want to find Amacor's contact information and send a message, so that I can get in touch for questions or support.
+**User Story:** As a user, I want to find Amacor's contact information through multiple channels and send a message, so that I can get in touch for questions or support.
 
 #### Acceptance Criteria
 
 1. THE Website SHALL render the Contact page with a Contact_Form containing required fields for name (maximum 100 characters), phone (maximum 15 digits), email (maximum 254 characters), subject (maximum 150 characters), and message (maximum 2000 characters)
-2. THE Website SHALL display contact cards showing phone numbers, email addresses, and office hours
-3. THE Website SHALL display an embedded map showing Amacor's physical location
-4. WHEN a User submits the Contact_Form with all required fields filled and valid (email in standard email format, phone containing only digits, spaces, hyphens, or parentheses), THE Website SHALL display a green confirmation message and clear the form fields
-5. IF a User submits the Contact_Form with missing required fields or invalid field formats, THEN THE Website SHALL display inline validation errors next to each invalid or incomplete field indicating the specific issue
-6. WHEN a User taps a phone number on a contact card, THE Website SHALL initiate a phone call to that number
-7. IF the Contact_Form submission fails due to a server or network error, THEN THE Website SHALL display an error message indicating the message was not sent and SHALL preserve the entered form data
+2. THE Website SHALL display contact cards showing: WhatsApp number with direct link, phone numbers, email addresses, physical address, and office hours
+3. THE Website SHALL display an embedded map showing Amacor's physical location in Campo Grande, RJ
+4. THE Website SHALL display social media links (Instagram, Facebook) with icons linking to Amacor's official profiles
+5. WHEN a User submits the Contact_Form with all required fields filled and valid (email in standard email format, phone containing only digits, spaces, hyphens, or parentheses), THE Website SHALL display a green confirmation message and clear the form fields
+6. IF a User submits the Contact_Form with missing required fields or invalid field formats, THEN THE Website SHALL display inline validation errors next to each invalid or incomplete field indicating the specific issue
+7. WHEN a User taps a phone number on a contact card, THE Website SHALL initiate a phone call to that number
+8. WHEN a User taps the WhatsApp number on a contact card, THE Website SHALL open a WhatsApp conversation link in a new browser tab
+9. IF the Contact_Form submission fails due to a server or network error, THEN THE Website SHALL display an error message indicating the message was not sent and SHALL preserve the entered form data
 
-### Requirement 13: Accessibility and Readability
+### Requirement 14: Lead Capture and Conversion Optimization
+
+**User Story:** As a potential customer, I want multiple low-friction ways to express interest in a plan, so that I can get information or start contracting without barriers.
+
+#### Acceptance Criteria
+
+1. THE Website SHALL ensure all Contact_Form components render correctly and function on mobile viewports without requiring JavaScript activation messages or broken states
+2. THE Website SHALL provide at least 3 conversion touchpoints on the Home page: Simulation_Widget, WhatsApp_CTA, and Contact_Form
+3. WHEN a User completes a plan simulation in the Simulation_Widget, THE Website SHALL display a WhatsApp_CTA button with the simulated plan details pre-filled for immediate contracting
+4. THE Website SHALL track Lead interactions by storing form submission data in a format compatible with future CRM integration using Mock_Data structures
+5. THE Website SHALL ensure all WhatsApp_CTA links include contextual pre-filled messages indicating the page of origin and selected plan when applicable
+6. IF the Website detects that JavaScript is not fully loaded when a User attempts to use a Contact_Form, THEN THE Website SHALL display a fallback contact method (WhatsApp link and phone number) instead of a broken form state
+7. THE Website SHALL render all lead capture forms with fields at full width on mobile viewports, a minimum input height of 48 pixels, and clearly visible submit buttons with a minimum touch target of 48x48 pixels
+
+### Requirement 15: Accessibility and Readability
 
 **User Story:** As a user aged 50+, I want the website to be easy to read and interact with, so that I can use it without difficulty or frustration.
 
@@ -205,10 +267,10 @@ This document defines the requirements for the Amacor Planos de Saúde website �
 4. THE Website SHALL provide clickable areas with a minimum size of 48x48 pixels for all interactive elements
 5. THE Website SHALL use a minimum spacing of 16 pixels between interactive elements to prevent accidental taps
 6. THE Website SHALL avoid auto-playing animations, and any animation present SHALL not move or reposition page content after it has been rendered, and SHALL not use flashing or blinking effects that cycle more than 3 times per second
-7. THE Website SHALL use language at or below an 8th-grade reading level (Flesch-Kincaid Grade Level ≤ 8) and SHALL avoid domain-specific technical terms unless a plain-language definition is provided inline or in a glossary
+7. THE Website SHALL use language at or below an 8th-grade reading level (Flesch-Kincaid Grade Level of 8 or less) and SHALL avoid domain-specific technical terms unless a plain-language definition is provided inline or in a glossary
 8. THE Website SHALL provide focus indicators on all interactive elements that have a minimum contrast ratio of 3:1 against adjacent colors and a minimum thickness of 2 pixels for keyboard navigation
 
-### Requirement 14: Responsive Design
+### Requirement 16: Responsive Design
 
 **User Story:** As a user, I want the website to work well on my phone, tablet, and computer, so that I can access it from any device.
 
@@ -221,13 +283,26 @@ This document defines the requirements for the Amacor Planos de Saúde website �
 5. THE Website SHALL render all images and media so that they scale proportionally and do not exceed the width of their containing element
 6. THE Website SHALL NOT display a horizontal scrollbar at any of the three defined breakpoints
 
-### Requirement 15: Reusable Component Architecture
+### Requirement 17: Visual Identity and Design System
+
+**User Story:** As a user, I want the website to feel modern, trustworthy, and human, so that I feel confident choosing Amacor as my health plan provider.
+
+#### Acceptance Criteria
+
+1. THE Website SHALL use rounded cards (border-radius of at least 12 pixels) with soft shadows for all card components (Plan_Card, Provider_Card, benefit cards, quick-access cards)
+2. THE Website SHALL use a consistent icon set with medical/health-themed icons for benefit items, service cards, and navigation elements
+3. THE Website SHALL incorporate human photography (people, families, medical professionals) in Hero sections and key marketing sections, using images that represent the 50+ target audience
+4. THE Website SHALL maintain generous whitespace with a minimum of 48 pixels vertical spacing between major page sections
+5. THE Website SHALL use the blue/green color palette exclusively: blue for primary actions and headings, green for health indicators and WhatsApp elements, white and light gray for backgrounds, avoiding cluttered color usage
+6. THE Website SHALL display all section headings in a consistent typographic style with bold weight and the primary blue color
+
+### Requirement 18: Reusable Component Architecture
 
 **User Story:** As a developer, I want a library of reusable components, so that I can maintain consistency and develop new pages efficiently.
 
 #### Acceptance Criteria
 
-1. THE Website SHALL implement the following as reusable React components: Header, Footer, WhatsApp_Button, Hero_Section, Plan_Card, InfoCard, Provider_Card, Search_Filters, Accordion, Contact_Form, CTA_Section
+1. THE Website SHALL implement the following as reusable React components: Header, Footer, WhatsApp_Button, WhatsApp_CTA, Hero_Section, Plan_Card, Benefits_Grid, Trust_Section, Testimonials_Section, Simulation_Widget, Provider_Card, Search_Filters, Accordion, Contact_Form, CTA_Section, Beneficiary_Area cards
 2. THE Website SHALL define and export a TypeScript props interface for each reusable component, distinguishing required props from optional props with default values, so that each component renders correctly when provided only its required props
 3. THE Website SHALL apply all component-specific styles as Tailwind CSS utility classes directly within the component's JSX markup, without requiring external CSS files or separate style modules
 4. THE Website SHALL organize components in a dedicated components directory with one file per component or one folder per component when the component includes sub-components or helper files

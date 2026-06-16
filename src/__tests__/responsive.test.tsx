@@ -8,12 +8,27 @@ import ContactForm from '../components/ContactForm/ContactForm'
 import { ProviderCard } from '../components/ProviderCard/ProviderCard'
 import { SearchFilters } from '../components/SearchFilters/SearchFilters'
 import { HeroSection } from '../components/HeroSection/HeroSection'
+import { AuthProvider } from '../contexts/AuthContext'
+import { AdminAuthProvider } from '../contexts/AdminAuthContext'
 import type { Provider } from '../types/provider'
 import type { FormFieldConfig } from '../types/forms'
 
 // Helper to wrap components that use React Router
 function withRouter(ui: React.ReactElement) {
   return <MemoryRouter>{ui}</MemoryRouter>
+}
+
+// Helper to wrap components that need auth context
+function withAuthContext(ui: React.ReactElement) {
+  return (
+    <MemoryRouter>
+      <AuthProvider>
+        <AdminAuthProvider>
+          {ui}
+        </AdminAuthProvider>
+      </AuthProvider>
+    </MemoryRouter>
+  )
 }
 
 const mockProvider: Provider = {
@@ -48,26 +63,26 @@ const mockFormFields: FormFieldConfig[] = [
 
 describe('Responsive Design - Header', () => {
   it('hides desktop navigation on mobile via tablet:flex class', () => {
-    render(withRouter(<Header currentPath="/" />))
+    render(withAuthContext(<Header currentPath="/" />))
     const nav = document.querySelector('nav.hidden.tablet\\:flex')
     expect(nav).toBeInTheDocument()
   })
 
   it('shows hamburger button only on mobile via tablet:hidden class', () => {
-    render(withRouter(<Header currentPath="/" />))
+    render(withAuthContext(<Header currentPath="/" />))
     const button = screen.getByRole('button', { name: 'Abrir menu' })
     expect(button.className).toContain('tablet:hidden')
   })
 
   it('hamburger button has minimum 48x48px tap target', () => {
-    render(withRouter(<Header currentPath="/" />))
+    render(withAuthContext(<Header currentPath="/" />))
     const button = screen.getByRole('button', { name: 'Abrir menu' })
-    expect(button.className).toContain('min-w-touch')
-    expect(button.className).toContain('min-h-touch')
+    expect(button.className).toContain('min-w-[48px]')
+    expect(button.className).toContain('min-h-[48px]')
   })
 
   it('mobile menu panel is hidden on tablet+ via tablet:hidden', () => {
-    render(withRouter(<Header currentPath="/" />))
+    render(withAuthContext(<Header currentPath="/" />))
     const mobileMenuContainer = document.querySelector('.tablet\\:hidden.fixed.inset-0')
     expect(mobileMenuContainer).toBeInTheDocument()
   })
