@@ -3,7 +3,10 @@
     "id": "plan-exclusivo-i",
     "name": "Exclusivo I",
     "slug": "exclusivo-i",
+    "tagline": "Saúde ambulatorial essencial com telemedicina 24h",
     "description": "Plano ambulatorial individual com cobertura essencial para consultas, exames e procedimentos básicos.",
+    "startingPrice": 89.90,
+    "contractType": "individual",
     "benefits": [
       "Consultas médicas em diversas especialidades",
       "Exames laboratoriais e de imagem",
@@ -11,14 +14,55 @@
       "Rede credenciada ampla em São Paulo",
       "Telemedicina 24 horas"
     ],
+    "detailedBenefits": [
+      {
+        "icon": "stethoscope",
+        "title": "Consultas médicas",
+        "description": "Acesso a consultas em diversas especialidades médicas na rede credenciada."
+      },
+      {
+        "icon": "flask",
+        "title": "Exames laboratoriais",
+        "description": "Exames de sangue, urina e outros exames laboratoriais cobertos."
+      },
+      {
+        "icon": "image",
+        "title": "Exames de imagem",
+        "description": "Raio-X, ultrassom, tomografia e ressonância magnética."
+      },
+      {
+        "icon": "video",
+        "title": "Telemedicina 24h",
+        "description": "Atendimento médico online disponível 24 horas por dia, 7 dias por semana."
+      },
+      {
+        "icon": "hospital",
+        "title": "Atendimento ambulatorial",
+        "description": "Cobertura completa para procedimentos ambulatoriais e pequenas cirurgias."
+      }
+    ],
+    "coverageDetails": [
+      "Consultas em clínica médica e especialidades",
+      "Exames laboratoriais simples e complexos",
+      "Exames de imagem (raio-X, ultrassom, tomografia)",
+      "Procedimentos ambulatoriais",
+      "Telemedicina 24 horas",
+      "Mais de 2 mil procedimentos cobertos"
+    ],
+    "coParticipation": "Sem coparticipação",
+    "networkInfo": "Rede credenciada ampla em Campo Grande e Zona Oeste do RJ",
     "type": "individual",
-    "highlighted": false
+    "highlighted": false,
+    "includesTelemedicine": true
   },
   {
     "id": "plan-exclusivo-ii",
     "name": "Exclusivo II",
     "slug": "exclusivo-ii",
+    "tagline": "Cobertura ampliada para você e sua família",
     "description": "Plano ambulatorial completo com cobertura ampliada, incluindo especialidades adicionais e atendimento prioritário.",
+    "startingPrice": 149.90,
+    "contractType": "familiar",
     "benefits": [
       "Todas as coberturas do Exclusivo I",
       "Especialidades médicas ampliadas",
@@ -26,14 +70,117 @@
       "Atendimento prioritário na rede",
       "Psicologia e acompanhamento mental"
     ],
+    "detailedBenefits": [
+      {
+        "icon": "stethoscope",
+        "title": "Consultas e especialidades ampliadas",
+        "description": "Acesso a todas as especialidades médicas, incluindo áreas adicionais como nutrição e fonoaudiologia."
+      },
+      {
+        "icon": "activity",
+        "title": "Fisioterapia e reabilitação",
+        "description": "Sessões de fisioterapia, RPG e reabilitação motora cobertas pelo plano."
+      },
+      {
+        "icon": "brain",
+        "title": "Saúde mental",
+        "description": "Psicologia, psiquiatria e acompanhamento de saúde mental com profissionais credenciados."
+      },
+      {
+        "icon": "video",
+        "title": "Telemedicina 24h",
+        "description": "Atendimento médico online disponível 24 horas por dia, 7 dias por semana."
+      },
+      {
+        "icon": "star",
+        "title": "Atendimento prioritário",
+        "description": "Prioridade no agendamento e atendimento na rede credenciada."
+      },
+      {
+        "icon": "users",
+        "title": "Cobertura familiar",
+        "description": "Inclua dependentes com condições especiais e cobertura completa para toda a família."
+      }
+    ],
+    "coverageDetails": [
+      "Todas as coberturas do Exclusivo I",
+      "Especialidades médicas ampliadas (nutrição, fonoaudiologia)",
+      "Fisioterapia e reabilitação",
+      "Psicologia e psiquiatria",
+      "Atendimento prioritário na rede",
+      "Cobertura familiar com dependentes",
+      "Mais de 2 mil procedimentos cobertos"
+    ],
+    "coParticipation": "Sem coparticipação",
+    "networkInfo": "Rede credenciada ampla em Campo Grande e Zona Oeste do RJ com atendimento prioritário",
     "type": "individual",
-    "highlighted": true
+    "highlighted": true,
+    "includesTelemedicine": true
+  },
+  {
+    "id": "plan-mais-com-franquia",
+    "name": "Amacor Mais com Franquia",
+    "slug": "mais-com-franquia",
+    "tagline": "Saúde acessível com coparticipação inteligente",
+    "description": "Plano ambulatorial com coparticipação, ideal para quem busca cobertura de qualidade com mensalidade mais acessível.",
+    "startingPrice": 69.90,
+    "contractType": "individual",
+    "benefits": [
+      "Consultas médicas em diversas especialidades",
+      "Exames laboratoriais e de imagem",
+      "Atendimento ambulatorial completo",
+      "Telemedicina 24 horas",
+      "Mensalidade mais acessível"
+    ],
+    "detailedBenefits": [
+      {
+        "icon": "stethoscope",
+        "title": "Consultas médicas",
+        "description": "Acesso a consultas em diversas especialidades com coparticipação por utilização."
+      },
+      {
+        "icon": "flask",
+        "title": "Exames laboratoriais",
+        "description": "Exames de sangue, urina e outros exames com coparticipação reduzida."
+      },
+      {
+        "icon": "image",
+        "title": "Exames de imagem",
+        "description": "Raio-X, ultrassom e outros exames de imagem cobertos com coparticipação."
+      },
+      {
+        "icon": "video",
+        "title": "Telemedicina 24h",
+        "description": "Atendimento médico online disponível 24 horas, sem custo adicional."
+      },
+      {
+        "icon": "wallet",
+        "title": "Economia na mensalidade",
+        "description": "Mensalidade reduzida com modelo de coparticipação inteligente por utilização."
+      }
+    ],
+    "coverageDetails": [
+      "Consultas em clínica médica e especialidades",
+      "Exames laboratoriais simples e complexos",
+      "Exames de imagem (raio-X, ultrassom)",
+      "Procedimentos ambulatoriais",
+      "Telemedicina 24 horas inclusa",
+      "Mais de 2 mil procedimentos cobertos"
+    ],
+    "coParticipation": "Coparticipação por utilização em consultas e exames",
+    "networkInfo": "Rede credenciada em Campo Grande e Zona Oeste do RJ",
+    "type": "individual",
+    "highlighted": false,
+    "includesTelemedicine": true
   },
   {
     "id": "plan-empresarial",
     "name": "Empresarial",
     "slug": "empresarial",
+    "tagline": "Saúde corporativa com gestão simplificada para sua empresa",
     "description": "Plano corporativo com franquia, ideal para empresas que buscam saúde ambulatorial para seus colaboradores.",
+    "startingPrice": null,
+    "contractType": "empresarial",
     "benefits": [
       "Cobertura ambulatorial completa",
       "Carências reduzidas para grupos",
@@ -41,7 +188,45 @@
       "Rede credenciada em toda São Paulo",
       "Telemedicina para colaboradores"
     ],
+    "detailedBenefits": [
+      {
+        "icon": "building",
+        "title": "Gestão corporativa",
+        "description": "Painel de gestão simplificado para o RH da sua empresa."
+      },
+      {
+        "icon": "clock",
+        "title": "Carências reduzidas",
+        "description": "Carências reduzidas ou isentas para grupos de colaboradores."
+      },
+      {
+        "icon": "stethoscope",
+        "title": "Cobertura ambulatorial completa",
+        "description": "Consultas, exames e procedimentos ambulatoriais para todos os colaboradores."
+      },
+      {
+        "icon": "video",
+        "title": "Telemedicina",
+        "description": "Atendimento online 24h para todos os colaboradores cobertos."
+      },
+      {
+        "icon": "shield",
+        "title": "Rede credenciada ampla",
+        "description": "Acesso à rede credenciada em Campo Grande e Zona Oeste do RJ."
+      }
+    ],
+    "coverageDetails": [
+      "Cobertura ambulatorial completa para colaboradores",
+      "Consultas em todas as especialidades",
+      "Exames laboratoriais e de imagem",
+      "Procedimentos ambulatoriais",
+      "Telemedicina 24 horas",
+      "Carências reduzidas para grupos"
+    ],
+    "coParticipation": "Modelo com franquia — consulte condições para sua empresa",
+    "networkInfo": "Rede credenciada em Campo Grande e Zona Oeste do RJ",
     "type": "corporate",
-    "highlighted": false
+    "highlighted": false,
+    "includesTelemedicine": true
   }
 ]

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "testimonial-1",
+    "name": "Maria Aparecida Santos",
+    "location": "Campo Grande, RJ",
+    "quote": "Tenho o plano Amacor há mais de 5 anos e sempre fui muito bem atendida. A telemedicina facilitou demais minha vida, consigo consultar sem sair de casa.",
+    "rating": 5
+  },
+  {
+    "id": "testimonial-2",
+    "name": "José Carlos Oliveira",
+    "location": "Santa Cruz, RJ",
+    "quote": "O atendimento é rápido e os médicos são muito atenciosos. Recomendo para toda a família. O preço é justo pelo que oferecem.",
+    "rating": 5
+  },
+  {
+    "id": "testimonial-3",
+    "name": "Ana Paula Ferreira",
+    "location": "Bangu, RJ",
+    "quote": "Depois que contratei o plano da Amacor, não preciso mais esperar horas em fila. Agendo minha consulta e sou atendida no horário marcado.",
+    "rating": 4
+  },
+  {
+    "id": "testimonial-4",
+    "name": "Roberto Mendes",
+    "location": "Realengo, RJ",
+    "quote": "Minha esposa e eu somos beneficiários há 3 anos. A rede credenciada aqui na Zona Oeste é excelente, temos tudo pertinho de casa.",
+    "rating": 5
+  }
+]

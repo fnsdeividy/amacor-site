@@ -1,0 +1,38 @@
+[
+  {
+    "id": "telemedicina-24h",
+    "icon": "phone-call",
+    "title": "Telemedicina 24h",
+    "description": "Consultas médicas por vídeo a qualquer hora, sem sair de casa."
+  },
+  {
+    "id": "atendimento-ambulatorial",
+    "icon": "hospital",
+    "title": "Atendimento ambulatorial",
+    "description": "Acesso a consultas e procedimentos ambulatoriais na rede credenciada."
+  },
+  {
+    "id": "consultas-exames",
+    "icon": "stethoscope",
+    "title": "Consultas e exames",
+    "description": "Consultas em diversas especialidades e exames laboratoriais e de imagem."
+  },
+  {
+    "id": "ambulancia-aconselhamento",
+    "icon": "ambulance",
+    "title": "Ambulância e aconselhamento médico",
+    "description": "Remoção de urgência e orientação médica por telefone 24 horas."
+  },
+  {
+    "id": "mais-2mil-procedimentos",
+    "icon": "clipboard-list",
+    "title": "Mais de 2 mil procedimentos",
+    "description": "Ampla cobertura com mais de 2.000 procedimentos médicos disponíveis."
+  },
+  {
+    "id": "area-beneficiario-boleto",
+    "icon": "user-circle",
+    "title": "Área do beneficiário e 2ª via de boleto",
+    "description": "Autoatendimento online para boletos, manuais e solicitações."
+  }
+]

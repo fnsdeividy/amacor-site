@@ -1,0 +1,58 @@
+{
+  "history": {
+    "title": "Nossa História",
+    "content": "A Amacor Planos de Saúde nasceu com o propósito de oferecer assistência médica de qualidade e acessível para a população de Campo Grande e toda a Zona Oeste do Rio de Janeiro. Com mais de 30 anos de atuação, construímos uma trajetória sólida baseada na proximidade com nossos beneficiários, no compromisso com a saúde e no investimento contínuo em tecnologia e infraestrutura. Somos referência em atendimento ambulatorial na região, com uma rede própria e credenciada que garante acesso rápido e humanizado aos serviços de saúde.",
+    "milestones": [
+      {
+        "year": 1992,
+        "description": "Fundação da Amacor em Campo Grande, Rio de Janeiro, com foco em atendimento ambulatorial acessível para a comunidade local."
+      },
+      {
+        "year": 2001,
+        "description": "Expansão da rede credenciada para toda a Zona Oeste, incluindo Santa Cruz, Bangu, Realengo e adjacências."
+      },
+      {
+        "year": 2010,
+        "description": "Modernização da infraestrutura e implantação de sistemas digitais para gestão de beneficiários e agendamento de consultas."
+      },
+      {
+        "year": 2018,
+        "description": "Lançamento do serviço de Telemedicina 24h, ampliando o acesso à saúde com consultas remotas para todos os planos."
+      },
+      {
+        "year": 2023,
+        "description": "Alcance de mais de 2 mil procedimentos cobertos e consolidação como operadora de referência na região com avaliação IDSS positiva."
+      }
+    ]
+  },
+  "mission": "Promover saúde e bem-estar com planos acessíveis, atendimento humanizado e proximidade, garantindo que cada beneficiário tenha acesso a cuidados médicos de qualidade em Campo Grande e na Zona Oeste do Rio de Janeiro.",
+  "vision": "Ser a operadora de planos de saúde mais confiável e próxima da população da Zona Oeste, reconhecida pela excelência no atendimento, inovação em saúde digital e compromisso com o cuidado integral.",
+  "values": [
+    {
+      "title": "Proximidade",
+      "description": "Estamos onde nossos beneficiários estão. Conhecemos a região, as pessoas e suas necessidades de saúde.",
+      "icon": "Heart"
+    },
+    {
+      "title": "Acessibilidade",
+      "description": "Acreditamos que saúde de qualidade deve estar ao alcance de todos, com planos justos e sem burocracia desnecessária.",
+      "icon": "Shield"
+    },
+    {
+      "title": "Transparência",
+      "description": "Atuamos com clareza em todas as relações, desde a contratação até o atendimento, sem surpresas ou letras miúdas.",
+      "icon": "Eye"
+    },
+    {
+      "title": "Inovação",
+      "description": "Investimos em tecnologia e saúde digital para oferecer mais praticidade e agilidade no cuidado com a saúde.",
+      "icon": "Lightbulb"
+    }
+  ],
+  "ans": {
+    "registryNumber": "416428",
+    "status": "Ativo",
+    "verificationUrl": "https://www.gov.br/ans/pt-br/assuntos/informacoes-e-avaliacoes-de-operadoras/consulta-de-operadoras"
+  },
+  "idssLink": "/idss"
+}

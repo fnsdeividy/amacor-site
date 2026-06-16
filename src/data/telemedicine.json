@@ -1,0 +1,78 @@
+{
+  "hero": {
+    "headline": "Atendimento médico na palma da mão",
+    "subtitle": "Consultas médicas 24 horas por dia, 7 dias por semana, diretamente do seu smartphone. Sem sair de casa, sem filas, com toda a praticidade que você merece."
+  },
+  "steps": [
+    {
+      "number": 1,
+      "title": "Acesse a plataforma",
+      "description": "Entre na plataforma de telemedicina pelo celular, tablet ou computador usando seus dados de beneficiário.",
+      "icon": "smartphone"
+    },
+    {
+      "number": 2,
+      "title": "Escolha a especialidade",
+      "description": "Selecione a especialidade médica desejada entre as opções disponíveis para atendimento online.",
+      "icon": "stethoscope"
+    },
+    {
+      "number": 3,
+      "title": "Aguarde o atendimento",
+      "description": "Um médico estará disponível em poucos minutos para iniciar sua consulta por vídeo.",
+      "icon": "clock"
+    },
+    {
+      "number": 4,
+      "title": "Receba orientações",
+      "description": "Ao final da consulta, receba receitas, pedidos de exames ou encaminhamentos diretamente no app.",
+      "icon": "clipboard"
+    }
+  ],
+  "benefits": [
+    {
+      "icon": "clock-24",
+      "title": "Disponível 24 horas",
+      "description": "Atendimento médico a qualquer hora do dia ou da noite, inclusive fins de semana e feriados."
+    },
+    {
+      "icon": "no-waiting",
+      "title": "Sem sala de espera",
+      "description": "Consulte um médico sem filas e sem espera. Seu tempo é valioso e nós respeitamos isso."
+    },
+    {
+      "icon": "prescription",
+      "title": "Receitas e encaminhamentos",
+      "description": "Receba receitas médicas digitais e encaminhamentos para especialistas quando necessário."
+    },
+    {
+      "icon": "location",
+      "title": "Acesso de qualquer lugar",
+      "description": "Consulte de casa, do trabalho ou de qualquer lugar com acesso à internet. Sem deslocamento."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Quais planos incluem telemedicina?",
+      "answer": "A telemedicina está disponível para os planos Exclusivo I, Exclusivo II e Empresarial. Consulte os detalhes do seu plano para confirmar a cobertura."
+    },
+    {
+      "question": "Preciso agendar a consulta com antecedência?",
+      "answer": "Não. O atendimento por telemedicina é sob demanda, disponível 24 horas. Basta acessar a plataforma e iniciar sua consulta quando precisar."
+    },
+    {
+      "question": "A receita emitida por telemedicina é válida?",
+      "answer": "Sim. As receitas digitais emitidas pelos médicos na plataforma de telemedicina possuem validade legal e podem ser utilizadas em qualquer farmácia."
+    },
+    {
+      "question": "Quais especialidades estão disponíveis?",
+      "answer": "Estão disponíveis clínica geral, pediatria, dermatologia e outras especialidades. A disponibilidade pode variar conforme o horário e demanda."
+    }
+  ],
+  "plansWithTelemedicine": [
+    "plan-exclusivo-i",
+    "plan-exclusivo-ii",
+    "plan-empresarial"
+  ],
+  "platformUrl": "https://telemedicina.amacor.com.br"
+}
