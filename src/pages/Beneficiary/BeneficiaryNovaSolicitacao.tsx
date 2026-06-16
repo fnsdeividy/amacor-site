@@ -107,9 +107,9 @@ export default function BeneficiaryNovaSolicitacao() {
       const formData = new FormData();
       formData.append('tipoExame', tipoExame);
       formData.append('prestadorNome', prestador);
-      formData.append('codigoBeneficiario', session.codigo);
-      formData.append('nomeBeneficiario', session.nome);
-      formData.append('cpfCnpj', session.cpfCnpj);
+      formData.append('codigoBeneficiario', session!.codigo);
+      formData.append('nomeBeneficiario', session!.nome);
+      formData.append('cpfCnpj', session!.cpfCnpj);
       formData.append('pedidoMedico', file);
 
       const response = await fetch('/api/solicitacoes', {

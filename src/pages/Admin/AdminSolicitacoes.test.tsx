@@ -3,6 +3,8 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 import AdminSolicitacoes from './AdminSolicitacoes';
 
+declare const global: { fetch: typeof fetch };
+
 // Mock useAdminAuth
 const mockSession = {
   token: 'test-jwt-token',
