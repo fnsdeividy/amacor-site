@@ -152,12 +152,7 @@ describe('Header', () => {
 
   it('does not have duplicate navigation links', () => {
     renderHeader()
-    // Desktop nav has unique hrefs - verify Planos appears as button (not anchor)
-    const navLinks = screen.getAllByRole('link')
-    const hrefs = navLinks.map((link) => link.getAttribute('href')).filter(Boolean)
-    const _uniqueHrefs = new Set(hrefs)
-    // Note: mobile + desktop might duplicate. Desktop should have unique set.
-    // Just verify no duplicates in the first occurrence
+    // Just verify no duplicates in the desktop nav
     const desktopNav = screen.getByRole('navigation', { name: 'Navegação principal' })
     const desktopLinks = desktopNav.querySelectorAll('a[href]')
     const desktopHrefs = Array.from(desktopLinks).map((l) => l.getAttribute('href'))

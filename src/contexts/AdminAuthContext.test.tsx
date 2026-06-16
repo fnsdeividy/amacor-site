@@ -163,12 +163,6 @@ function createFakeJwt(payload: Record<string, unknown>): string {
   return `${header}.${body}.${signature}`;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function getContextValue() {
-  // This is a trick — won't be used, we test via the rendered component
-  return { login: async () => { } };
-}
-
 async function loginViaButton() {
   // The login button triggers context login internally
   screen.getByTestId('login-btn').click();
