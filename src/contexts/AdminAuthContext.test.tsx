@@ -80,12 +80,8 @@ describe('AdminAuthContext', () => {
 
     renderWithProvider();
 
-    let result: { success: boolean; error?: string } | undefined;
-    const { login } = getContextValue();
-
     await act(async () => {
-      // Use a component that exposes the result
-      result = await loginViaButton();
+      await loginViaButton();
     });
 
     expect(screen.getByTestId('authenticated').textContent).toBe('false');

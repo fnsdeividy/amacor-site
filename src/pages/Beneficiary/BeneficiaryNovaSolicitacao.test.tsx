@@ -4,7 +4,7 @@ import { MemoryRouter } from 'react-router-dom';
 import BeneficiaryNovaSolicitacao, { validateFile } from './BeneficiaryNovaSolicitacao';
 import * as AuthContext from '../../contexts/AuthContext';
 
-declare const global: { fetch: typeof fetch };
+declare const global: { fetch: ReturnType<typeof vi.fn> };
 
 // Mock useAuth
 vi.mock('../../contexts/AuthContext', () => ({

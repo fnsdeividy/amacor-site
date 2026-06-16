@@ -2,6 +2,8 @@ import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import AdminDashboard from './AdminDashboard';
 
+declare const global: { fetch: ReturnType<typeof vi.fn> };
+
 // Mock useAdminAuth
 const mockSession = {
   token: 'test-jwt-token',

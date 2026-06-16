@@ -3,7 +3,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 import AdminSolicitacoes from './AdminSolicitacoes';
 
-declare const global: { fetch: typeof fetch };
+declare const global: { fetch: ReturnType<typeof vi.fn> };
 
 // Mock useAdminAuth
 const mockSession = {
