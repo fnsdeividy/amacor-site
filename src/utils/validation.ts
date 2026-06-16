@@ -1,6 +1,15 @@
 import type { FormFieldConfig, ValidationRule, ValidationResult } from '../types/forms';
 
 /**
+ * Rule type for the simplified plan form validation interface.
+ */
+export interface FormValidationRule {
+  type: 'required' | 'email' | 'phone' | 'cep' | 'maxLength';
+  message: string;
+  value?: number;
+}
+
+/**
  * Validates a single value against a single validation rule.
  * Returns the error message if validation fails, or null if it passes.
  */
@@ -22,7 +31,7 @@ export function validateRule(value: string, rule: ValidationRule): string | null
 
     case 'phone': {
       const digitsOnly = value.replace(/\D/g, '');
-      if (value && digitsOnly.length < 10) {
+      if (value && (digitsOnly.length < 10 || digitsOnly.length > 11)) {
         return rule.message;
       }
       break;
@@ -148,11 +157,12 @@ export function validateCep(value: string): boolean {
 
 /**
  * Validates a Brazilian phone number.
- * Must have at least 10 digits (area code + number).
+ * Must have 10 or 11 digits (DDD + número).
+ * 10 digits = landline, 11 digits = mobile.
  */
 export function validatePhone(value: string): boolean {
   const digitsOnly = value.replace(/\D/g, '');
-  return digitsOnly.length >= 10;
+  return digitsOnly.length >= 10 && digitsOnly.length <= 11;
 }
 
 /**
@@ -161,4 +171,66 @@ export function validatePhone(value: string): boolean {
 export function validateEmail(value: string): boolean {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(value);
+}
+
+/**
+ * Validates a set of form fields against a rules map.
+ * Returns isValid with errors keyed to invalid fields.
+ * Error messages in plain Portuguese (≤ 8th-grade reading level).
+ */
+export function validateFormFields(
+  fields: Record<string, string>,
+  rules: Record<string, FormValidationRule[]>
+): ValidationResult {
+  const errors: Record<string, string> = {};
+
+  for (const [fieldName, fieldRules] of Object.entries(rules)) {
+    const value = fields[fieldName] || '';
+
+    for (const rule of fieldRules) {
+      let error: string | null = null;
+
+      switch (rule.type) {
+        case 'required':
+          if (!value || value.trim().length === 0) {
+            error = rule.message;
+          }
+          break;
+
+        case 'email':
+          if (value && !validateEmail(value)) {
+            error = rule.message;
+          }
+          break;
+
+        case 'phone':
+          if (value && !validatePhone(value)) {
+            error = rule.message;
+          }
+          break;
+
+        case 'cep':
+          if (value && !validateCep(value)) {
+            error = rule.message;
+          }
+          break;
+
+        case 'maxLength':
+          if (value && rule.value !== undefined && value.length > rule.value) {
+            error = rule.message;
+          }
+          break;
+      }
+
+      if (error) {
+        errors[fieldName] = error;
+        break; // Stop at first error for this field
+      }
+    }
+  }
+
+  return {
+    isValid: Object.keys(errors).length === 0,
+    errors,
+  };
 }
