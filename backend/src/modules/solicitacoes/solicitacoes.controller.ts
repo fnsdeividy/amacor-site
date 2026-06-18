@@ -11,6 +11,7 @@ import {
 import * as service from './solicitacoes.service';
 import { FiltrosSolicitacao } from './solicitacoes.repository';
 import { SolicitacaoStatus } from '../../types/index';
+import { upload } from '../anexos/anexos.controller';
 
 const router = Router();
 
@@ -208,16 +209,23 @@ router.get(
  * POST /api/solicitacoes
  *
  * Cria uma nova solicitação de autorização (beneficiário).
+ * Aceita multipart/form-data com arquivo "pedidoMedico" obrigatório.
  * Endpoint público (sem JWT - feito pelo beneficiário).
  */
 router.post(
   '/',
   publicRateLimiter,
+  upload.single('pedidoMedico'),
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const validation = validateCriarSolicitacao(req.body);
       if (!validation.valid) {
         throw new ValidationError('Dados da solicitação inválidos', validation.campos);
+      }
+
+      // Validar que o pedido médico foi anexado (Requisito 7.5)
+      if (!req.file) {
+        throw new ValidationError('Pedido médico é obrigatório para criar uma solicitação');
       }
 
       const dados = {
@@ -236,9 +244,67 @@ router.post(
           : undefined,
       };
 
-      const solicitacao = await service.criarSolicitacao(dados);
+      const pedidoMedico = {
+        nomeOriginal: req.file.originalname,
+        caminhoArmazenamento: req.file.filename,
+        tipoMime: req.file.mimetype,
+        tamanhoBytes: req.file.size,
+      };
 
-      res.status(201).json(solicitacao);
+      const resultado = await service.criarSolicitacao(dados, pedidoMedico);
+
+      res.status(201).json(resultado);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+/**
+ * PATCH /api/solicitacoes/:id/status
+ *
+ * Altera o status de uma solicitação (admin).
+ * Valida a transição via máquina de estados (rejeita com 422 se transição inválida).
+ * Registra evento no histórico com tipo, responsável, perfil e timestamp.
+ * Requer autenticação JWT.
+ */
+router.patch(
+  '/:id/status',
+  authenticatedRateLimiter,
+  authMiddleware,
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const id = req.params.id as string;
+
+      if (!isValidUUID(id)) {
+        throw new NotFoundError('Solicitação não encontrada');
+      }
+
+      const novoStatus = req.body.status as SolicitacaoStatus | undefined;
+
+      if (!novoStatus || !statusValidos.includes(novoStatus)) {
+        throw new ValidationError('Status inválido ou não informado');
+      }
+
+      const user = req.user!;
+      const descricao = req.body.descricao as string | undefined;
+
+      const resultado = await service.alterarStatus(
+        id,
+        novoStatus,
+        user.nome,
+        user.perfil,
+        descricao
+      );
+
+      if (resultado.success === false) {
+        if (resultado.erro === 'Solicitação não encontrada') {
+          throw new NotFoundError(resultado.erro);
+        }
+        throw new ValidationError(resultado.erro);
+      }
+
+      res.status(200).json(resultado.solicitacao);
     } catch (error) {
       next(error);
     }
@@ -250,7 +316,7 @@ router.post(
  *
  * Marca uma solicitação como enviada ao CRM (admin).
  * Requer autenticação JWT.
- * Só funciona para status "Pendente de análise" (rejeita com 400 caso contrário).
+ * Valida transição via máquina de estados (rejeita com 422 se status não permite).
  */
 router.patch(
   '/:id/enviar-crm',
@@ -274,7 +340,7 @@ router.patch(
         protocoloCrm
       );
 
-      if (!resultado.success) {
+      if (resultado.success === false) {
         if (resultado.erro === 'Solicitação não encontrada') {
           throw new NotFoundError(resultado.erro);
         }
@@ -322,7 +388,7 @@ router.post(
         user.perfil
       );
 
-      if (!resultado.success) {
+      if (resultado.success === false) {
         if (resultado.erro === 'Solicitação não encontrada') {
           throw new NotFoundError(resultado.erro);
         }
@@ -330,6 +396,44 @@ router.post(
       }
 
       res.status(201).json({ mensagem: 'Observação adicionada com sucesso' });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+/**
+ * POST /api/solicitacoes/:id/anexos
+ *
+ * Upload de documento adicional a uma solicitação (beneficiário).
+ * Aceita multipart/form-data com arquivo "arquivo".
+ * Upload APENAS permitido quando status é "Pendente de documento".
+ * Endpoint público (sem JWT - feito pelo beneficiário).
+ */
+router.post(
+  '/:id/anexos',
+  publicRateLimiter,
+  upload.single('arquivo'),
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const id = req.params.id as string;
+
+      if (!isValidUUID(id)) {
+        throw new NotFoundError('Solicitação não encontrada');
+      }
+
+      if (!req.file) {
+        throw new ValidationError('Arquivo é obrigatório');
+      }
+
+      const resultado = await service.uploadDocumentoAdicional(id, {
+        nomeOriginal: req.file.originalname,
+        caminhoArmazenamento: req.file.filename,
+        tipoMime: req.file.mimetype,
+        tamanhoBytes: req.file.size,
+      });
+
+      res.status(201).json(resultado);
     } catch (error) {
       next(error);
     }

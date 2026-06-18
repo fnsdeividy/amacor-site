@@ -1,13 +1,16 @@
 import { query, getPool } from '../../config/database';
-import { HistoricoEvento, Solicitacao } from '../../types/index';
+import { HistoricoEvento, Solicitacao, SolicitacaoStatus } from '../../types/index';
 import { logger } from '../../utils/logger';
 import * as repository from './solicitacoes.repository';
+import * as anexosRepository from '../anexos/anexos.repository';
 import {
   CriarSolicitacaoInput,
   FiltrosSolicitacao,
   Paginacao,
   ResultadoPaginado,
 } from './solicitacoes.repository';
+import { validarTransicao } from './stateMachine';
+import { AppError, ValidationError } from '../../middleware/errorHandler';
 
 /**
  * Resultado paginado para histórico de eventos.
@@ -21,14 +24,54 @@ export interface ResultadoHistoricoPaginado {
 }
 
 /**
+ * Informações do arquivo de pedido médico para criação de solicitação.
+ */
+export interface PedidoMedicoFile {
+  nomeOriginal: string;
+  caminhoArmazenamento: string;
+  tipoMime: string;
+  tamanhoBytes: number;
+}
+
+/**
+ * Resultado da criação de solicitação retornado ao cliente.
+ */
+export interface CriarSolicitacaoResult {
+  id: string;
+  protocolo: string;
+  numeroInterno: number;
+}
+
+/**
  * Cria uma nova solicitação de autorização.
  *
- * - Valida dados de entrada (já validados pelo controller)
- * - Delega criação ao repositório (protocolo gerado automaticamente)
+ * - Rejeita criação se pedido médico não for anexado
+ * - Delega criação ao repositório (protocolo gerado automaticamente, status "Pendente de análise")
  * - Registra evento de criação no histórico (feito pelo repositório)
+ * - Vincula o arquivo de pedido médico como anexo com tipoAnexo "pedido_medico"
+ * - Retorna id, protocolo e numeroInterno
  */
-export async function criarSolicitacao(dados: CriarSolicitacaoInput): Promise<Solicitacao> {
+export async function criarSolicitacao(
+  dados: CriarSolicitacaoInput,
+  pedidoMedico?: PedidoMedicoFile
+): Promise<CriarSolicitacaoResult> {
+  // Rejeitar criação se pedido médico não está anexado (Requisito 7.5)
+  if (!pedidoMedico) {
+    throw new ValidationError('Pedido médico é obrigatório para criar uma solicitação');
+  }
+
+  // Criar solicitação com status "Pendente de análise" e protocolo gerado (Requisitos 7.1, 7.2, 7.3)
   const solicitacao = await repository.criar(dados);
+
+  // Vincular arquivo de pedido médico como anexo com tipoAnexo "pedido_medico" (Requisito 7.4)
+  await anexosRepository.criar({
+    solicitacaoId: solicitacao.id,
+    nomeOriginal: pedidoMedico.nomeOriginal,
+    caminhoArmazenamento: pedidoMedico.caminhoArmazenamento,
+    tipoMime: pedidoMedico.tipoMime,
+    tamanhoBytes: pedidoMedico.tamanhoBytes,
+    tipoAnexo: 'pedido_medico',
+  });
 
   logger.info('solicitacoes.criar', {
     userId: dados.codigoBeneficiario,
@@ -40,7 +83,12 @@ export async function criarSolicitacao(dados: CriarSolicitacaoInput): Promise<So
     },
   });
 
-  return solicitacao;
+  // Retornar id, protocolo e numeroInterno (Requisito 7.6)
+  return {
+    id: solicitacao.id,
+    protocolo: solicitacao.protocolo,
+    numeroInterno: solicitacao.numeroInterno,
+  };
 }
 
 /**
@@ -78,10 +126,62 @@ export async function listarPorBeneficiario(
 }
 
 /**
+ * Altera o status de uma solicitação, validando a transição via máquina de estados.
+ *
+ * Integração completa: máquina de estados + histórico de eventos.
+ * - Valida a transição usando `validarTransicao` (lança TransicaoInvalidaError HTTP 422 se inválida)
+ * - Registra evento no histórico com tipo, responsável, perfil e timestamp em toda transição válida
+ */
+export async function alterarStatus(
+  solicitacaoId: string,
+  novoStatus: SolicitacaoStatus,
+  responsavelNome: string,
+  responsavelPerfil: string,
+  descricao?: string
+): Promise<{ success: true; solicitacao: Solicitacao } | { success: false; erro: string }> {
+  // Buscar solicitação atual para validar transição
+  const resultado = await repository.buscarPorId(solicitacaoId);
+
+  if (!resultado) {
+    return { success: false, erro: 'Solicitação não encontrada' };
+  }
+
+  const { solicitacao } = resultado;
+
+  // Validar transição via máquina de estados (lança TransicaoInvalidaError se inválida)
+  validarTransicao(solicitacao.status, novoStatus);
+
+  // Transição válida — atualizar status e registrar evento no histórico
+  const solicitacaoAtualizada = await repository.atualizarStatus(
+    solicitacaoId,
+    novoStatus,
+    responsavelNome,
+    responsavelPerfil,
+    descricao || `Status alterado de "${solicitacao.status}" para "${novoStatus}"`
+  );
+
+  if (!solicitacaoAtualizada) {
+    return { success: false, erro: 'Falha ao atualizar solicitação' };
+  }
+
+  logger.info('solicitacoes.alterar_status', {
+    userId: responsavelNome,
+    result: 'success',
+    metadata: {
+      solicitacaoId,
+      statusAnterior: solicitacao.status,
+      statusNovo: novoStatus,
+    },
+  });
+
+  return { success: true, solicitacao: solicitacaoAtualizada };
+}
+
+/**
  * Marca uma solicitação como enviada ao CRM.
  *
- * Regra de negócio: Só permite se status atual for "Pendente de análise".
- * Caso contrário, retorna erro.
+ * Utiliza a máquina de estados para validar que a transição para "Enviada ao CRM" é permitida.
+ * Registra evento no histórico em caso de transição válida.
  */
 export async function enviarParaCrm(
   solicitacaoId: string,
@@ -98,13 +198,8 @@ export async function enviarParaCrm(
 
   const { solicitacao } = resultado;
 
-  // Validar transição de status - apenas "Pendente de análise" pode ser enviada ao CRM
-  if (solicitacao.status !== 'Pendente de análise') {
-    return {
-      success: false,
-      erro: `Não é possível enviar ao CRM. Status atual: "${solicitacao.status}". Apenas solicitações com status "Pendente de análise" podem ser enviadas.`,
-    };
-  }
+  // Validar transição via máquina de estados (lança TransicaoInvalidaError se inválida)
+  validarTransicao(solicitacao.status, 'Enviada ao CRM');
 
   const solicitacaoAtualizada = await repository.marcarEnviadoCrm(solicitacaoId, {
     protocoloCrm,
@@ -190,6 +285,73 @@ export async function adicionarObservacao(
   } finally {
     client.release();
   }
+}
+
+/**
+ * Dados do arquivo para upload de documento adicional.
+ */
+export interface DocumentoAdicionalFile {
+  nomeOriginal: string;
+  caminhoArmazenamento: string;
+  tipoMime: string;
+  tamanhoBytes: number;
+}
+
+/**
+ * Faz upload de um documento adicional a uma solicitação.
+ *
+ * - Apenas permite upload quando status é "Pendente de documento" (Requisito 13.1)
+ * - Rejeita com HTTP 422 quando status é diferente de "Pendente de documento" (Requisito 13.2)
+ * - Cria registro de anexo com tipoAnexo "outro"
+ */
+export async function uploadDocumentoAdicional(
+  solicitacaoId: string,
+  arquivo: DocumentoAdicionalFile
+): Promise<{ success: true; anexo: { id: string; nomeOriginal: string; tipoMime: string; tamanhoBytes: number } }> {
+  const resultado = await repository.buscarPorId(solicitacaoId);
+
+  if (!resultado) {
+    throw new ValidationError('Solicitação não encontrada');
+  }
+
+  const { solicitacao } = resultado;
+
+  // Requisito 13.1 e 13.2: upload apenas quando status é "Pendente de documento"
+  if (solicitacao.status !== 'Pendente de documento') {
+    throw new AppError(
+      422,
+      `Upload de documentos adicionais não permitido. Status atual: "${solicitacao.status}". Upload é permitido apenas quando o status é "Pendente de documento".`
+    );
+  }
+
+  const anexo = await anexosRepository.criar({
+    solicitacaoId,
+    nomeOriginal: arquivo.nomeOriginal,
+    caminhoArmazenamento: arquivo.caminhoArmazenamento,
+    tipoMime: arquivo.tipoMime,
+    tamanhoBytes: arquivo.tamanhoBytes,
+    tipoAnexo: 'outro',
+  });
+
+  logger.info('solicitacoes.upload_documento_adicional', {
+    userId: solicitacao.codigoBeneficiario,
+    result: 'success',
+    metadata: {
+      solicitacaoId,
+      anexoId: anexo.id,
+      nomeOriginal: arquivo.nomeOriginal,
+    },
+  });
+
+  return {
+    success: true,
+    anexo: {
+      id: anexo.id,
+      nomeOriginal: anexo.nomeOriginal,
+      tipoMime: anexo.tipoMime,
+      tamanhoBytes: anexo.tamanhoBytes,
+    },
+  };
 }
 
 /**
