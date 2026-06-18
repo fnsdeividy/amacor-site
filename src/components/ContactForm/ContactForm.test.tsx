@@ -191,7 +191,7 @@ describe('ContactForm', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText(/Não foi possível enviar sua mensagem/)
+        screen.getByText(/Nao foi possivel enviar sua mensagem/)
       ).toBeInTheDocument()
     })
 

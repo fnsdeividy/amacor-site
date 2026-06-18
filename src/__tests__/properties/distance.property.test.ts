@@ -82,8 +82,8 @@ describe('Property 3: Distance-based provider filtering', () => {
             const distance = haversineDistance(
               centerLat,
               centerLng,
-              provider.coordinates.lat,
-              provider.coordinates.lng
+              provider.coordinates!.lat,
+              provider.coordinates!.lng
             );
             expect(distance).toBeLessThanOrEqual(radius);
           }
@@ -108,8 +108,8 @@ describe('Property 3: Distance-based provider filtering', () => {
             const distance = haversineDistance(
               centerLat,
               centerLng,
-              provider.coordinates.lat,
-              provider.coordinates.lng
+              provider.coordinates!.lat,
+              provider.coordinates!.lng
             );
             if (distance <= radius) {
               expect(result).toContainEqual(provider);

@@ -16,8 +16,8 @@ describe('TISSManual', () => {
   it('renders a description about the TISS standard for health information exchange', () => {
     render(<TISSManual />)
 
-    expect(screen.getByText(/TISS.*Troca de Informações na Saúde Suplementar/)).toBeInTheDocument()
-    expect(screen.getByText(/intercâmbio de dados/)).toBeInTheDocument()
+    expect(screen.getByText(/TISS.*Troca de Informacoes na Saude Suplementar/)).toBeInTheDocument()
+    expect(screen.getByText(/intercambio de dados/)).toBeInTheDocument()
   })
 
   it('displays at least one downloadable document link with name and file format', () => {
@@ -56,7 +56,7 @@ describe('TISSManual', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText('Arquivo indisponível. Tente novamente mais tarde.')
+        screen.getByText('Arquivo indisponivel. Tente novamente mais tarde.')
       ).toBeInTheDocument()
     })
   })
@@ -73,7 +73,7 @@ describe('TISSManual', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText('Arquivo indisponível. Tente novamente mais tarde.')
+        screen.getByText('Arquivo indisponivel. Tente novamente mais tarde.')
       ).toBeInTheDocument()
     })
   })
@@ -90,7 +90,7 @@ describe('TISSManual', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText('Arquivo indisponível. Tente novamente mais tarde.')
+        screen.getByText('Arquivo indisponivel. Tente novamente mais tarde.')
       ).toBeInTheDocument()
     })
 
@@ -98,7 +98,7 @@ describe('TISSManual', () => {
 
     await waitFor(() => {
       expect(
-        screen.queryByText('Arquivo indisponível. Tente novamente mais tarde.')
+        screen.queryByText('Arquivo indisponivel. Tente novamente mais tarde.')
       ).not.toBeInTheDocument()
     })
   })
@@ -113,7 +113,7 @@ describe('TISSManual', () => {
 
     await waitFor(() => {
       const alert = screen.getByRole('alert')
-      expect(alert).toHaveTextContent('Arquivo indisponível. Tente novamente mais tarde.')
+      expect(alert).toHaveTextContent('Arquivo indisponivel. Tente novamente mais tarde.')
     })
   })
 

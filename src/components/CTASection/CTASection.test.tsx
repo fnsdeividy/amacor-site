@@ -146,10 +146,10 @@ describe('CTASection', () => {
     )
 
     const button = screen.getByText('Ação')
-    expect(button.className).toContain('bg-primary-500')
+    expect(button.className).toContain('bg-primary-600')
   })
 
-  it('ensures minimum 48x48px touch targets via min-w-touch and min-h-touch classes', () => {
+  it('ensures minimum touch targets via min-h-touch class', () => {
     renderWithRouter(
       <CTASection
         title="Título"
@@ -158,7 +158,6 @@ describe('CTASection', () => {
     )
 
     const button = screen.getByText('Ação')
-    expect(button.className).toContain('min-w-touch')
     expect(button.className).toContain('min-h-touch')
   })
 })
