@@ -42,13 +42,50 @@ export interface BeneficiarySession {
 }
 
 export interface Boleto {
-  vencimento: string; // DD/MM/AAAA
-  valor: number; // Valor em centavos ou reais
+  vencimento: string; // DD/MM/AAAA (formatado)
+  valor: number; // Valor/Saldo em reais
   status: 'vencido' | 'a vencer';
   pdfUrl: string; // URL para download do PDF
+  parcela?: string; // Número da parcela
+  codigoRec?: string; // CodigoREC para gerar 2ª via
 }
 
 export interface BoletosRequest {
   parse: string;
   codigo: string;
+}
+
+export interface AlterarSenhaRequest {
+  tipo: 'USR';
+  codigo: string;
+  senhaVelha: string;
+  senhaNova: string;
+}
+
+export interface DadosBeneficiarioRequest {
+  parse: string;
+  codigo: string;
+}
+
+export interface DadosBeneficiario {
+  [key: string]: string;
+}
+
+export interface RedeAtendimentoRequest {
+  parse: string;
+  codigo: string;
+}
+
+export interface PrestadorRede {
+  [key: string]: string;
+}
+
+export interface ListaCRMsRequest {
+  parse: string;
+  codigo: string;
+  dataIni: string;
+}
+
+export interface ProtocoloCRM {
+  [key: string]: string;
 }

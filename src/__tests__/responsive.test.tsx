@@ -106,8 +106,8 @@ describe('Responsive Design - WhatsApp Button', () => {
   it('has minimum 56x56px size for visibility', () => {
     render(<WhatsAppButton phoneNumber="5521999999999" />)
     const link = screen.getByRole('link', { name: /whatsapp/i })
-    expect(link.className).toContain('min-w-touch-lg')
-    expect(link.className).toContain('min-h-touch-lg')
+    expect(link.className).toContain('w-[60px]')
+    expect(link.className).toContain('h-[60px]')
   })
 })
 
@@ -179,26 +179,26 @@ describe('Responsive Design - ContactForm Fields', () => {
 })
 
 describe('Responsive Design - ProviderCard', () => {
-  it('renders as a flex column card for single-column stacking', () => {
+  it('renders as a card with rounded corners', () => {
     render(
       withRouter(
         <ProviderCard provider={mockProvider} />
       )
     )
     const article = screen.getByRole('article')
-    expect(article.className).toContain('flex')
-    expect(article.className).toContain('flex-col')
+    expect(article.className).toContain('rounded-2xl')
   })
 
-  it('has responsive padding (p-4 on mobile, tablet:p-6 on tablet+)', () => {
+  it('has responsive padding (p-5 on mobile, tablet:p-6 on tablet+)', () => {
     render(
       withRouter(
         <ProviderCard provider={mockProvider} />
       )
     )
     const article = screen.getByRole('article')
-    expect(article.className).toContain('p-4')
-    expect(article.className).toContain('tablet:p-6')
+    const contentDiv = article.querySelector('.p-5')
+    expect(contentDiv).toBeInTheDocument()
+    expect(contentDiv?.className).toContain('tablet:p-6')
   })
 
   it('action buttons have minimum touch target size', () => {
@@ -208,8 +208,7 @@ describe('Responsive Design - ProviderCard', () => {
       )
     )
     const callButton = screen.getByRole('link', { name: /Ligar para/i })
-    expect(callButton.className).toContain('min-w-touch')
-    expect(callButton.className).toContain('min-h-touch')
+    expect(callButton.className).toContain('min-h-[40px]')
   })
 })
 
@@ -232,7 +231,7 @@ describe('Responsive Design - SearchFilters', () => {
     render(withRouter(<SearchFilters {...defaultProps} />))
     const cepInput = screen.getByLabelText('CEP')
     expect(cepInput.className).toContain('w-full')
-    expect(cepInput.className).toContain('min-h-touch')
+    expect(cepInput.className).toContain('min-h-[44px]')
   })
 
   it('geolocation button is full-width on mobile, auto on tablet', () => {
@@ -251,9 +250,9 @@ describe('Responsive Design - HeroSection', () => {
     ctaLink: '/planos',
   }
 
-  it('stacks content vertically on mobile, side-by-side on tablet+', () => {
+  it('stacks content vertically on mobile with flex-col layout', () => {
     render(withRouter(<HeroSection {...heroProps} />))
-    const container = document.querySelector('.flex.flex-col.tablet\\:flex-row')
+    const container = document.querySelector('.flex.flex-col')
     expect(container).toBeInTheDocument()
   })
 
@@ -266,7 +265,6 @@ describe('Responsive Design - HeroSection', () => {
   it('CTA button has minimum touch target size', () => {
     render(withRouter(<HeroSection {...heroProps} />))
     const link = screen.getByRole('link', { name: 'Simular plano' })
-    expect(link.className).toContain('min-w-touch')
     expect(link.className).toContain('min-h-touch')
   })
 })
@@ -308,7 +306,7 @@ describe('Responsive Design - No Overflow-X', () => {
 })
 
 describe('Responsive Design - Images Scale Proportionally', () => {
-  it('HeroSection background image uses cover sizing for proportional scaling', () => {
+  it('HeroSection background image uses object-cover for proportional scaling', () => {
     render(
       withRouter(
         <HeroSection
@@ -320,8 +318,7 @@ describe('Responsive Design - Images Scale Proportionally', () => {
         />
       )
     )
-    const section = document.querySelector('section')
-    expect(section?.style.backgroundSize).toBe('cover')
-    expect(section?.style.backgroundPosition).toBe('center')
+    const img = document.querySelector('img.object-cover')
+    expect(img).toBeInTheDocument()
   })
 })

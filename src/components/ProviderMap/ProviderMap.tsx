@@ -73,8 +73,8 @@ export function ProviderMap({
       {providers.map((provider) => {
         const position = getMarkerPosition(provider, bounds)
         const isSelected = provider.id === selectedProviderId
-        const color = markerColors[provider.type] ?? 'bg-gray-500'
-        const borderColor = markerBorderColors[provider.type] ?? 'border-gray-700'
+        const color = (provider.type && markerColors[provider.type]) ?? 'bg-gray-500'
+        const borderColor = (provider.type && markerBorderColors[provider.type]) ?? 'border-gray-700'
 
         return (
           <button
@@ -82,14 +82,14 @@ export function ProviderMap({
             type="button"
             onClick={() => onMarkerClick?.(provider.id)}
             className={`absolute transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-primary-300 rounded-full ${isSelected
-                ? `w-6 h-6 ${color} border-3 ${borderColor} ring-4 ring-primary-400 scale-150 z-20 shadow-lg`
-                : `w-4 h-4 ${color} border-2 ${borderColor} hover:scale-125 z-10 shadow-md`
+              ? `w-6 h-6 ${color} border-3 ${borderColor} ring-4 ring-primary-400 scale-150 z-20 shadow-lg`
+              : `w-4 h-4 ${color} border-2 ${borderColor} hover:scale-125 z-10 shadow-md`
               }`}
             style={{
               top: `${position.top}%`,
               left: `${position.left}%`,
             }}
-            aria-label={`${provider.name} - ${provider.type}${isSelected ? ' (selecionado)' : ''}`}
+            aria-label={`${provider.name} - ${provider.type ?? 'Prestador'}${isSelected ? ' (selecionado)' : ''}`}
             title={provider.name}
           />
         )
@@ -113,12 +113,13 @@ interface Bounds {
 }
 
 function calculateBounds(providers: Provider[]): Bounds {
-  if (providers.length === 0) {
+  const withCoords = providers.filter((p) => p.coordinates)
+  if (withCoords.length === 0) {
     return { minLat: -24, maxLat: -23, minLng: -47, maxLng: -46 }
   }
 
-  const lats = providers.map((p) => p.coordinates.lat)
-  const lngs = providers.map((p) => p.coordinates.lng)
+  const lats = withCoords.map((p) => p.coordinates!.lat)
+  const lngs = withCoords.map((p) => p.coordinates!.lng)
 
   const minLat = Math.min(...lats)
   const maxLat = Math.max(...lats)
@@ -141,6 +142,8 @@ function getMarkerPosition(
   provider: Provider,
   bounds: Bounds
 ): { top: number; left: number } {
+  if (!provider.coordinates) return { top: 50, left: 50 }
+
   const latRange = bounds.maxLat - bounds.minLat
   const lngRange = bounds.maxLng - bounds.minLng
 
@@ -164,7 +167,7 @@ function SelectedProviderTooltip({ provider }: { provider?: Provider }) {
       <h4 className="text-sm font-bold text-primary-800 truncate">
         {provider.name}
       </h4>
-      <p className="text-xs text-gray-600 mt-0.5">{provider.type}</p>
+      <p className="text-xs text-gray-600 mt-0.5">{provider.type ?? 'Prestador'}</p>
       <p className="text-xs text-gray-500 mt-1 line-clamp-2">
         {provider.address.street}, {provider.address.number} -{' '}
         {provider.address.neighborhood}

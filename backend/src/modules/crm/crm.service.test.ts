@@ -41,7 +41,7 @@ describe('CRM Service', () => {
 
       expect(result.success).toBe(true);
       expect(result.error).toBe('not_found');
-      expect(result.message).toContain('ainda não cadastrada no CRM');
+      expect(result.message).toBe('Ainda não cadastrada no CRM');
       expect(result.status).toBeUndefined();
     });
 
@@ -147,7 +147,7 @@ describe('CRM Service', () => {
 
       expect(result.success).toBe(false);
       expect(result.error).toBe('invalid_interval');
-      expect(result.message).toContain('90 dias');
+      expect(result.message).toBe('Intervalo máximo 90 dias');
       expect(mockFetch).not.toHaveBeenCalled();
     });
 
@@ -156,7 +156,7 @@ describe('CRM Service', () => {
 
       expect(result.success).toBe(false);
       expect(result.error).toBe('invalid_interval');
-      expect(result.message).toContain('anterior');
+      expect(result.message).toBe('Data final anterior à inicial');
       expect(mockFetch).not.toHaveBeenCalled();
     });
 
@@ -165,7 +165,7 @@ describe('CRM Service', () => {
 
       expect(result.success).toBe(false);
       expect(result.error).toBe('invalid_interval');
-      expect(result.message).toContain('inválidas');
+      expect(result.message).toBe('Datas inválidas');
       expect(mockFetch).not.toHaveBeenCalled();
     });
 

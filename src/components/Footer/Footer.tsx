@@ -4,8 +4,10 @@ export function Footer(_props: FooterProps) {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="w-full bg-primary-950 text-warm-300">
-      <div className="mx-auto max-w-7xl px-4 py-14 tablet:px-6 desktop:px-8">
+    <footer className="w-full bg-primary-950 text-warm-300 relative overflow-hidden">
+      {/* Topography texture */}
+      <div className="absolute inset-0 opacity-100" style={{ backgroundImage: 'url(/img/textures/topography.svg)', backgroundSize: '600px 600px', backgroundRepeat: 'repeat' }} aria-hidden="true" />
+      <div className="relative mx-auto max-w-7xl px-4 py-14 tablet:px-6 desktop:px-8">
         <div className="grid grid-cols-1 gap-10 tablet:grid-cols-2 desktop:grid-cols-4">
           {/* Brand & Regulatory */}
           <div>
@@ -144,7 +146,7 @@ export function Footer(_props: FooterProps) {
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-white/10">
+      <div className="relative border-t border-white/10">
         <div className="mx-auto max-w-7xl px-4 py-5 tablet:px-6 desktop:px-8 flex flex-col tablet:flex-row items-center justify-between gap-2">
           <p className="text-xs text-warm-500">
             © {currentYear} Amacor Planos de Saúde. Todos os direitos reservados.

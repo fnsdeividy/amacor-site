@@ -36,6 +36,10 @@ import BeneficiaryBoletos from './pages/Beneficiary/BeneficiaryBoletos'
 import BeneficiarySolicitacoes from './pages/Beneficiary/BeneficiarySolicitacoes'
 import BeneficiaryNovaSolicitacao from './pages/Beneficiary/BeneficiaryNovaSolicitacao'
 import BeneficiarySolicitacaoDetalhe from './pages/Beneficiary/BeneficiarySolicitacaoDetalhe'
+import BeneficiaryDados from './pages/Beneficiary/BeneficiaryDados'
+import BeneficiaryAlterarSenha from './pages/Beneficiary/BeneficiaryAlterarSenha'
+import BeneficiaryProtocolos from './pages/Beneficiary/BeneficiaryProtocolos'
+import BeneficiaryRede from './pages/Beneficiary/BeneficiaryRede'
 
 function Layout() {
   const { pathname } = useLocation()
@@ -64,6 +68,7 @@ function Layout() {
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro" element={<Register />} />
           <Route path="/beneficiario" element={<BeneficiaryArea />} />
+          <Route path="/area-do-beneficiario" element={<BeneficiaryArea />} />
           <Route path="/buscar-exames" element={<ExamSearch />} />
 
           {/* Admin routes */}
@@ -77,6 +82,10 @@ function Layout() {
           <Route path="/beneficiario/solicitacoes" element={<BeneficiaryRoute><BeneficiarySolicitacoes /></BeneficiaryRoute>} />
           <Route path="/beneficiario/solicitacoes/nova" element={<BeneficiaryRoute><BeneficiaryNovaSolicitacao /></BeneficiaryRoute>} />
           <Route path="/beneficiario/solicitacoes/:id" element={<BeneficiaryRoute><BeneficiarySolicitacaoDetalhe /></BeneficiaryRoute>} />
+          <Route path="/beneficiario/dados" element={<BeneficiaryRoute><BeneficiaryDados /></BeneficiaryRoute>} />
+          <Route path="/beneficiario/alterar-senha" element={<BeneficiaryRoute><BeneficiaryAlterarSenha /></BeneficiaryRoute>} />
+          <Route path="/beneficiario/protocolos" element={<BeneficiaryRoute><BeneficiaryProtocolos /></BeneficiaryRoute>} />
+          <Route path="/beneficiario/rede" element={<BeneficiaryRoute><BeneficiaryRede /></BeneficiaryRoute>} />
         </Routes>
       </main>
       <Footer />

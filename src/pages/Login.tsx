@@ -1,6 +1,23 @@
-import { useState, type FormEvent } from 'react';
+import { useState, type FormEvent, type ChangeEvent } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+
+/**
+ * Aplica máscara de matrícula no formato XXX.XXXXXX-XX
+ * Aceita apenas dígitos e formata automaticamente.
+ */
+function formatMatricula(value: string): string {
+  // Remove tudo que não é dígito
+  const digits = value.replace(/\D/g, '').slice(0, 11);
+
+  if (digits.length <= 3) {
+    return digits;
+  }
+  if (digits.length <= 9) {
+    return `${digits.slice(0, 3)}.${digits.slice(3)}`;
+  }
+  return `${digits.slice(0, 3)}.${digits.slice(3, 9)}-${digits.slice(9, 11)}`;
+}
 
 export default function Login() {
   const [codigo, setCodigo] = useState('');
@@ -14,6 +31,8 @@ export default function Login() {
 
     if (!codigo.trim()) {
       errors.codigo = 'Matrícula é obrigatória';
+    } else if (!/^\d{3}\.\d{6}-\d{2}$/.test(codigo.trim())) {
+      errors.codigo = 'Formato inválido. Use XXX.XXXXXX-XX';
     }
     if (!senha.trim()) {
       errors.senha = 'Senha é obrigatória';
@@ -43,7 +62,7 @@ export default function Login() {
   return (
     <section className="py-16 px-4">
       <div className="max-w-md mx-auto">
-        <h1 className="text-3xl font-bold text-primary-green text-center mb-8">
+        <h1 className="text-3xl font-bold text-primary-600 text-center mb-8">
           Área do Beneficiário
         </h1>
 
@@ -56,14 +75,15 @@ export default function Login() {
               id="codigo"
               type="text"
               value={codigo}
-              onChange={(e) => {
-                setCodigo(e.target.value);
+              onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                setCodigo(formatMatricula(e.target.value));
                 if (fieldErrors.codigo) {
                   setFieldErrors((prev) => ({ ...prev, codigo: undefined }));
                 }
               }}
+              maxLength={13}
               placeholder="Ex: 020.019572-00"
-              className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-green focus:border-transparent outline-none ${fieldErrors.codigo ? 'border-red-500' : 'border-gray-300'
+              className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none ${fieldErrors.codigo ? 'border-red-500' : 'border-gray-300'
                 }`}
               aria-describedby={fieldErrors.codigo ? 'codigo-error' : 'codigo-help'}
               aria-invalid={!!fieldErrors.codigo}
@@ -93,7 +113,7 @@ export default function Login() {
                   setFieldErrors((prev) => ({ ...prev, senha: undefined }));
                 }
               }}
-              className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-green focus:border-transparent outline-none ${fieldErrors.senha ? 'border-red-500' : 'border-gray-300'
+              className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none ${fieldErrors.senha ? 'border-red-500' : 'border-gray-300'
                 }`}
               aria-describedby={fieldErrors.senha ? 'senha-error' : undefined}
               aria-invalid={!!fieldErrors.senha}
@@ -114,7 +134,7 @@ export default function Login() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-primary-green text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-full bg-primary-600 text-white py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {isLoading ? (
               <>
@@ -148,7 +168,7 @@ export default function Login() {
 
           <p className="text-center text-sm text-gray-600">
             Não tem login?{' '}
-            <Link to="/cadastro" className="text-primary-green font-medium hover:underline">
+            <Link to="/cadastro" className="text-primary-600 font-medium hover:underline">
               Criar conta
             </Link>
           </p>

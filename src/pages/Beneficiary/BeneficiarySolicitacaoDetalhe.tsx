@@ -184,7 +184,7 @@ export default function BeneficiarySolicitacaoDetalhe() {
             </p>
             <Link
               to="/beneficiario/solicitacoes"
-              className="inline-flex items-center px-5 py-2.5 bg-primary-green text-white rounded-lg font-semibold hover:bg-green-700 transition-colors"
+              className="inline-flex items-center px-5 py-2.5 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition-colors"
             >
               Voltar para solicitações
             </Link>
@@ -210,7 +210,7 @@ export default function BeneficiarySolicitacaoDetalhe() {
             </p>
             <button
               onClick={fetchSolicitacao}
-              className="px-6 py-3 bg-primary-green text-white rounded-lg font-semibold hover:bg-green-700 transition-colors min-w-[48px] min-h-[48px]"
+              className="px-6 py-3 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition-colors min-w-[48px] min-h-[48px]"
             >
               Tentar novamente
             </button>
@@ -228,7 +228,7 @@ export default function BeneficiarySolicitacaoDetalhe() {
         {/* Back link */}
         <Link
           to="/beneficiario/solicitacoes"
-          className="inline-flex items-center gap-1 text-sm text-primary-green hover:text-green-700 transition-colors mb-6"
+          className="inline-flex items-center gap-1 text-sm text-primary-600 hover:text-primary-700 transition-colors mb-6"
         >
           <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -238,7 +238,7 @@ export default function BeneficiarySolicitacaoDetalhe() {
 
         {/* Header */}
         <header className="mb-6">
-          <h1 className="text-2xl sm:text-3xl font-bold text-primary-green">
+          <h1 className="text-2xl sm:text-3xl font-bold text-primary-600">
             Solicitação
           </h1>
           <p className="mt-1 text-sm text-gray-500">
@@ -292,7 +292,7 @@ export default function BeneficiarySolicitacaoDetalhe() {
               {solicitacao.historico.map((evento) => (
                 <li key={evento.id} className="ml-6">
                   <span
-                    className="absolute -left-2 flex items-center justify-center w-4 h-4 bg-primary-green rounded-full ring-4 ring-white"
+                    className="absolute -left-2 flex items-center justify-center w-4 h-4 bg-primary-600 rounded-full ring-4 ring-white"
                     aria-hidden="true"
                   />
                   <div className="p-3 bg-gray-50 rounded-lg border border-gray-100">

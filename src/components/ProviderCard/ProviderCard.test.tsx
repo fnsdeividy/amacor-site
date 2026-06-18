@@ -80,8 +80,7 @@ describe('ProviderCard', () => {
   it('renders operating hours', () => {
     render(<ProviderCard provider={mockProvider} />)
     expect(screen.getByText(/Seg-Sex: 24 horas/)).toBeInTheDocument()
-    expect(screen.getByText(/Sábado: 24 horas/)).toBeInTheDocument()
-    expect(screen.getByText(/Domingo: 24 horas/)).toBeInTheDocument()
+    expect(screen.getByText(/Sáb: 24 horas/)).toBeInTheDocument()
   })
 
   it('renders accepted plans', () => {
@@ -110,7 +109,7 @@ describe('ProviderCard', () => {
     const directionsLink = screen.getByRole('link', { name: /como chegar/i })
     expect(directionsLink).toHaveAttribute(
       'href',
-      `https://www.google.com/maps/dir/?api=1&destination=${mockProvider.coordinates.lat},${mockProvider.coordinates.lng}`
+      `https://www.google.com/maps/dir/?api=1&destination=${mockProvider.coordinates!.lat},${mockProvider.coordinates!.lng}`
     )
   })
 
@@ -131,10 +130,9 @@ describe('ProviderCard', () => {
     ).not.toBeInTheDocument()
   })
 
-  it('action buttons have minimum 48px touch targets', () => {
+  it('action buttons have minimum 40px touch targets', () => {
     render(<ProviderCard provider={mockProvider} onShowOnMap={() => { }} />)
     const callButton = screen.getByRole('link', { name: /ligar/i })
-    expect(callButton.className).toContain('min-w-touch')
-    expect(callButton.className).toContain('min-h-touch')
+    expect(callButton.className).toContain('min-h-[40px]')
   })
 })

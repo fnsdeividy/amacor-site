@@ -1,5 +1,5 @@
 import { query, getPool } from '../../config/database';
-import { gerarProtocolo } from '../../utils/protocol';
+import { gerarProtocoloUnico } from '../../utils/protocol';
 import {
   Solicitacao,
   SolicitacaoStatus,
@@ -212,7 +212,20 @@ export async function criar(dados: CriarSolicitacaoInput): Promise<Solicitacao> 
     );
 
     const row = insertResult.rows[0];
-    const protocolo = gerarProtocolo(row.numero_interno);
+
+    // Busca protocolos existentes para a data atual para garantir unicidade
+    const hoje = new Date();
+    const year = hoje.getFullYear();
+    const month = String(hoje.getMonth() + 1).padStart(2, '0');
+    const day = String(hoje.getDate()).padStart(2, '0');
+    const datePrefix = `AMCR-${year}${month}${day}-%`;
+
+    const existingResult = await client.query<{ protocolo: string }>(
+      `SELECT protocolo FROM solicitacoes WHERE protocolo LIKE $1 AND protocolo != 'TEMP'`,
+      [datePrefix]
+    );
+    const existingProtocols = existingResult.rows.map((r) => r.protocolo);
+    const protocolo = gerarProtocoloUnico(existingProtocols, hoje);
 
     // Atualiza com o protocolo gerado
     const updateResult = await client.query<SolicitacaoRow>(

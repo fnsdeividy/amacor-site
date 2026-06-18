@@ -66,8 +66,10 @@ export function CTASection({
   secondaryAction,
 }: CTASectionProps) {
   return (
-    <section className="w-full bg-warm-50 py-20 tablet:py-24 px-4 tablet:px-8">
-      <div className="mx-auto max-w-4xl text-center">
+    <section className="w-full bg-warm-50 py-20 tablet:py-24 px-4 tablet:px-8 relative overflow-hidden">
+      {/* Grid dots texture */}
+      <div className="absolute inset-0 opacity-60" style={{ backgroundImage: 'url(/img/textures/grid-dots.svg)', backgroundRepeat: 'repeat', backgroundSize: '60px 60px' }} aria-hidden="true" />
+      <div className="relative mx-auto max-w-4xl text-center">
         <h2 className="text-heading-md tablet:text-heading-lg text-primary-900">
           {title}
         </h2>

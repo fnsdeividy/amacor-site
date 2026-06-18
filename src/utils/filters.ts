@@ -46,7 +46,7 @@ export function filterProviders(
     const query = filters.searchQuery.toLowerCase().trim();
     result = result.filter((provider) => {
       const nameMatch = provider.name.toLowerCase().includes(query);
-      const specialtyMatch = provider.specialties.some((s) =>
+      const specialtyMatch = (provider.specialties || []).some((s) =>
         s.toLowerCase().includes(query)
       );
       const cityMatch = provider.address.city.toLowerCase().includes(query);
@@ -59,7 +59,7 @@ export function filterProviders(
   if (filters.specialty) {
     const specialty: Specialty = filters.specialty;
     result = result.filter((provider) =>
-      provider.specialties.includes(specialty)
+      (provider.specialties || []).includes(specialty)
     );
   }
 
@@ -67,7 +67,7 @@ export function filterProviders(
   if (filters.plan) {
     const plan: PlanType = filters.plan;
     result = result.filter((provider) =>
-      provider.acceptedPlans.includes(plan)
+      (provider.acceptedPlans || []).includes(plan)
     );
   }
 
@@ -97,6 +97,7 @@ export function filterProviders(
   if (filters.userLocation) {
     const radiusKm = filters.radiusKm ?? 10;
     result = result.filter((provider) => {
+      if (!provider.coordinates) return false;
       const distance = haversineDistance(
         filters.userLocation!.lat,
         filters.userLocation!.lng,

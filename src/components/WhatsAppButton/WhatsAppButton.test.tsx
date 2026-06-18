@@ -50,8 +50,8 @@ describe('WhatsAppButton', () => {
     render(<WhatsAppButton phoneNumber="5511999999999" />);
 
     const link = screen.getByRole('link', { name: /whatsapp/i });
-    expect(link.className).toContain('min-w-touch-lg');
-    expect(link.className).toContain('min-h-touch-lg');
+    expect(link.className).toContain('w-[60px]');
+    expect(link.className).toContain('h-[60px]');
   });
 
   it('uses whatsapp green background color', () => {

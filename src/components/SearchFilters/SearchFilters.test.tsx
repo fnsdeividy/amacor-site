@@ -20,7 +20,7 @@ describe('SearchFilters', () => {
     expect(screen.getByLabelText('Bairro')).toBeInTheDocument()
     expect(screen.getByLabelText('Especialidade')).toBeInTheDocument()
     expect(screen.getByLabelText('Plano')).toBeInTheDocument()
-    expect(screen.getByLabelText('Tipo de prestador')).toBeInTheDocument()
+    expect(screen.getByLabelText('Tipo')).toBeInTheDocument()
   })
 
   it('calls onGeolocationRequest when geolocation button is clicked', () => {
@@ -107,14 +107,14 @@ describe('SearchFilters', () => {
     )
   })
 
-  it('renders specialty options with "Todos" as default', () => {
+  it('renders specialty options with "Todas as especialidades" as default', () => {
     render(<SearchFilters {...defaultProps} />)
 
     const select = screen.getByLabelText('Especialidade')
     expect(select).toHaveValue('')
 
     const options = select.querySelectorAll('option')
-    expect(options[0]).toHaveTextContent('Todos')
+    expect(options[0]).toHaveTextContent('Todas as especialidades')
     expect(options[1]).toHaveTextContent('Cardiologia')
     expect(options[2]).toHaveTextContent('Dermatologia')
     expect(options[3]).toHaveTextContent('Pediatria')
@@ -132,14 +132,14 @@ describe('SearchFilters', () => {
     )
   })
 
-  it('renders plan options with "Todos" as default', () => {
+  it('renders plan options with "Todos os planos" as default', () => {
     render(<SearchFilters {...defaultProps} />)
 
     const select = screen.getByLabelText('Plano')
     expect(select).toHaveValue('')
 
     const options = select.querySelectorAll('option')
-    expect(options[0]).toHaveTextContent('Todos')
+    expect(options[0]).toHaveTextContent('Todos os planos')
     expect(options[1]).toHaveTextContent('Exclusivo I')
   })
 
@@ -155,14 +155,14 @@ describe('SearchFilters', () => {
     )
   })
 
-  it('renders provider type options with "Todos" as default', () => {
+  it('renders provider type options with "Todos os tipos" as default', () => {
     render(<SearchFilters {...defaultProps} />)
 
-    const select = screen.getByLabelText('Tipo de prestador')
+    const select = screen.getByLabelText('Tipo')
     expect(select).toHaveValue('')
 
     const options = select.querySelectorAll('option')
-    expect(options[0]).toHaveTextContent('Todos')
+    expect(options[0]).toHaveTextContent('Todos os tipos')
     expect(options[1]).toHaveTextContent('Hospital')
   })
 
@@ -170,7 +170,7 @@ describe('SearchFilters', () => {
     const onFiltersChange = vi.fn()
     render(<SearchFilters {...defaultProps} onFiltersChange={onFiltersChange} />)
 
-    const select = screen.getByLabelText('Tipo de prestador')
+    const select = screen.getByLabelText('Tipo')
     fireEvent.change(select, { target: { value: 'Hospital' } })
 
     expect(onFiltersChange).toHaveBeenCalledWith(
@@ -178,17 +178,17 @@ describe('SearchFilters', () => {
     )
   })
 
-  it('has minimum 48px height on all inputs and buttons', () => {
+  it('has minimum 44px height on all inputs and buttons', () => {
     render(<SearchFilters {...defaultProps} />)
 
     const cepInput = screen.getByLabelText('CEP')
-    expect(cepInput.className).toContain('min-h-touch')
+    expect(cepInput.className).toContain('min-h-[44px]')
 
     const cityInput = screen.getByLabelText('Cidade')
-    expect(cityInput.className).toContain('min-h-touch')
+    expect(cityInput.className).toContain('min-h-[44px]')
 
     const button = screen.getByLabelText('Usar minha localização atual')
-    expect(button.className).toContain('min-h-touch')
+    expect(button.className).toContain('min-h-[44px]')
   })
 
   it('has search role for accessibility', () => {

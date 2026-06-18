@@ -47,7 +47,7 @@ export function ProviderCard({
   onShowOnMap,
 }: ProviderCardProps) {
   const distance =
-    userLocation
+    userLocation && provider.coordinates
       ? haversineDistance(
         userLocation.lat,
         userLocation.lng,
@@ -64,11 +64,13 @@ export function ProviderCard({
     .filter(Boolean)
     .join(', ')
 
-  const phoneDigits = provider.phone.replace(/\D/g, '')
+  const phoneDigits = (provider.phone || '').replace(/\D/g, '')
   const whatsappDigits = provider.whatsapp?.replace(/\D/g, '') ?? ''
-  const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${provider.coordinates.lat},${provider.coordinates.lng}`
+  const directionsUrl = provider.coordinates
+    ? `https://www.google.com/maps/dir/?api=1&destination=${provider.coordinates.lat},${provider.coordinates.lng}`
+    : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`
 
-  const config = typeConfig[provider.type] ?? {
+  const config = typeConfig[provider.type || 'Clínica'] ?? {
     accent: 'bg-warm-500',
     bg: 'bg-warm-50',
     text: 'text-warm-700',
@@ -84,7 +86,7 @@ export function ProviderCard({
           <div className="flex items-center gap-2">
             <span className={`w-2 h-2 rounded-full ${config.accent}`} aria-hidden="true" />
             <span className={`text-xs font-bold uppercase tracking-wider ${config.text}`}>
-              {provider.type}
+              {provider.type || 'Prestador'}
             </span>
           </div>
           {distance !== null && (
@@ -99,7 +101,7 @@ export function ProviderCard({
 
         {/* Specialties */}
         <div className="flex flex-wrap gap-1.5 mb-4">
-          {provider.specialties.slice(0, 4).map((specialty) => (
+          {(provider.specialties || []).slice(0, 4).map((specialty) => (
             <span
               key={specialty}
               className={`text-xs font-medium ${config.bg} ${config.text} px-2 py-0.5 rounded-md`}
@@ -107,9 +109,9 @@ export function ProviderCard({
               {specialty}
             </span>
           ))}
-          {provider.specialties.length > 4 && (
+          {(provider.specialties || []).length > 4 && (
             <span className="text-xs font-medium text-warm-400 px-2 py-0.5">
-              +{provider.specialties.length - 4}
+              +{(provider.specialties || []).length - 4}
             </span>
           )}
         </div>
@@ -129,8 +131,8 @@ export function ProviderCard({
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <span>
-              Seg-Sex: {provider.operatingHours.weekdays}
-              {provider.operatingHours.saturday && (
+              Seg-Sex: {provider.operatingHours?.weekdays || 'Consultar'}
+              {provider.operatingHours?.saturday && (
                 <span className="text-warm-400"> · Sáb: {provider.operatingHours.saturday}</span>
               )}
             </span>
@@ -139,7 +141,7 @@ export function ProviderCard({
 
         {/* Plans */}
         <div className="flex flex-wrap gap-1.5 mt-4 pt-4 border-t border-warm-100">
-          {provider.acceptedPlans.map((plan) => (
+          {(provider.acceptedPlans || []).map((plan) => (
             <span
               key={plan}
               className="inline-flex items-center gap-1 text-xs font-semibold bg-primary-50 text-primary-700 px-2.5 py-1 rounded-md"

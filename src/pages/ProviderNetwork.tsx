@@ -1,10 +1,8 @@
-import { useState } from 'react'
-import type { ViewMode, Provider, Specialty, PlanType, ProviderType } from '../types/provider'
+import type { Provider, Specialty, PlanType, ProviderType } from '../types/provider'
 import { useGeolocation } from '../hooks/useGeolocation'
 import { useProviderSearch } from '../hooks/useProviderSearch'
 import { SearchFilters } from '../components/SearchFilters/SearchFilters'
 import { ProviderCard } from '../components/ProviderCard/ProviderCard'
-import { ProviderMap } from '../components/ProviderMap/ProviderMap'
 import providersData from '../data/providers.json'
 
 const providers = providersData as Provider[]
@@ -37,8 +35,6 @@ const PROVIDER_TYPES: ProviderType[] = [
 
 export default function ProviderNetwork() {
   const geolocation = useGeolocation()
-  const [viewMode, setViewMode] = useState<ViewMode>('list')
-  const [selectedProviderId, setSelectedProviderId] = useState<string | null>(null)
 
   const {
     results,
@@ -51,17 +47,6 @@ export default function ProviderNetwork() {
     providers,
     userLocation: geolocation.position,
   })
-
-  const handleShowOnMap = (providerId: string) => {
-    setSelectedProviderId(providerId)
-    if (viewMode === 'list') {
-      setViewMode('combined')
-    }
-  }
-
-  const handleMarkerClick = (providerId: string) => {
-    setSelectedProviderId(providerId)
-  }
 
   return (
     <div className="w-full min-h-screen bg-background-light">
@@ -147,197 +132,50 @@ export default function ProviderNetwork() {
       {/* Results Section */}
       <section className="w-full py-10 tablet:py-12 px-4 tablet:px-8">
         <div className="mx-auto max-w-7xl">
-          {/* Toolbar: view toggle + result count */}
-          <div className="flex flex-col tablet:flex-row items-start tablet:items-center justify-between gap-4 mb-8">
+          {/* Result count */}
+          <div className="mb-8">
             <p className="text-body font-medium text-warm-600">
               <span className="text-primary-900 font-bold text-lg">{totalResults}</span>{' '}
               {totalResults === 1 ? 'prestador encontrado' : 'prestadores encontrados'}
             </p>
-
-            <div className="flex items-center gap-1 p-1 bg-warm-100 rounded-xl" role="group" aria-label="Modo de visualização">
-              <button
-                type="button"
-                onClick={() => setViewMode('list')}
-                className={`px-4 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 ${viewMode === 'list'
-                    ? 'bg-white text-primary-900 shadow-sm'
-                    : 'text-warm-500 hover:text-warm-700'
-                  }`}
-                aria-pressed={viewMode === 'list'}
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-                </svg>
-                Lista
-              </button>
-              <button
-                type="button"
-                onClick={() => setViewMode('map')}
-                className={`px-4 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 ${viewMode === 'map'
-                    ? 'bg-white text-primary-900 shadow-sm'
-                    : 'text-warm-500 hover:text-warm-700'
-                  }`}
-                aria-pressed={viewMode === 'map'}
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-                </svg>
-                Mapa
-              </button>
-              <button
-                type="button"
-                onClick={() => setViewMode('combined')}
-                className={`px-4 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 ${viewMode === 'combined'
-                    ? 'bg-white text-primary-900 shadow-sm'
-                    : 'text-warm-500 hover:text-warm-700'
-                  }`}
-                aria-pressed={viewMode === 'combined'}
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zM14 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z" />
-                </svg>
-                <span className="hidden tablet:inline">Combinado</span>
-              </button>
-            </div>
           </div>
 
-          {/* List View */}
-          {viewMode === 'list' && (
-            <div className="w-full">
-              {totalResults === 0 ? (
-                <div className="w-full py-20 text-center bg-white rounded-2xl border border-warm-200 shadow-soft">
-                  <div className="w-16 h-16 mx-auto mb-5 rounded-2xl bg-warm-100 flex items-center justify-center">
-                    <svg className="w-7 h-7 text-warm-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                  </div>
-                  <p className="text-lg font-semibold text-warm-700">
-                    Nenhum prestador encontrado
-                  </p>
-                  <p className="text-body text-warm-500 mt-2 max-w-sm mx-auto">
-                    Tente ampliar os filtros ou buscar por outra especialidade.
-                  </p>
+          {/* Provider List */}
+          <div className="w-full">
+            {totalResults === 0 ? (
+              <div className="w-full py-20 text-center bg-white rounded-2xl border border-warm-200 shadow-soft">
+                <div className="w-16 h-16 mx-auto mb-5 rounded-2xl bg-warm-100 flex items-center justify-center">
+                  <svg className="w-7 h-7 text-warm-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
                 </div>
-              ) : (
-                <>
-                  <div className="grid grid-cols-1 desktop:grid-cols-2 gap-5">
-                    {results.map((provider) => (
-                      <ProviderCard
-                        key={provider.id}
-                        provider={provider}
-                        userLocation={geolocation.position}
-                        onShowOnMap={handleShowOnMap}
-                      />
-                    ))}
-                  </div>
+                <p className="text-lg font-semibold text-warm-700">Nenhum prestador encontrado</p>
+                <p className="text-body text-warm-500 mt-2 max-w-sm mx-auto">Tente ampliar os filtros ou buscar por outra especialidade.</p>
+              </div>
+            ) : (
+              <>
+                <div className="grid grid-cols-1 desktop:grid-cols-2 gap-5">
+                  {results.map((provider) => (
+                    <ProviderCard
+                      key={provider.id}
+                      provider={provider}
+                      userLocation={geolocation.position}
+                      onShowOnMap={() => { }}
+                    />
+                  ))}
+                </div>
 
-                  {totalPages > 1 && (
-                    <nav
-                      className="flex items-center justify-center gap-3 mt-12"
-                      aria-label="Paginação de resultados"
-                    >
-                      <button
-                        type="button"
-                        onClick={() => setCurrentPage(currentPage - 1)}
-                        disabled={currentPage <= 1}
-                        className="min-h-touch px-5 py-3 rounded-xl font-semibold text-sm bg-white text-primary-700 border border-warm-200 hover:border-primary-200 hover:bg-primary-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-soft"
-                        aria-label="Página anterior"
-                      >
-                        ← Anterior
-                      </button>
-                      <span className="px-4 py-2.5 rounded-xl bg-primary-600 text-white text-sm font-bold min-w-[80px] text-center">
-                        {currentPage} de {totalPages}
-                      </span>
-                      <button
-                        type="button"
-                        onClick={() => setCurrentPage(currentPage + 1)}
-                        disabled={currentPage >= totalPages}
-                        className="min-h-touch px-5 py-3 rounded-xl font-semibold text-sm bg-white text-primary-700 border border-warm-200 hover:border-primary-200 hover:bg-primary-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-soft"
-                        aria-label="Próxima página"
-                      >
-                        Próxima →
-                      </button>
-                    </nav>
-                  )}
-                </>
-              )}
-            </div>
-          )}
-
-          {/* Map View */}
-          {viewMode === 'map' && (
-            <div className="w-full h-[500px] tablet:h-[650px] rounded-2xl overflow-hidden shadow-elevated border border-warm-100">
-              <ProviderMap
-                providers={results}
-                selectedProviderId={selectedProviderId}
-                onMarkerClick={handleMarkerClick}
-              />
-            </div>
-          )}
-
-          {/* Combined View */}
-          {viewMode === 'combined' && (
-            <div className="flex flex-col desktop:flex-row gap-6 w-full">
-              <div className="w-full desktop:w-1/2 desktop:max-h-[650px] desktop:overflow-y-auto desktop:pr-3 scrollbar-thin">
-                {totalResults === 0 ? (
-                  <div className="w-full py-20 text-center bg-white rounded-2xl border border-warm-200">
-                    <p className="text-body-lg text-warm-600">
-                      Nenhum prestador encontrado. Tente ampliar os filtros.
-                    </p>
-                  </div>
-                ) : (
-                  <>
-                    <div className="flex flex-col gap-4">
-                      {results.map((provider) => (
-                        <ProviderCard
-                          key={provider.id}
-                          provider={provider}
-                          userLocation={geolocation.position}
-                          onShowOnMap={handleShowOnMap}
-                        />
-                      ))}
-                    </div>
-
-                    {totalPages > 1 && (
-                      <nav
-                        className="flex items-center justify-center gap-3 mt-8"
-                        aria-label="Paginação de resultados"
-                      >
-                        <button
-                          type="button"
-                          onClick={() => setCurrentPage(currentPage - 1)}
-                          disabled={currentPage <= 1}
-                          className="min-h-touch px-5 py-3 rounded-xl font-semibold text-sm bg-white text-primary-700 border border-warm-200 hover:border-primary-200 hover:bg-primary-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-soft"
-                          aria-label="Página anterior"
-                        >
-                          ← Anterior
-                        </button>
-                        <span className="px-4 py-2.5 rounded-xl bg-primary-600 text-white text-sm font-bold min-w-[80px] text-center">
-                          {currentPage} de {totalPages}
-                        </span>
-                        <button
-                          type="button"
-                          onClick={() => setCurrentPage(currentPage + 1)}
-                          disabled={currentPage >= totalPages}
-                          className="min-h-touch px-5 py-3 rounded-xl font-semibold text-sm bg-white text-primary-700 border border-warm-200 hover:border-primary-200 hover:bg-primary-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-soft"
-                          aria-label="Próxima página"
-                        >
-                          Próxima →
-                        </button>
-                      </nav>
-                    )}
-                  </>
+                {totalPages > 1 && (
+                  <nav className="flex items-center justify-center gap-3 mt-12" aria-label="Paginação de resultados">
+                    <button type="button" onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage <= 1} className="min-h-touch px-5 py-3 rounded-xl font-semibold text-sm bg-white text-primary-700 border border-warm-200 hover:border-primary-200 hover:bg-primary-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-soft" aria-label="Página anterior">← Anterior</button>
+                    <span className="px-4 py-2.5 rounded-xl bg-primary-600 text-white text-sm font-bold min-w-[80px] text-center">{currentPage} de {totalPages}</span>
+                    <button type="button" onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage >= totalPages} className="min-h-touch px-5 py-3 rounded-xl font-semibold text-sm bg-white text-primary-700 border border-warm-200 hover:border-primary-200 hover:bg-primary-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-soft" aria-label="Próxima página">Próxima →</button>
+                  </nav>
                 )}
-              </div>
+              </>
+            )}
+          </div>
 
-              <div className="w-full desktop:w-1/2 h-[400px] desktop:h-[650px] desktop:sticky desktop:top-[96px] rounded-2xl overflow-hidden shadow-elevated border border-warm-100">
-                <ProviderMap
-                  providers={results}
-                  selectedProviderId={selectedProviderId}
-                  onMarkerClick={handleMarkerClick}
-                />
-              </div>
-            </div>
-          )}
         </div>
       </section>
 

@@ -111,14 +111,14 @@ describe('Property 4: Provider sorting invariant', () => {
           const distI = haversineDistance(
             center.lat,
             center.lng,
-            sorted[i].coordinates.lat,
-            sorted[i].coordinates.lng
+            sorted[i].coordinates!.lat,
+            sorted[i].coordinates!.lng
           );
           const distNext = haversineDistance(
             center.lat,
             center.lng,
-            sorted[i + 1].coordinates.lat,
-            sorted[i + 1].coordinates.lng
+            sorted[i + 1].coordinates!.lat,
+            sorted[i + 1].coordinates!.lng
           );
           expect(distI).toBeLessThanOrEqual(distNext);
         }
@@ -137,8 +137,8 @@ describe('Property 4: Provider sorting invariant', () => {
 
         // Verify adjacent pair ordering by first specialty
         for (let i = 0; i < sorted.length - 1; i++) {
-          const specI = sorted[i].specialties.length > 0 ? sorted[i].specialties[0] : '';
-          const specNext = sorted[i + 1].specialties.length > 0 ? sorted[i + 1].specialties[0] : '';
+          const specI = sorted[i].specialties && sorted[i].specialties!.length > 0 ? sorted[i].specialties![0] : '';
+          const specNext = sorted[i + 1].specialties && sorted[i + 1].specialties!.length > 0 ? sorted[i + 1].specialties![0] : '';
           expect(specI.localeCompare(specNext)).toBeLessThanOrEqual(0);
         }
 

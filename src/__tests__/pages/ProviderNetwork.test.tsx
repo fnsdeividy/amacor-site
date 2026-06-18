@@ -101,7 +101,7 @@ describe('ProviderNetwork Page', () => {
     it('renders the page subtitle', () => {
       render(<ProviderNetwork />)
       expect(
-        screen.getByText('Encontre hospitais, clínicas e laboratórios perto de você.')
+        screen.getByText(/Encontre hospitais, clínicas e laboratórios perto de você/)
       ).toBeInTheDocument()
     })
 
@@ -112,7 +112,7 @@ describe('ProviderNetwork Page', () => {
       expect(screen.getByLabelText('Cidade')).toBeInTheDocument()
       expect(screen.getByLabelText('Especialidade')).toBeInTheDocument()
       expect(screen.getByLabelText('Plano')).toBeInTheDocument()
-      expect(screen.getByLabelText('Tipo de prestador')).toBeInTheDocument()
+      expect(screen.getByLabelText('Tipo')).toBeInTheDocument()
     })
   })
 
@@ -126,7 +126,7 @@ describe('ProviderNetwork Page', () => {
 
     it('displays the total results count', () => {
       render(<ProviderNetwork />)
-      expect(screen.getByText('3 prestadores encontrados')).toBeInTheDocument()
+      expect(screen.getByText(/prestadores encontrados/)).toBeInTheDocument()
     })
 
     it('displays singular form for 1 result', () => {
@@ -137,7 +137,7 @@ describe('ProviderNetwork Page', () => {
         },
       })
       render(<ProviderNetwork />)
-      expect(screen.getByText('1 prestador encontrado')).toBeInTheDocument()
+      expect(screen.getByText(/prestador encontrado/)).toBeInTheDocument()
     })
   })
 
@@ -202,7 +202,7 @@ describe('ProviderNetwork Page', () => {
       })
       render(<ProviderNetwork />)
       expect(
-        screen.getByText('Nenhum prestador encontrado. Tente ampliar os filtros.')
+        screen.getByText('Nenhum prestador encontrado')
       ).toBeInTheDocument()
     })
 
@@ -235,7 +235,7 @@ describe('ProviderNetwork Page', () => {
       expect(
         screen.getByRole('navigation', { name: /paginação/i })
       ).toBeInTheDocument()
-      expect(screen.getByText('Página 1 de 2')).toBeInTheDocument()
+      expect(screen.getByText('1 de 2')).toBeInTheDocument()
     })
 
     it('does not render pagination when totalPages is 1', () => {

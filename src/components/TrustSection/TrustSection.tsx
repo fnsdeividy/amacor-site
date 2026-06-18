@@ -14,10 +14,12 @@ export interface TrustSectionProps {
 export function TrustSection({ title, stats, className = '' }: TrustSectionProps) {
   return (
     <section
-      className={`w-full py-20 tablet:py-24 px-4 tablet:px-8 bg-background-light ${className}`}
+      className={`w-full py-20 tablet:py-24 px-4 tablet:px-8 bg-background-light relative overflow-hidden ${className}`}
       aria-labelledby="trust-section-heading"
     >
-      <div className="mx-auto max-w-6xl">
+      {/* Organic blobs texture */}
+      <div className="absolute inset-0 opacity-80" style={{ backgroundImage: 'url(/img/textures/organic-blobs.svg)', backgroundSize: 'cover', backgroundPosition: 'center' }} aria-hidden="true" />
+      <div className="relative mx-auto max-w-6xl">
         <h2
           id="trust-section-heading"
           className="text-heading-md tablet:text-heading-lg text-primary-900 text-center mb-12 tablet:mb-16"

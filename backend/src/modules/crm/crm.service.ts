@@ -107,7 +107,7 @@ export async function consultarStatusPorProtocolo(
       return {
         success: true,
         error: 'not_found',
-        message: 'Solicitação ainda não cadastrada no CRM',
+        message: 'Ainda não cadastrada no CRM',
       };
     }
 
@@ -124,17 +124,17 @@ export async function consultarStatusPorProtocolo(
       };
     }
 
-    const data = await response.json();
+    const data = await response.json() as Record<string, unknown>;
 
     logger.info('crm.consultarStatus', {
       result: 'success',
-      metadata: { protocolo, statusCrm: data.Status || data.status },
+      metadata: { protocolo, statusCrm: (data as Record<string, string>).Status || (data as Record<string, string>).status },
     });
 
     return {
       success: true,
-      status: data.Status || data.status,
-      dados: data,
+      status: (data as Record<string, string>).Status || (data as Record<string, string>).status,
+      dados: data as Record<string, unknown>,
     };
   } catch (error: unknown) {
     clearTimeout(timeoutId);
@@ -194,7 +194,7 @@ export async function listarSolicitacoesCrm(
     return {
       success: false,
       error: 'invalid_interval',
-      message: 'Datas informadas são inválidas',
+      message: 'Datas inválidas',
     };
   }
 
@@ -202,7 +202,7 @@ export async function listarSolicitacoesCrm(
     return {
       success: false,
       error: 'invalid_interval',
-      message: 'Data final não pode ser anterior à data inicial',
+      message: 'Data final anterior à inicial',
     };
   }
 
@@ -211,7 +211,7 @@ export async function listarSolicitacoesCrm(
     return {
       success: false,
       error: 'invalid_interval',
-      message: `Intervalo máximo permitido é de ${MAX_INTERVAL_DAYS} dias (informado: ${Math.ceil(interval)} dias)`,
+      message: 'Intervalo máximo 90 dias',
     };
   }
 
@@ -253,12 +253,12 @@ export async function listarSolicitacoesCrm(
       };
     }
 
-    const data = await response.json();
+    const data = await response.json() as Record<string, unknown>;
 
     // O CRM pode retornar um array ou um objeto com array
     const solicitacoes: CrmSolicitacaoItem[] = Array.isArray(data)
-      ? data
-      : (data.solicitacoes || data.Solicitacoes || []);
+      ? data as CrmSolicitacaoItem[]
+      : ((data.solicitacoes || data.Solicitacoes || []) as CrmSolicitacaoItem[]);
 
     logger.info('crm.listarSolicitacoes', {
       result: 'success',

@@ -73,12 +73,12 @@ describe('InfoCard', () => {
     expect(screen.queryByRole('link')).not.toBeInTheDocument()
   })
 
-  it('applies rounded corners and shadow styling', () => {
+  it('applies rounded corners and border styling', () => {
     const { container } = renderWithRouter(
       <InfoCard title="Card" description="Descrição do card." />
     )
 
     const card = container.firstElementChild
-    expect(card).toHaveClass('rounded-2xl', 'shadow-md', 'p-6')
+    expect(card).toHaveClass('rounded-2xl', 'border')
   })
 })
