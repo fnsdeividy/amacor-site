@@ -45,13 +45,14 @@ export function haversineDistance(
 
 /**
  * Calculates the distance from a center point to a provider.
- * Returns the distance in kilometers.
+ * Returns the distance in kilometers, or Infinity if provider has no coordinates.
  */
 export function distanceToProvider(
   centerLat: number,
   centerLng: number,
   provider: Provider
 ): number {
+  if (!provider.coordinates) return Infinity;
   return haversineDistance(
     centerLat,
     centerLng,
@@ -76,6 +77,7 @@ export function filterProvidersByRadius(
   radiusKm: number = 10
 ): Provider[] {
   return providers.filter((provider) => {
+    if (!provider.coordinates) return false;
     const distance = haversineDistance(
       centerLat,
       centerLng,
@@ -100,8 +102,12 @@ export function sortProvidersByDistance(
   centerLng: number
 ): Provider[] {
   return [...providers].sort((a, b) => {
-    const distA = haversineDistance(centerLat, centerLng, a.coordinates.lat, a.coordinates.lng);
-    const distB = haversineDistance(centerLat, centerLng, b.coordinates.lat, b.coordinates.lng);
+    const distA = a.coordinates
+      ? haversineDistance(centerLat, centerLng, a.coordinates.lat, a.coordinates.lng)
+      : Infinity;
+    const distB = b.coordinates
+      ? haversineDistance(centerLat, centerLng, b.coordinates.lat, b.coordinates.lng)
+      : Infinity;
     return distA - distB;
   });
 }
@@ -124,8 +130,8 @@ export function sortProvidersByName(providers: Provider[]): Provider[] {
  */
 export function sortProvidersBySpecialty(providers: Provider[]): Provider[] {
   return [...providers].sort((a, b) => {
-    const specA = a.specialties.length > 0 ? a.specialties[0] : '';
-    const specB = b.specialties.length > 0 ? b.specialties[0] : '';
+    const specA = a.specialties && a.specialties.length > 0 ? a.specialties[0] : '';
+    const specB = b.specialties && b.specialties.length > 0 ? b.specialties[0] : '';
     return specA.localeCompare(specB);
   });
 }

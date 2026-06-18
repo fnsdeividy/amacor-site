@@ -20,8 +20,10 @@ export type PlanType = 'Exclusivo I' | 'Exclusivo II' | 'Empresarial' | 'Amacor 
 export interface Provider {
   id: string;
   name: string;
-  type: ProviderType;
-  specialties: Specialty[];
+  type?: ProviderType;
+  specialties?: Specialty[];
+  exams?: string[];
+  services?: string[];
   address: {
     street: string;
     number: string;
@@ -29,20 +31,21 @@ export interface Provider {
     neighborhood: string;
     city: string;
     state: string;
-    cep: string;
+    cep?: string;
   };
-  coordinates: {
+  coordinates?: {
     lat: number;
     lng: number;
   };
-  phone: string;
+  phone?: string;
   whatsapp?: string;
-  operatingHours: {
+  operatingHours?: {
     weekdays: string;
     saturday?: string;
     sunday?: string;
   };
-  acceptedPlans: PlanType[];
+  acceptedPlans?: PlanType[];
+  highlight?: string;
 }
 
 export interface ProviderFilters {
