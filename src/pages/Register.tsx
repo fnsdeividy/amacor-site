@@ -2,16 +2,23 @@ import { useState, type FormEvent, type ChangeEvent } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
-/** Validates matrícula: 1-20 alphanumeric characters */
+/**
+ * Aplica máscara de matrícula no formato XXX.XXXXXX-XX
+ */
+function formatMatricula(value: string): string {
+  const digits = value.replace(/\D/g, '').slice(0, 11);
+  if (digits.length <= 3) return digits;
+  if (digits.length <= 9) return `${digits.slice(0, 3)}.${digits.slice(3)}`;
+  return `${digits.slice(0, 3)}.${digits.slice(3, 9)}-${digits.slice(9, 11)}`;
+}
+
+/** Validates matrícula: formato XXX.XXXXXX-XX */
 export function validateMatricula(value: string): string | null {
   if (!value.trim()) {
     return 'Matrícula é obrigatória';
   }
-  if (value.length > 20) {
-    return 'Matrícula deve ter no máximo 20 caracteres';
-  }
-  if (!/^[a-zA-Z0-9]+$/.test(value)) {
-    return 'Matrícula deve conter apenas letras e números';
+  if (!/^\d{3}\.\d{6}-\d{2}$/.test(value.trim())) {
+    return 'Formato inválido. Use XXX.XXXXXX-XX';
   }
   return null;
 }
@@ -39,7 +46,7 @@ export default function Register() {
   const navigate = useNavigate();
 
   function handleCodigoChange(e: ChangeEvent<HTMLInputElement>) {
-    setCodigo(e.target.value);
+    setCodigo(formatMatricula(e.target.value));
     if (fieldErrors.codigo) {
       setFieldErrors((prev) => ({ ...prev, codigo: undefined }));
     }
@@ -83,10 +90,10 @@ export default function Register() {
       <section className="py-16 px-4">
         <div className="max-w-md mx-auto text-center">
           <div className="bg-green-50 border border-green-200 rounded-lg p-8">
-            <svg className="w-16 h-16 text-primary-green mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <svg className="w-16 h-16 text-primary-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
-            <h2 className="text-2xl font-bold text-primary-green mb-2">Login criado com sucesso!</h2>
+            <h2 className="text-2xl font-bold text-primary-600 mb-2">Login criado com sucesso!</h2>
             <p className="text-gray-600">
               Você será redirecionado para a página de login em instantes.
             </p>
@@ -99,7 +106,7 @@ export default function Register() {
   return (
     <section className="py-16 px-4">
       <div className="max-w-md mx-auto">
-        <h1 className="text-3xl font-bold text-primary-green text-center mb-8">
+        <h1 className="text-3xl font-bold text-primary-600 text-center mb-8">
           Criar Login
         </h1>
 
@@ -113,11 +120,11 @@ export default function Register() {
               type="text"
               value={codigo}
               onChange={handleCodigoChange}
-              maxLength={20}
-              placeholder="Ex: 02001957200"
+              maxLength={13}
+              placeholder="Ex: 020.019572-00"
               aria-describedby="codigo-register-help codigo-register-error"
               aria-invalid={!!fieldErrors.codigo}
-              className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-green focus:border-transparent outline-none ${fieldErrors.codigo ? 'border-red-500' : 'border-gray-300'
+              className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none ${fieldErrors.codigo ? 'border-red-500' : 'border-gray-300'
                 }`}
             />
             <p id="codigo-register-help" className="mt-1 text-xs text-gray-500">
@@ -142,7 +149,7 @@ export default function Register() {
               maxLength={20}
               aria-describedby="senha-register-help senha-register-error"
               aria-invalid={!!fieldErrors.senha}
-              className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-green focus:border-transparent outline-none ${fieldErrors.senha ? 'border-red-500' : 'border-gray-300'
+              className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none ${fieldErrors.senha ? 'border-red-500' : 'border-gray-300'
                 }`}
             />
             <p id="senha-register-help" className="mt-1 text-xs text-gray-500">
@@ -164,7 +171,7 @@ export default function Register() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-primary-green text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+            className="w-full bg-primary-600 text-white py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
           >
             {isLoading ? (
               <>
@@ -181,7 +188,7 @@ export default function Register() {
 
           <p className="text-center text-sm text-gray-600">
             Já tem login?{' '}
-            <Link to="/login" className="text-primary-green font-medium hover:underline">
+            <Link to="/login" className="text-primary-600 font-medium hover:underline">
               Entrar
             </Link>
           </p>

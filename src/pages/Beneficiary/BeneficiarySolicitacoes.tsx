@@ -126,7 +126,7 @@ export default function BeneficiarySolicitacoes() {
     return (
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl font-bold text-primary-green mb-8">Minhas Solicitações</h1>
+          <h1 className="text-3xl font-bold text-primary-600 mb-8">Minhas Solicitações</h1>
           <div className="space-y-4" aria-label="Carregando solicitações">
             {[1, 2, 3, 4].map((i) => (
               <div key={i} className="bg-white rounded-lg shadow-md p-6 animate-pulse">
@@ -153,7 +153,7 @@ export default function BeneficiarySolicitacoes() {
     return (
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl font-bold text-primary-green mb-8">Minhas Solicitações</h1>
+          <h1 className="text-3xl font-bold text-primary-600 mb-8">Minhas Solicitações</h1>
           <div className="bg-white rounded-lg shadow-md p-8 text-center">
             <div className="text-red-500 mb-4">
               <svg className="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -163,7 +163,7 @@ export default function BeneficiarySolicitacoes() {
             <p className="text-gray-700 mb-6" role="alert">{error}</p>
             <button
               onClick={() => fetchSolicitacoes(pagina)}
-              className="px-6 py-3 bg-primary-green text-white rounded-lg font-semibold hover:bg-green-700 transition-colors min-w-[48px] min-h-[48px]"
+              className="px-6 py-3 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition-colors min-w-[48px] min-h-[48px]"
             >
               Tentar novamente
             </button>
@@ -178,7 +178,7 @@ export default function BeneficiarySolicitacoes() {
     return (
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl font-bold text-primary-green mb-8">Minhas Solicitações</h1>
+          <h1 className="text-3xl font-bold text-primary-600 mb-8">Minhas Solicitações</h1>
           <div className="bg-white rounded-lg shadow-md p-8 text-center">
             <div className="text-gray-400 mb-4">
               <svg className="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -188,7 +188,7 @@ export default function BeneficiarySolicitacoes() {
             <p className="text-gray-600">Nenhuma solicitação</p>
             <Link
               to="/beneficiario/solicitacoes/nova"
-              className="inline-block mt-4 px-6 py-2 bg-primary-green text-white rounded-lg font-semibold hover:bg-green-700 transition-colors"
+              className="inline-block mt-4 px-6 py-2 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition-colors"
             >
               Nova Solicitação
             </Link>
@@ -203,10 +203,10 @@ export default function BeneficiarySolicitacoes() {
     <section className="py-16 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
-          <h1 className="text-3xl font-bold text-primary-green">Minhas Solicitações</h1>
+          <h1 className="text-3xl font-bold text-primary-600">Minhas Solicitações</h1>
           <Link
             to="/beneficiario/solicitacoes/nova"
-            className="inline-flex items-center px-4 py-2 bg-primary-green text-white rounded-lg font-semibold hover:bg-green-700 transition-colors text-sm"
+            className="inline-flex items-center px-4 py-2 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition-colors text-sm"
           >
             <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />

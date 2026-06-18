@@ -165,7 +165,7 @@ export default function BeneficiaryNovaSolicitacao() {
             <p className="text-gray-600 mb-4">
               Sua solicitação foi registrada com sucesso.
             </p>
-            <p className="text-lg font-semibold text-primary-green mb-2">
+            <p className="text-lg font-semibold text-primary-600 mb-2">
               Número interno: {successData.numeroInterno}
             </p>
             <p className="text-sm text-gray-500 mb-6">
@@ -174,7 +174,7 @@ export default function BeneficiaryNovaSolicitacao() {
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link
                 to="/beneficiario/solicitacoes"
-                className="px-6 py-2 bg-primary-green text-white rounded-lg font-semibold hover:bg-green-700 transition-colors"
+                className="px-6 py-2 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition-colors"
               >
                 Ver minhas solicitações
               </Link>
@@ -204,7 +204,7 @@ export default function BeneficiaryNovaSolicitacao() {
     <section className="py-16 px-4">
       <div className="max-w-2xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-primary-green">
+          <h1 className="text-3xl font-bold text-primary-600">
             Nova Solicitação de Exame
           </h1>
           <p className="text-gray-600 mt-1">
@@ -223,7 +223,7 @@ export default function BeneficiaryNovaSolicitacao() {
               value={tipoExame}
               onChange={(e) => setTipoExame(e.target.value)}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-green focus:border-transparent outline-none bg-white"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none bg-white"
             >
               <option value="">Selecione o tipo</option>
               {TIPO_EXAME_OPTIONS.map((option) => (
@@ -244,7 +244,7 @@ export default function BeneficiaryNovaSolicitacao() {
               value={prestador}
               onChange={(e) => setPrestador(e.target.value)}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-green focus:border-transparent outline-none bg-white"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none bg-white"
             >
               <option value="">Selecione o prestador</option>
               {providersData.map((provider) => (
@@ -269,7 +269,7 @@ export default function BeneficiaryNovaSolicitacao() {
               type="file"
               accept=".pdf,.jpg,.jpeg,.png"
               onChange={handleFileChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-green focus:border-transparent outline-none file:mr-4 file:py-1 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-primary-green file:text-white hover:file:bg-green-700 file:cursor-pointer"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none file:mr-4 file:py-1 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-primary-600 file:text-white hover:file:bg-primary-700 file:cursor-pointer"
             />
             {fileError && (
               <p className="mt-1 text-sm text-red-600" role="alert">
@@ -295,7 +295,7 @@ export default function BeneficiaryNovaSolicitacao() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-6 py-3 bg-primary-green text-white rounded-lg font-semibold hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-6 py-3 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? 'Enviando...' : 'Enviar Solicitação'}
             </button>

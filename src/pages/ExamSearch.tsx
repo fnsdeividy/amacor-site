@@ -32,7 +32,7 @@ export default function ExamSearch() {
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="text-center mb-10">
-          <h1 className="text-3xl font-bold text-primary-green mb-3">
+          <h1 className="text-3xl font-bold text-primary-600 mb-3">
             Buscar Exames
           </h1>
           <p className="text-gray-600 max-w-2xl mx-auto">
@@ -70,7 +70,7 @@ export default function ExamSearch() {
                     }
                   }}
                   placeholder="Digite o nome do exame..."
-                  className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-green focus:border-transparent outline-none text-base"
+                  className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none text-base"
                   autoComplete="off"
                 />
               </div>
@@ -138,7 +138,7 @@ export default function ExamSearch() {
                 <button
                   key={exam}
                   onClick={() => handleSelectExam(exam)}
-                  className="px-4 py-2 bg-green-50 text-primary-green rounded-full text-sm font-medium hover:bg-green-100 transition-colors border border-green-200"
+                  className="px-4 py-2 bg-green-50 text-primary-600 rounded-full text-sm font-medium hover:bg-green-100 transition-colors border border-green-200"
                 >
                   {exam}
                 </button>
@@ -152,7 +152,7 @@ export default function ExamSearch() {
           <div>
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-semibold text-gray-800">
-                Locais para: <span className="text-primary-green">{selectedExam}</span>
+                Locais para: <span className="text-primary-600">{selectedExam}</span>
               </h2>
               <span className="text-sm text-gray-500">
                 {results.length} {results.length === 1 ? 'local encontrado' : 'locais encontrados'}
@@ -205,7 +205,7 @@ function ProviderResultCard({ provider }: { provider: CredentialedProvider }) {
             {provider.phones.length > 0 && (
               <a
                 href={`tel:${provider.phones[0].replace(/\D/g, '')}`}
-                className="inline-flex items-center gap-2 text-sm text-primary-green font-medium hover:underline"
+                className="inline-flex items-center gap-2 text-sm text-primary-600 font-medium hover:underline"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -243,7 +243,7 @@ function ProviderResultCard({ provider }: { provider: CredentialedProvider }) {
         {(provider.exams.length > 0 || provider.phones.length > 1) && (
           <button
             onClick={() => setExpanded(!expanded)}
-            className="mt-3 text-sm text-primary-green hover:underline flex items-center gap-1"
+            className="mt-3 text-sm text-primary-600 hover:underline flex items-center gap-1"
           >
             {expanded ? 'Ver menos' : 'Ver todos os exames e contatos'}
             <svg
@@ -269,7 +269,7 @@ function ProviderResultCard({ provider }: { provider: CredentialedProvider }) {
                     <a
                       key={i}
                       href={`tel:${phone.replace(/\D/g, '')}`}
-                      className="text-sm text-primary-green hover:underline"
+                      className="text-sm text-primary-600 hover:underline"
                     >
                       {phone}
                     </a>
