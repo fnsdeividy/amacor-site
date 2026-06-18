@@ -60,6 +60,8 @@ export default function BeneficiaryBoletos() {
    * Gera a 2ª via do boleto usando CodigoREC
    */
   const [downloadingRec, setDownloadingRec] = useState<string | null>(null);
+  const [pixCopiaCola, setPixCopiaCola] = useState<string | null>(null);
+  const [pixCopied, setPixCopied] = useState(false);
 
   async function handleDownload(boleto: Boleto) {
     if (!session || !boleto.codigoRec) return;
@@ -71,6 +73,13 @@ export default function BeneficiaryBoletos() {
         codigo: session.codigo,
         codigoRec: boleto.codigoRec,
       });
+
+      // Se tem PIX, mostrar copia e cola
+      const emv = dados['sEMV'] || dados['EMV'] || '';
+      if (emv) {
+        setPixCopiaCola(emv);
+        setPixCopied(false);
+      }
 
       // Gerar PDF do boleto com os dados retornados
       await generateBoletoPdf(dados as any);
@@ -162,6 +171,42 @@ export default function BeneficiaryBoletos() {
     <section className="py-16 px-4">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold text-primary-600 mb-8">Segunda Via de Boletos</h1>
+
+        {/* PIX Copia e Cola banner */}
+        {pixCopiaCola && (
+          <div className="mb-6 bg-green-50 border border-green-200 rounded-lg p-5">
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="text-sm font-bold text-green-800 flex items-center gap-2">
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M13.152 1.477l3.37 3.371-4.476 4.476a1.5 1.5 0 01-2.121 0L8.99 8.389a1.5 1.5 0 010-2.122l4.163-4.79z" />
+                  <path d="M20.523 8.848l-3.37-3.371-4.477 4.476a1.5 1.5 0 000 2.122l.935.935a1.5 1.5 0 002.122 0l4.79-4.162z" />
+                </svg>
+                PIX Copia e Cola
+              </h2>
+              <button
+                onClick={() => setPixCopiaCola(null)}
+                className="text-green-600 hover:text-green-800 text-sm"
+                aria-label="Fechar"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="bg-white border border-green-100 rounded p-3 mb-3">
+              <p className="text-xs font-mono text-gray-700 break-all select-all">{pixCopiaCola}</p>
+            </div>
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(pixCopiaCola);
+                setPixCopied(true);
+                setTimeout(() => setPixCopied(false), 3000);
+              }}
+              className="px-4 py-2 bg-green-600 text-white text-sm font-semibold rounded-lg hover:bg-green-700 transition-colors"
+            >
+              {pixCopied ? '✓ Copiado!' : 'Copiar código PIX'}
+            </button>
+          </div>
+        )}
+
         <div className="space-y-4">
           {boletos.map((boleto, index) => (
             <div

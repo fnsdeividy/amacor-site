@@ -432,7 +432,22 @@ export async function generateBoletoPdf(data: BoletoData): Promise<void> {
       doc.setFontSize(6);
       doc.text('PIX Itaú - AMACOR SAUDE', ml, qrY + 24);
 
-      y += qrSize + 4;
+      // PIX Copia e Cola
+      y += qrSize + 6;
+      doc.setFillColor(...LIGHT_GRAY);
+      doc.roundedRect(ml, y, cw, 14, 2, 2, 'F');
+      doc.setFontSize(6.5);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(...BRAND_DARK);
+      doc.text('PIX Copia e Cola:', ml + 3, y + 4);
+      doc.setFontSize(5.5);
+      doc.setFont('courier', 'normal');
+      doc.setTextColor(0, 0, 0);
+      // Quebrar o EMV em linhas para caber no PDF
+      const emvLines = doc.splitTextToSize(data.sEMV, cw - 6);
+      doc.text(emvLines, ml + 3, y + 8);
+
+      y += 16;
     } catch {
       // Se falhar a geração do QR, continua sem ele
     }
