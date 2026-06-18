@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
 import HeroSection from '../components/HeroSection/HeroSection'
-import SimulationWidget from '../components/SimulationWidget/SimulationWidget'
 import BenefitsGrid from '../components/BenefitsGrid/BenefitsGrid'
 import PlanCard from '../components/PlanCard/PlanCard'
 import TrustSection from '../components/TrustSection/TrustSection'
@@ -90,8 +89,8 @@ export default function Home() {
     <div>
       {/* 1. Hero Section with dual CTAs */}
       <HeroSection
-        headline="Planos de saúde com cuidado e confiança"
-        subtitle="A Amacor oferece planos individuais e empresariais com ampla rede credenciada no Rio de Janeiro. Simule agora e encontre o plano ideal para você."
+        headline="Plano de saúde ambulatorial com cuidado e confiança"
+        subtitle="A Amacor oferece planos ambulatoriais individuais, familiares e empresariais com ampla rede credenciada na Zona Oeste do Rio de Janeiro. Simule agora e encontre o plano ideal para você."
         primaryCTA={{
           text: 'Simular meu plano',
           link: 'https://amacorsaude.com.br/simulador/',
@@ -105,18 +104,10 @@ export default function Home() {
         backgroundImage="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1920&q=80"
       />
 
-      {/* 2. Simulation Widget */}
-      <section
-        id="simulacao"
-        className="w-full py-16 tablet:py-20 px-4 tablet:px-8 bg-gradient-to-b from-primary-50 to-warm-50"
-      >
-        <div className="mx-auto max-w-4xl">
-          <SimulationWidget />
-        </div>
-      </section>
-
-      {/* 3. Benefits Grid (6 cards) */}
+      {/* 2. Benefits Grid (6 cards) */}
       <section className="w-full py-16 tablet:py-24 px-4 tablet:px-8 bg-white relative overflow-hidden">
+        {/* Texture overlay */}
+        <div className="absolute inset-0 opacity-70" style={{ backgroundImage: 'url(/img/textures/waves.svg)', backgroundSize: 'cover', backgroundPosition: 'center' }} aria-hidden="true" />
         {/* Subtle decorative circles */}
         <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-primary-50 opacity-60" aria-hidden="true" />
         <div className="absolute -bottom-16 -left-16 w-64 h-64 rounded-full bg-accent-50 opacity-50" aria-hidden="true" />
@@ -137,8 +128,10 @@ export default function Home() {
       </section>
 
       {/* 4. Plan Cards (commercial style) */}
-      <section className="w-full py-16 tablet:py-24 px-4 tablet:px-8 bg-gradient-to-b from-warm-50 to-primary-50/30">
-        <div className="mx-auto max-w-7xl">
+      <section className="w-full py-16 tablet:py-24 px-4 tablet:px-8 bg-gradient-to-b from-warm-50 to-primary-50/30 relative overflow-hidden">
+        {/* Texture overlay */}
+        <div className="absolute inset-0 opacity-50" style={{ backgroundImage: 'url(/img/textures/geometric.svg)', backgroundRepeat: 'repeat', backgroundSize: '200px 200px' }} aria-hidden="true" />
+        <div className="relative mx-auto max-w-7xl">
           <div className="text-center mb-12">
             <span className="inline-block text-sm font-semibold text-primary-600 uppercase tracking-wider mb-3">
               Planos
@@ -270,10 +263,12 @@ export default function Home() {
 
       {/* 9. Beneficiary Area Cards */}
       <section
-        className="w-full py-16 tablet:py-20 px-4 tablet:px-8 bg-primary-50/50 border-y border-primary-100"
+        className="w-full py-16 tablet:py-20 px-4 tablet:px-8 bg-primary-50/50 border-y border-primary-100 relative overflow-hidden"
         aria-labelledby="beneficiary-area-heading"
       >
-        <div className="mx-auto max-w-7xl">
+        {/* Texture overlay */}
+        <div className="absolute inset-0 opacity-40" style={{ backgroundImage: 'url(/img/textures/grid-dots.svg)', backgroundRepeat: 'repeat', backgroundSize: '60px 60px' }} aria-hidden="true" />
+        <div className="relative mx-auto max-w-7xl">
           <div className="text-center mb-12">
             <span className="inline-block text-sm font-semibold text-primary-600 uppercase tracking-wider mb-3">
               Autoatendimento

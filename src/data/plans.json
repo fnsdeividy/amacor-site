@@ -4,15 +4,15 @@
     "name": "Exclusivo I",
     "slug": "exclusivo-i",
     "tagline": "Saúde ambulatorial essencial com telemedicina 24h",
-    "description": "Plano ambulatorial individual com cobertura essencial para consultas, exames e procedimentos básicos.",
+    "description": "Plano ambulatorial individual com cobertura essencial para consultas, exames e procedimentos ambulatoriais básicos.",
     "startingPrice": 89.90,
     "contractType": "individual",
     "benefits": [
-      "Consultas médicas em diversas especialidades",
+      "Consultas em diversas especialidades médicas",
       "Exames laboratoriais e de imagem",
       "Atendimento ambulatorial completo",
-      "Rede credenciada ampla em São Paulo",
-      "Telemedicina 24 horas"
+      "Rede credenciada na Zona Oeste do Rio de Janeiro",
+      "Telemedicina 24 horas inclusa"
     ],
     "detailedBenefits": [
       {
@@ -60,14 +60,14 @@
     "name": "Exclusivo II",
     "slug": "exclusivo-ii",
     "tagline": "Cobertura ampliada para você e sua família",
-    "description": "Plano ambulatorial completo com cobertura ampliada, incluindo especialidades adicionais e atendimento prioritário.",
+    "description": "Plano ambulatorial completo com cobertura ampliada, incluindo especialidades adicionais e atendimento prioritário na rede.",
     "startingPrice": 149.90,
     "contractType": "familiar",
     "benefits": [
       "Todas as coberturas do Exclusivo I",
       "Especialidades médicas ampliadas",
-      "Fisioterapia e reabilitação",
-      "Atendimento prioritário na rede",
+      "Fisioterapia e reabilitação inclusas",
+      "Atendimento prioritário na rede credenciada",
       "Psicologia e acompanhamento mental"
     ],
     "detailedBenefits": [
@@ -126,11 +126,11 @@
     "startingPrice": 69.90,
     "contractType": "individual",
     "benefits": [
-      "Consultas médicas em diversas especialidades",
+      "Consultas em diversas especialidades médicas",
       "Exames laboratoriais e de imagem",
       "Atendimento ambulatorial completo",
-      "Telemedicina 24 horas",
-      "Mensalidade mais acessível"
+      "Telemedicina 24 horas inclusa",
+      "Mensalidade reduzida com coparticipação"
     ],
     "detailedBenefits": [
       {
@@ -178,15 +178,15 @@
     "name": "Empresarial",
     "slug": "empresarial",
     "tagline": "Saúde corporativa com gestão simplificada para sua empresa",
-    "description": "Plano corporativo com franquia, ideal para empresas que buscam saúde ambulatorial para seus colaboradores.",
+    "description": "Plano ambulatorial corporativo com franquia, ideal para empresas que buscam saúde ambulatorial para seus colaboradores.",
     "startingPrice": null,
     "contractType": "empresarial",
     "benefits": [
       "Cobertura ambulatorial completa",
       "Carências reduzidas para grupos",
-      "Gestão simplificada para RH",
-      "Rede credenciada em toda São Paulo",
-      "Telemedicina para colaboradores"
+      "Gestão simplificada para o RH",
+      "Rede credenciada na Zona Oeste do Rio de Janeiro",
+      "Telemedicina 24 horas para colaboradores"
     ],
     "detailedBenefits": [
       {

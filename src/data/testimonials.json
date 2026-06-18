@@ -1,30 +1,44 @@
 [
   {
-    "id": "testimonial-1",
-    "name": "Maria Aparecida Santos",
-    "location": "Campo Grande, RJ",
-    "quote": "Tenho o plano Amacor há mais de 5 anos e sempre fui muito bem atendida. A telemedicina facilitou demais minha vida, consigo consultar sem sair de casa.",
-    "rating": 5
+    "id": "test-001",
+    "name": "Graça Martins",
+    "rating": 5,
+    "quote": "Fui muito bem atendida na clínica, ótimos funcionários. Queria agradecer pelo serviço personalizado do funcionário Anthony, que todas as vezes que vou sempre me auxilia em tudo e nas marcações que estão ótimas no segundo andar.",
+    "location": "Campo Grande, RJ"
   },
   {
-    "id": "testimonial-2",
-    "name": "José Carlos Oliveira",
-    "location": "Santa Cruz, RJ",
-    "quote": "O atendimento é rápido e os médicos são muito atenciosos. Recomendo para toda a família. O preço é justo pelo que oferecem.",
-    "rating": 5
+    "id": "test-002",
+    "name": "Paulo Monteiro",
+    "rating": 5,
+    "quote": "Ótimo atendimento dos funcionários; tanto físico como o atendimento pelo WhatsApp; sempre que preciso estão prontos em atender; simpatia e cordialidade presentes; em especial os funcionários Antony, Joana, Cris e Tânia. Parabéns Amacor.",
+    "location": "Rio de Janeiro, RJ"
   },
   {
-    "id": "testimonial-3",
-    "name": "Ana Paula Ferreira",
-    "location": "Bangu, RJ",
-    "quote": "Depois que contratei o plano da Amacor, não preciso mais esperar horas em fila. Agendo minha consulta e sou atendida no horário marcado.",
-    "rating": 4
+    "id": "test-003",
+    "name": "Antonio Machado",
+    "rating": 5,
+    "quote": "Excelente atendimento, muito atenciosos e pacientes. Super recomendo.",
+    "location": "Rio de Janeiro, RJ"
   },
   {
-    "id": "testimonial-4",
-    "name": "Roberto Mendes",
-    "location": "Realengo, RJ",
-    "quote": "Minha esposa e eu somos beneficiários há 3 anos. A rede credenciada aqui na Zona Oeste é excelente, temos tudo pertinho de casa.",
-    "rating": 5
+    "id": "test-004",
+    "name": "Risolina Maria",
+    "rating": 5,
+    "quote": "Atendimento maravilhoso de todas atendentes e do Anthony, atendimento muito humanizado e ágil, parabéns pela equipe de funcionários e dos médicos. Parabéns a todos.",
+    "location": "Rio de Janeiro, RJ"
+  },
+  {
+    "id": "test-005",
+    "name": "Jacqueline Afonso Gomes",
+    "rating": 5,
+    "quote": "Atendimento bom e atencioso da doutora Rafaela, ginecologista. E o atendimento do Anthony da recepção, sempre muito educado e prestativo!",
+    "location": "Campo Grande, RJ"
+  },
+  {
+    "id": "test-006",
+    "name": "Ceu",
+    "rating": 5,
+    "quote": "Este atendimento me ajudou muito!! Foi muito importante pra mim.",
+    "location": "Rio de Janeiro, RJ"
   }
 ]
