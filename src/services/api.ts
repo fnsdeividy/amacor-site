@@ -1,36 +1,13 @@
 /**
  * Serviço de integração com WebService MH Vida
- * Base URL: http://mhvida.startiss.com.br:83
+ * Em desenvolvimento, as requisições são proxied pelo Vite dev server.
+ * Em produção, usa a URL configurada em VITE_CRM_BASE_URL ou o proxy do backend.
  */
 
-import type { LoginResponse, LoginCredentials, CreateLoginRequest, CRMRequest, CRMData, Boleto, BoletosRequest } from '../types/beneficiary';
+import type { LoginResponse, LoginCredentials, CreateLoginRequest, CRMRequest, CRMData, Boleto, BoletosRequest, AlterarSenhaRequest, DadosBeneficiarioRequest, DadosBeneficiario, RedeAtendimentoRequest, PrestadorRede, ListaCRMsRequest, ProtocoloCRM } from '../types/beneficiary';
+import { parseXMLResponse, parseBoletosXML, parseMultiRowXML } from '../utils/xmlParser';
 
-const BASE_URL = 'http://mhvida.startiss.com.br:83';
-
-/**
- * Faz o parse de XML retornado pelo WebService para objeto JavaScript
- */
-function parseXMLResponse(xmlString: string): Record<string, string> {
-  const parser = new DOMParser();
-  const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
-
-  const parserError = xmlDoc.querySelector('parsererror');
-  if (parserError) {
-    throw new Error('Erro ao processar resposta do servidor');
-  }
-
-  const row = xmlDoc.querySelector('row');
-  if (!row) {
-    throw new Error('Resposta inválida do servidor');
-  }
-
-  const result: Record<string, string> = {};
-  for (const child of Array.from(row.children)) {
-    result[child.tagName] = child.textContent || '';
-  }
-
-  return result;
-}
+const BASE_URL = '';
 
 /**
  * Acessa a tabela de todos os recursos do WebService
@@ -190,47 +167,226 @@ export async function getBoletos(request: BoletosRequest): Promise<Boleto[]> {
   return boletos;
 }
 
+
 /**
- * Faz o parse de XML contendo lista de boletos retornada pelo WebService
+ * Lista protocolos/solicitações do beneficiário no CRM
+ * Endpoint: /ws_ListaCRMs
+ * Timeout: 15 segundos
  */
-function parseBoletosXML(xmlString: string): Boleto[] {
-  const parser = new DOMParser();
-  const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
+export async function getListaCRMs(request: ListaCRMsRequest): Promise<ProtocoloCRM[]> {
+  const params = new URLSearchParams({
+    Parse: request.parse,
+    Codigo: request.codigo,
+    Tipo: 'USR',
+    DataIni: request.dataIni,
+  });
 
-  const parserError = xmlDoc.querySelector('parsererror');
-  if (parserError) {
-    throw new Error('Erro ao processar resposta do servidor');
-  }
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 15000);
 
-  const rows = xmlDoc.querySelectorAll('row');
-  if (!rows || rows.length === 0) {
-    return [];
-  }
-
-  const boletos: Boleto[] = [];
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  for (const row of Array.from(rows)) {
-    const vencimentoRaw = row.querySelector('Vencimento')?.textContent || '';
-    const valorRaw = row.querySelector('Valor')?.textContent || '0';
-    const pdfUrl = row.querySelector('LinkPDF')?.textContent || row.querySelector('Link')?.textContent || '';
-
-    // Parse vencimento to determine status
-    const [day, month, year] = vencimentoRaw.split('/').map(Number);
-    const vencimentoDate = new Date(year, month - 1, day);
-    const status: 'vencido' | 'a vencer' = vencimentoDate < today ? 'vencido' : 'a vencer';
-
-    // Parse valor (pode vir como "1234.56" ou "1234,56")
-    const valor = parseFloat(valorRaw.replace(',', '.')) || 0;
-
-    boletos.push({
-      vencimento: vencimentoRaw,
-      valor,
-      status,
-      pdfUrl,
+  let response: Response;
+  try {
+    response = await fetch(`${BASE_URL}/ws_ListaCRMs?${params.toString()}`, {
+      signal: controller.signal,
     });
+  } catch (err: unknown) {
+    clearTimeout(timeoutId);
+    if (err instanceof Error && err.name === 'AbortError') {
+      throw new Error('Não foi possível consultar os protocolos. Tente novamente.');
+    }
+    throw new Error('Não foi possível consultar os protocolos. Tente novamente.');
+  } finally {
+    clearTimeout(timeoutId);
   }
 
-  return boletos;
+  if (!response.ok) {
+    throw new Error('Não foi possível consultar os protocolos. Tente novamente.');
+  }
+
+  const xmlText = await response.text();
+  return parseMultiRowXML(xmlText);
+}
+
+/**
+ * Altera a senha do beneficiário
+ * Endpoint: /ws_AlterarSenha
+ */
+export async function alterarSenha(request: AlterarSenhaRequest): Promise<string> {
+  const params = new URLSearchParams({
+    Tipo: request.tipo,
+    Codigo: request.codigo,
+    SenhaVelha: request.senhaVelha,
+    SenhaNova: request.senhaNova,
+  });
+
+  let response: Response;
+  try {
+    response = await fetch(`${BASE_URL}/ws_AlterarSenha?${params.toString()}`);
+  } catch {
+    throw new Error('Não foi possível alterar a senha. Tente novamente.');
+  }
+
+  if (!response.ok) {
+    throw new Error('Não foi possível alterar a senha. Verifique a senha atual.');
+  }
+
+  return response.text();
+}
+
+/**
+ * Retorna boletos em aberto do beneficiário (2ª via)
+ * Endpoint: /ws_BoletosEmAberto
+ * Timeout: 10 segundos
+ */
+export async function getBoletosEmAberto(request: BoletosRequest): Promise<Boleto[]> {
+  const params = new URLSearchParams({
+    Parse: request.parse,
+    Codigo: request.codigo,
+    Tipo: 'USR',
+  });
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+  let response: Response;
+  try {
+    response = await fetch(`${BASE_URL}/ws_BoletosEmAberto?${params.toString()}`, {
+      signal: controller.signal,
+    });
+  } catch (err: unknown) {
+    clearTimeout(timeoutId);
+    if (err instanceof Error && err.name === 'AbortError') {
+      throw new Error('Não foi possível consultar os boletos. Tente novamente.');
+    }
+    throw new Error('Não foi possível consultar os boletos. Tente novamente.');
+  } finally {
+    clearTimeout(timeoutId);
+  }
+
+  if (!response.ok) {
+    throw new Error('Não foi possível consultar os boletos. Tente novamente.');
+  }
+
+  const xmlText = await response.text();
+  return parseBoletosXML(xmlText);
+}
+
+/**
+ * Retorna dados do beneficiário
+ * Endpoint: /ws_DadosDoBeneficiario
+ * Timeout: 10 segundos
+ */
+export async function getDadosBeneficiario(request: DadosBeneficiarioRequest): Promise<DadosBeneficiario> {
+  const params = new URLSearchParams({
+    Parse: request.parse,
+    Codigo: request.codigo,
+    Tipo: 'USR',
+  });
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+  let response: Response;
+  try {
+    response = await fetch(`${BASE_URL}/ws_DadosDoBeneficiario?${params.toString()}`, {
+      signal: controller.signal,
+    });
+  } catch (err: unknown) {
+    clearTimeout(timeoutId);
+    if (err instanceof Error && err.name === 'AbortError') {
+      throw new Error('Não foi possível consultar seus dados. Tente novamente.');
+    }
+    throw new Error('Não foi possível consultar seus dados. Tente novamente.');
+  } finally {
+    clearTimeout(timeoutId);
+  }
+
+  if (!response.ok) {
+    throw new Error('Não foi possível consultar seus dados. Tente novamente.');
+  }
+
+  const xmlText = await response.text();
+  return parseXMLResponse(xmlText);
+}
+
+/**
+ * Retorna a rede de atendimento do beneficiário
+ * Endpoint: /ws_RedeDoUsuario
+ * Timeout: 15 segundos
+ */
+export async function getRedeDoUsuario(request: RedeAtendimentoRequest): Promise<PrestadorRede[]> {
+  const params = new URLSearchParams({
+    Parse: request.parse,
+    Codigo: request.codigo,
+    Tipo: 'USR',
+  });
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+  let response: Response;
+  try {
+    response = await fetch(`${BASE_URL}/ws_RedeDoUsuario?${params.toString()}`, {
+      signal: controller.signal,
+    });
+  } catch (err: unknown) {
+    clearTimeout(timeoutId);
+    if (err instanceof Error && err.name === 'AbortError') {
+      throw new Error('Não foi possível consultar a rede de atendimento. Tente novamente.');
+    }
+    throw new Error('Não foi possível consultar a rede de atendimento. Tente novamente.');
+  } finally {
+    clearTimeout(timeoutId);
+  }
+
+  if (!response.ok) {
+    throw new Error('Não foi possível consultar a rede de atendimento. Tente novamente.');
+  }
+
+  const xmlText = await response.text();
+  return parseMultiRowXML(xmlText);
+}
+
+
+/**
+ * Gera a 2ª via do boleto
+ * Endpoint: /ws_Boleto2aVia
+ * Retorna dados do boleto (link ou dados para emissão)
+ */
+export async function getBoleto2aVia(request: {
+  parse: string;
+  codigo: string;
+  codigoRec: string;
+}): Promise<Record<string, string>> {
+  const params = new URLSearchParams({
+    Parse: request.parse,
+    Codigo: request.codigo,
+    Tipo: 'USR',
+    CodigoREC: request.codigoRec,
+  });
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+  let response: Response;
+  try {
+    response = await fetch(`${BASE_URL}/ws_Boleto2aVia?${params.toString()}`, {
+      signal: controller.signal,
+    });
+  } catch (err: unknown) {
+    clearTimeout(timeoutId);
+    if (err instanceof Error && err.name === 'AbortError') {
+      throw new Error('Não foi possível gerar a 2ª via. Tente novamente.');
+    }
+    throw new Error('Não foi possível gerar a 2ª via. Tente novamente.');
+  } finally {
+    clearTimeout(timeoutId);
+  }
+
+  if (!response.ok) {
+    throw new Error('Não foi possível gerar a 2ª via do boleto.');
+  }
+
+  const xmlText = await response.text();
+  return parseXMLResponse(xmlText);
 }

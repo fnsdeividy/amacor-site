@@ -129,6 +129,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const logout = useCallback(() => {
+    storeSession(null);
     setSession(null);
     setError(null);
   }, []);
@@ -139,9 +140,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   /**
    * Chamado quando uma requisição ao CRM falha indicando token Parse expirado.
-   * Limpa a sessão e redireciona para /login.
+   * Limpa a sessão imediatamente e redireciona para /login.
    */
   const handleParseExpired = useCallback(() => {
+    storeSession(null);
     setSession(null);
     setError(null);
     // Redirection is handled by BeneficiaryRoute guard or calling component
