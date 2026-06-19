@@ -8,8 +8,10 @@ import type { Boleto } from '../types/beneficiary';
  * @throws Error('Resposta inválida do servidor') se <row> ausente
  */
 export function parseXMLResponse(xmlString: string): Record<string, string> {
+  // Remove declaração XML com encoding ISO-8859-1 que causa parsererror no DOMParser (espera UTF-8)
+  const cleanXml = xmlString.replace(/<\?xml[^?]*\?>\s*/i, '');
   const parser = new DOMParser();
-  const doc = parser.parseFromString(xmlString, 'text/xml');
+  const doc = parser.parseFromString(cleanXml, 'text/xml');
 
   if (doc.querySelector('parsererror')) {
     throw new Error('Erro ao processar resposta do servidor');
@@ -37,8 +39,9 @@ export function parseXMLResponse(xmlString: string): Record<string, string> {
  * @returns Array vazio se nenhum <row> encontrado
  */
 export function parseBoletosXML(xmlString: string): Boleto[] {
+  const cleanXml = xmlString.replace(/<\?xml[^?]*\?>\s*/i, '');
   const parser = new DOMParser();
-  const doc = parser.parseFromString(xmlString, 'text/xml');
+  const doc = parser.parseFromString(cleanXml, 'text/xml');
 
   if (doc.querySelector('parsererror')) {
     throw new Error('Erro ao processar resposta do servidor');
@@ -136,8 +139,9 @@ function calcularStatusBoleto(vencimento: string): 'vencido' | 'a vencer' {
  * @returns Array vazio se nenhum <row> encontrado
  */
 export function parseMultiRowXML(xmlString: string): Record<string, string>[] {
+  const cleanXml = xmlString.replace(/<\?xml[^?]*\?>\s*/i, '');
   const parser = new DOMParser();
-  const doc = parser.parseFromString(xmlString, 'text/xml');
+  const doc = parser.parseFromString(cleanXml, 'text/xml');
 
   if (doc.querySelector('parsererror')) {
     throw new Error('Erro ao processar resposta do servidor');

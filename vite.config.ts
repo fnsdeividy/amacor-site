@@ -10,6 +10,12 @@ export default defineConfig({
         target: 'http://localhost:3001',
         changeOrigin: true,
       },
+      '/ws': {
+        target: 'https://api.amacor.cloud',
+        changeOrigin: true,
+        secure: true,
+        rewrite: (path) => `/webservice${path}`,
+      },
     },
   },
 })

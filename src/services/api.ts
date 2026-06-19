@@ -7,7 +7,13 @@
 import type { LoginResponse, LoginCredentials, CreateLoginRequest, CRMRequest, CRMData, Boleto, BoletosRequest, AlterarSenhaRequest, DadosBeneficiarioRequest, DadosBeneficiario, RedeAtendimentoRequest, PrestadorRede, ListaCRMsRequest, ProtocoloCRM } from '../types/beneficiary';
 import { parseXMLResponse, parseBoletosXML, parseMultiRowXML } from '../utils/xmlParser';
 
-const BASE_URL = import.meta.env.VITE_API_URL || 'https://amacor.cloud';
+/**
+ * Em desenvolvimento, usa path relativo para o proxy do Vite redirecionar e evitar CORS.
+ * Em produção, usa a URL completa configurada em VITE_API_URL.
+ */
+const BASE_URL = import.meta.env.PROD
+  ? (import.meta.env.VITE_API_URL || 'https://api.amacor.cloud/webservice').replace(/\/$/, '')
+  : '';
 const API_TOKEN = import.meta.env.VITE_API_TOKEN || '';
 
 /**
@@ -18,9 +24,47 @@ function apiFetch(url: string, options: RequestInit = {}): Promise<Response> {
     ...(options.headers as Record<string, string> || {}),
   };
   if (API_TOKEN) {
-    headers['Authorization'] = `Bearer ${API_TOKEN}`;
+    headers['x-internal-token'] = API_TOKEN;
   }
   return fetch(url, { ...options, headers });
+}
+
+/**
+ * Extrai o XML do body da resposta.
+ * O proxy do VPS retorna Content-Type: application/json com o XML como string JSON,
+ * ou pode retornar um JSON de erro com { message, detail }.
+ */
+async function extractXML(response: Response): Promise<string> {
+  const text = await response.text();
+
+  // Se começa com aspas, é uma string JSON wrapping o XML
+  if (text.startsWith('"')) {
+    try {
+      const parsed = JSON.parse(text);
+      if (typeof parsed === 'string') {
+        return parsed;
+      }
+    } catch {
+      // Se falhar o parse JSON, tenta usar como está
+    }
+  }
+
+  // Se começa com {, pode ser um JSON de erro do proxy
+  if (text.startsWith('{')) {
+    try {
+      const parsed = JSON.parse(text);
+      if (parsed.message) {
+        throw new Error(parsed.message);
+      }
+    } catch (err) {
+      if (err instanceof Error && err.message !== text) {
+        throw err;
+      }
+    }
+  }
+
+  // XML direto
+  return text;
 }
 
 /**
@@ -96,7 +140,7 @@ export async function login(credentials: LoginCredentials): Promise<LoginRespons
     throw new Error('Serviço temporariamente indisponível. Tente novamente.');
   }
 
-  const xmlText = await response.text();
+  const xmlText = await extractXML(response);
   const data = parseXMLResponse(xmlText);
 
   if (!data.Parse || !data.Codigo) {
@@ -132,7 +176,7 @@ export async function getCRMData(request: CRMRequest): Promise<CRMData> {
     throw new Error('Erro ao consultar dados do CRM. Verifique o protocolo informado.');
   }
 
-  const xmlText = await response.text();
+  const xmlText = await extractXML(response);
   const data = parseXMLResponse(xmlText);
 
   return {
@@ -176,7 +220,7 @@ export async function getBoletos(request: BoletosRequest): Promise<Boleto[]> {
     throw new Error('Não foi possível consultar os boletos. Tente novamente.');
   }
 
-  const xmlText = await response.text();
+  const xmlText = await extractXML(response);
   const boletos = parseBoletosXML(xmlText);
   return boletos;
 }
@@ -217,7 +261,7 @@ export async function getListaCRMs(request: ListaCRMsRequest): Promise<Protocolo
     throw new Error('Não foi possível consultar os protocolos. Tente novamente.');
   }
 
-  const xmlText = await response.text();
+  const xmlText = await extractXML(response);
   return parseMultiRowXML(xmlText);
 }
 
@@ -281,7 +325,7 @@ export async function getBoletosEmAberto(request: BoletosRequest): Promise<Bolet
     throw new Error('Não foi possível consultar os boletos. Tente novamente.');
   }
 
-  const xmlText = await response.text();
+  const xmlText = await extractXML(response);
   return parseBoletosXML(xmlText);
 }
 
@@ -319,7 +363,7 @@ export async function getDadosBeneficiario(request: DadosBeneficiarioRequest): P
     throw new Error('Não foi possível consultar seus dados. Tente novamente.');
   }
 
-  const xmlText = await response.text();
+  const xmlText = await extractXML(response);
   return parseXMLResponse(xmlText);
 }
 
@@ -357,7 +401,7 @@ export async function getRedeDoUsuario(request: RedeAtendimentoRequest): Promise
     throw new Error('Não foi possível consultar a rede de atendimento. Tente novamente.');
   }
 
-  const xmlText = await response.text();
+  const xmlText = await extractXML(response);
   return parseMultiRowXML(xmlText);
 }
 
@@ -401,6 +445,6 @@ export async function getBoleto2aVia(request: {
     throw new Error('Não foi possível gerar a 2ª via do boleto.');
   }
 
-  const xmlText = await response.text();
+  const xmlText = await extractXML(response);
   return parseXMLResponse(xmlText);
 }
