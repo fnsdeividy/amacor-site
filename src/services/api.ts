@@ -1,23 +1,27 @@
 /**
  * Serviço de integração com WebService MH Vida
- * Em desenvolvimento, as requisições são proxied pelo Vite dev server.
- * Em produção, usa a URL configurada em VITE_CRM_BASE_URL ou o proxy do backend.
+ * Em desenvolvimento, o Vite proxy redireciona /api/ws para o VPS.
+ * Em produção (Vercel), a serverless function /api/ws faz o proxy e injeta o token.
  */
 
 import type { LoginResponse, LoginCredentials, CreateLoginRequest, CRMRequest, CRMData, Boleto, BoletosRequest, AlterarSenhaRequest, DadosBeneficiarioRequest, DadosBeneficiario, RedeAtendimentoRequest, PrestadorRede, ListaCRMsRequest, ProtocoloCRM } from '../types/beneficiary';
 import { parseXMLResponse, parseBoletosXML, parseMultiRowXML } from '../utils/xmlParser';
 
-/**
- * Em desenvolvimento, usa path relativo para o proxy do Vite redirecionar e evitar CORS.
- * Em produção, usa a URL completa configurada em VITE_API_URL.
- */
-const BASE_URL = import.meta.env.PROD
-  ? (import.meta.env.VITE_API_URL || 'https://api.amacor.cloud/webservice').replace(/\/$/, '')
-  : '';
 const API_TOKEN = import.meta.env.VITE_API_TOKEN || '';
 
 /**
- * Wrapper do fetch que injeta o token de autenticação da API (se configurado)
+ * Monta a URL para chamar o proxy serverless.
+ * Ex: buildProxyUrl('ws_Login', { Tipo: 'USR', Codigo: '123' })
+ *   → '/api/ws?endpoint=ws_Login&Tipo=USR&Codigo=123'
+ */
+function buildProxyUrl(endpoint: string, params: Record<string, string> = {}): string {
+  const searchParams = new URLSearchParams({ endpoint, ...params });
+  return `/api/ws?${searchParams.toString()}`;
+}
+
+/**
+ * Wrapper do fetch que injeta o token em desenvolvimento.
+ * Em produção o token é injetado pela serverless function.
  */
 function apiFetch(url: string, options: RequestInit = {}): Promise<Response> {
   const headers: Record<string, string> = {
@@ -31,13 +35,12 @@ function apiFetch(url: string, options: RequestInit = {}): Promise<Response> {
 
 /**
  * Extrai o XML do body da resposta.
- * O proxy do VPS retorna Content-Type: application/json com o XML como string JSON,
- * ou pode retornar um JSON de erro com { message, detail }.
+ * O proxy pode retornar o XML como string JSON ou XML direto.
  */
 async function extractXML(response: Response): Promise<string> {
   const text = await response.text();
 
-  // Se começa com aspas, é uma string JSON wrapping o XML
+  // String JSON wrapping o XML
   if (text.startsWith('"')) {
     try {
       const parsed = JSON.parse(text);
@@ -45,16 +48,16 @@ async function extractXML(response: Response): Promise<string> {
         return parsed;
       }
     } catch {
-      // Se falhar o parse JSON, tenta usar como está
+      // fallthrough
     }
   }
 
-  // Se começa com {, pode ser um JSON de erro do proxy
+  // JSON de erro do proxy
   if (text.startsWith('{')) {
     try {
       const parsed = JSON.parse(text);
-      if (parsed.message) {
-        throw new Error(parsed.message);
+      if (parsed.message || parsed.error) {
+        throw new Error(parsed.message || parsed.error);
       }
     } catch (err) {
       if (err instanceof Error && err.message !== text) {
@@ -63,16 +66,15 @@ async function extractXML(response: Response): Promise<string> {
     }
   }
 
-  // XML direto
   return text;
 }
 
 /**
  * Acessa a tabela de todos os recursos do WebService
- * Endpoint: /ws_help
+ * Endpoint: ws_help
  */
 export async function getWebServiceHelp(): Promise<string> {
-  const response = await apiFetch(`${BASE_URL}/ws_help`);
+  const response = await apiFetch(buildProxyUrl('ws_help'));
   if (!response.ok) {
     throw new Error('Erro ao acessar recursos do WebService');
   }
@@ -81,19 +83,16 @@ export async function getWebServiceHelp(): Promise<string> {
 
 /**
  * Criação de login e senha para o usuário
- * Endpoint: /ws_CriaLogin
- * O campo Código é a matrícula do beneficiário
+ * Endpoint: ws_CriaLogin
  */
 export async function createLogin(data: CreateLoginRequest): Promise<string> {
-  const params = new URLSearchParams({
-    Tipo: data.tipo,
-    Codigo: data.codigo,
-    Senha: data.senha,
-  });
-
   let response: Response;
   try {
-    response = await apiFetch(`${BASE_URL}/ws_CriaLogin?${params.toString()}`);
+    response = await apiFetch(buildProxyUrl('ws_CriaLogin', {
+      Tipo: data.tipo,
+      Codigo: data.codigo,
+      Senha: data.senha,
+    }));
   } catch {
     throw new Error('Não foi possível completar o cadastro. Tente novamente.');
   }
@@ -107,25 +106,20 @@ export async function createLogin(data: CreateLoginRequest): Promise<string> {
 
 /**
  * Acessa login com associação de um parse
- * Endpoint: /ws_Login
- * Retorna o parse que é utilizado como permissão para acessar informações do beneficiário
+ * Endpoint: ws_Login
  * Timeout: 15 segundos
  */
 export async function login(credentials: LoginCredentials): Promise<LoginResponse> {
-  const params = new URLSearchParams({
-    Tipo: credentials.tipo,
-    Codigo: credentials.codigo,
-    Senha: credentials.senha,
-  });
-
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 15000);
 
   let response: Response;
   try {
-    response = await apiFetch(`${BASE_URL}/ws_Login?${params.toString()}`, {
-      signal: controller.signal,
-    });
+    response = await apiFetch(buildProxyUrl('ws_Login', {
+      Tipo: credentials.tipo,
+      Codigo: credentials.codigo,
+      Senha: credentials.senha,
+    }), { signal: controller.signal });
   } catch (err: unknown) {
     clearTimeout(timeoutId);
     if (err instanceof Error && err.name === 'AbortError') {
@@ -157,21 +151,16 @@ export async function login(credentials: LoginCredentials): Promise<LoginRespons
 
 /**
  * Retorna dados do CRM vinculado ao protocolo informado
- * Endpoint: /ws_DadosCRM
- * Parse = Código obtido ao fazer o login (Obrigatório)
- * Codigo = Código do Beneficiário (Obrigatório)
- * Tipo = USR (Obrigatório)
- * Protocolo = Protocolo para buscar dados no CRM
+ * Endpoint: ws_DadosCRM
  */
 export async function getCRMData(request: CRMRequest): Promise<CRMData> {
-  const params = new URLSearchParams({
+  const response = await apiFetch(buildProxyUrl('ws_DadosCRM', {
     Parse: request.parse,
     Codigo: request.codigo,
     Tipo: request.tipo,
     Protocolo: request.protocolo,
-  });
+  }));
 
-  const response = await apiFetch(`${BASE_URL}/ws_DadosCRM?${params.toString()}`);
   if (!response.ok) {
     throw new Error('Erro ao consultar dados do CRM. Verifique o protocolo informado.');
   }
@@ -185,27 +174,21 @@ export async function getCRMData(request: CRMRequest): Promise<CRMData> {
   };
 }
 
-
 /**
  * Retorna a lista de boletos disponíveis para o beneficiário
- * Consulta o CRM utilizando Parse e Codigo
- * Timeout: 10 segundos (conforme requisito 14.1)
+ * Timeout: 10 segundos
  */
 export async function getBoletos(request: BoletosRequest): Promise<Boleto[]> {
-  const params = new URLSearchParams({
-    Parse: request.parse,
-    Codigo: request.codigo,
-    Tipo: 'USR',
-  });
-
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 10000);
 
   let response: Response;
   try {
-    response = await apiFetch(`${BASE_URL}/ws_Boletos?${params.toString()}`, {
-      signal: controller.signal,
-    });
+    response = await apiFetch(buildProxyUrl('ws_Boletos', {
+      Parse: request.parse,
+      Codigo: request.codigo,
+      Tipo: 'USR',
+    }), { signal: controller.signal });
   } catch (err: unknown) {
     clearTimeout(timeoutId);
     if (err instanceof Error && err.name === 'AbortError') {
@@ -221,32 +204,26 @@ export async function getBoletos(request: BoletosRequest): Promise<Boleto[]> {
   }
 
   const xmlText = await extractXML(response);
-  const boletos = parseBoletosXML(xmlText);
-  return boletos;
+  return parseBoletosXML(xmlText);
 }
-
 
 /**
  * Lista protocolos/solicitações do beneficiário no CRM
- * Endpoint: /ws_ListaCRMs
+ * Endpoint: ws_ListaCRMs
  * Timeout: 15 segundos
  */
 export async function getListaCRMs(request: ListaCRMsRequest): Promise<ProtocoloCRM[]> {
-  const params = new URLSearchParams({
-    Parse: request.parse,
-    Codigo: request.codigo,
-    Tipo: 'USR',
-    DataIni: request.dataIni,
-  });
-
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 15000);
 
   let response: Response;
   try {
-    response = await apiFetch(`${BASE_URL}/ws_ListaCRMs?${params.toString()}`, {
-      signal: controller.signal,
-    });
+    response = await apiFetch(buildProxyUrl('ws_ListaCRMs', {
+      Parse: request.parse,
+      Codigo: request.codigo,
+      Tipo: 'USR',
+      DataIni: request.dataIni,
+    }), { signal: controller.signal });
   } catch (err: unknown) {
     clearTimeout(timeoutId);
     if (err instanceof Error && err.name === 'AbortError') {
@@ -267,19 +244,17 @@ export async function getListaCRMs(request: ListaCRMsRequest): Promise<Protocolo
 
 /**
  * Altera a senha do beneficiário
- * Endpoint: /ws_AlterarSenha
+ * Endpoint: ws_AlterarSenha
  */
 export async function alterarSenha(request: AlterarSenhaRequest): Promise<string> {
-  const params = new URLSearchParams({
-    Tipo: request.tipo,
-    Codigo: request.codigo,
-    SenhaVelha: request.senhaVelha,
-    SenhaNova: request.senhaNova,
-  });
-
   let response: Response;
   try {
-    response = await apiFetch(`${BASE_URL}/ws_AlterarSenha?${params.toString()}`);
+    response = await apiFetch(buildProxyUrl('ws_AlterarSenha', {
+      Tipo: request.tipo,
+      Codigo: request.codigo,
+      SenhaVelha: request.senhaVelha,
+      SenhaNova: request.senhaNova,
+    }));
   } catch {
     throw new Error('Não foi possível alterar a senha. Tente novamente.');
   }
@@ -293,24 +268,20 @@ export async function alterarSenha(request: AlterarSenhaRequest): Promise<string
 
 /**
  * Retorna boletos em aberto do beneficiário (2ª via)
- * Endpoint: /ws_BoletosEmAberto
+ * Endpoint: ws_BoletosEmAberto
  * Timeout: 10 segundos
  */
 export async function getBoletosEmAberto(request: BoletosRequest): Promise<Boleto[]> {
-  const params = new URLSearchParams({
-    Parse: request.parse,
-    Codigo: request.codigo,
-    Tipo: 'USR',
-  });
-
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 10000);
 
   let response: Response;
   try {
-    response = await apiFetch(`${BASE_URL}/ws_BoletosEmAberto?${params.toString()}`, {
-      signal: controller.signal,
-    });
+    response = await apiFetch(buildProxyUrl('ws_BoletosEmAberto', {
+      Parse: request.parse,
+      Codigo: request.codigo,
+      Tipo: 'USR',
+    }), { signal: controller.signal });
   } catch (err: unknown) {
     clearTimeout(timeoutId);
     if (err instanceof Error && err.name === 'AbortError') {
@@ -331,24 +302,20 @@ export async function getBoletosEmAberto(request: BoletosRequest): Promise<Bolet
 
 /**
  * Retorna dados do beneficiário
- * Endpoint: /ws_DadosDoBeneficiario
+ * Endpoint: ws_DadosDoBeneficiario
  * Timeout: 10 segundos
  */
 export async function getDadosBeneficiario(request: DadosBeneficiarioRequest): Promise<DadosBeneficiario> {
-  const params = new URLSearchParams({
-    Parse: request.parse,
-    Codigo: request.codigo,
-    Tipo: 'USR',
-  });
-
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 10000);
 
   let response: Response;
   try {
-    response = await apiFetch(`${BASE_URL}/ws_DadosDoBeneficiario?${params.toString()}`, {
-      signal: controller.signal,
-    });
+    response = await apiFetch(buildProxyUrl('ws_DadosDoBeneficiario', {
+      Parse: request.parse,
+      Codigo: request.codigo,
+      Tipo: 'USR',
+    }), { signal: controller.signal });
   } catch (err: unknown) {
     clearTimeout(timeoutId);
     if (err instanceof Error && err.name === 'AbortError') {
@@ -369,24 +336,20 @@ export async function getDadosBeneficiario(request: DadosBeneficiarioRequest): P
 
 /**
  * Retorna a rede de atendimento do beneficiário
- * Endpoint: /ws_RedeDoUsuario
+ * Endpoint: ws_RedeDoUsuario
  * Timeout: 15 segundos
  */
 export async function getRedeDoUsuario(request: RedeAtendimentoRequest): Promise<PrestadorRede[]> {
-  const params = new URLSearchParams({
-    Parse: request.parse,
-    Codigo: request.codigo,
-    Tipo: 'USR',
-  });
-
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 15000);
 
   let response: Response;
   try {
-    response = await apiFetch(`${BASE_URL}/ws_RedeDoUsuario?${params.toString()}`, {
-      signal: controller.signal,
-    });
+    response = await apiFetch(buildProxyUrl('ws_RedeDoUsuario', {
+      Parse: request.parse,
+      Codigo: request.codigo,
+      Tipo: 'USR',
+    }), { signal: controller.signal });
   } catch (err: unknown) {
     clearTimeout(timeoutId);
     if (err instanceof Error && err.name === 'AbortError') {
@@ -405,32 +368,26 @@ export async function getRedeDoUsuario(request: RedeAtendimentoRequest): Promise
   return parseMultiRowXML(xmlText);
 }
 
-
 /**
  * Gera a 2ª via do boleto
- * Endpoint: /ws_Boleto2aVia
- * Retorna dados do boleto (link ou dados para emissão)
+ * Endpoint: ws_Boleto2aVia
  */
 export async function getBoleto2aVia(request: {
   parse: string;
   codigo: string;
   codigoRec: string;
 }): Promise<Record<string, string>> {
-  const params = new URLSearchParams({
-    Parse: request.parse,
-    Codigo: request.codigo,
-    Tipo: 'USR',
-    CodigoREC: request.codigoRec,
-  });
-
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 15000);
 
   let response: Response;
   try {
-    response = await apiFetch(`${BASE_URL}/ws_Boleto2aVia?${params.toString()}`, {
-      signal: controller.signal,
-    });
+    response = await apiFetch(buildProxyUrl('ws_Boleto2aVia', {
+      Parse: request.parse,
+      Codigo: request.codigo,
+      Tipo: 'USR',
+      CodigoREC: request.codigoRec,
+    }), { signal: controller.signal });
   } catch (err: unknown) {
     clearTimeout(timeoutId);
     if (err instanceof Error && err.name === 'AbortError') {
