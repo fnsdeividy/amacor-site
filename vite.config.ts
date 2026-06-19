@@ -10,10 +10,6 @@ export default defineConfig({
         target: 'http://localhost:3001',
         changeOrigin: true,
       },
-      '/ws': {
-        target: 'http://mhvida.startiss.com.br:83',
-        changeOrigin: true,
-      },
     },
   },
 })

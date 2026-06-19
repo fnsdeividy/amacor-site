@@ -7,14 +7,28 @@
 import type { LoginResponse, LoginCredentials, CreateLoginRequest, CRMRequest, CRMData, Boleto, BoletosRequest, AlterarSenhaRequest, DadosBeneficiarioRequest, DadosBeneficiario, RedeAtendimentoRequest, PrestadorRede, ListaCRMsRequest, ProtocoloCRM } from '../types/beneficiary';
 import { parseXMLResponse, parseBoletosXML, parseMultiRowXML } from '../utils/xmlParser';
 
-const BASE_URL = '';
+const BASE_URL = import.meta.env.VITE_API_URL || 'https://amacor.cloud';
+const API_TOKEN = import.meta.env.VITE_API_TOKEN || '';
+
+/**
+ * Wrapper do fetch que injeta o token de autenticação da API (se configurado)
+ */
+function apiFetch(url: string, options: RequestInit = {}): Promise<Response> {
+  const headers: Record<string, string> = {
+    ...(options.headers as Record<string, string> || {}),
+  };
+  if (API_TOKEN) {
+    headers['Authorization'] = `Bearer ${API_TOKEN}`;
+  }
+  return fetch(url, { ...options, headers });
+}
 
 /**
  * Acessa a tabela de todos os recursos do WebService
  * Endpoint: /ws_help
  */
 export async function getWebServiceHelp(): Promise<string> {
-  const response = await fetch(`${BASE_URL}/ws_help`);
+  const response = await apiFetch(`${BASE_URL}/ws_help`);
   if (!response.ok) {
     throw new Error('Erro ao acessar recursos do WebService');
   }
@@ -35,7 +49,7 @@ export async function createLogin(data: CreateLoginRequest): Promise<string> {
 
   let response: Response;
   try {
-    response = await fetch(`${BASE_URL}/ws_CriaLogin?${params.toString()}`);
+    response = await apiFetch(`${BASE_URL}/ws_CriaLogin?${params.toString()}`);
   } catch {
     throw new Error('Não foi possível completar o cadastro. Tente novamente.');
   }
@@ -65,7 +79,7 @@ export async function login(credentials: LoginCredentials): Promise<LoginRespons
 
   let response: Response;
   try {
-    response = await fetch(`${BASE_URL}/ws_Login?${params.toString()}`, {
+    response = await apiFetch(`${BASE_URL}/ws_Login?${params.toString()}`, {
       signal: controller.signal,
     });
   } catch (err: unknown) {
@@ -113,7 +127,7 @@ export async function getCRMData(request: CRMRequest): Promise<CRMData> {
     Protocolo: request.protocolo,
   });
 
-  const response = await fetch(`${BASE_URL}/ws_DadosCRM?${params.toString()}`);
+  const response = await apiFetch(`${BASE_URL}/ws_DadosCRM?${params.toString()}`);
   if (!response.ok) {
     throw new Error('Erro ao consultar dados do CRM. Verifique o protocolo informado.');
   }
@@ -145,7 +159,7 @@ export async function getBoletos(request: BoletosRequest): Promise<Boleto[]> {
 
   let response: Response;
   try {
-    response = await fetch(`${BASE_URL}/ws_Boletos?${params.toString()}`, {
+    response = await apiFetch(`${BASE_URL}/ws_Boletos?${params.toString()}`, {
       signal: controller.signal,
     });
   } catch (err: unknown) {
@@ -186,7 +200,7 @@ export async function getListaCRMs(request: ListaCRMsRequest): Promise<Protocolo
 
   let response: Response;
   try {
-    response = await fetch(`${BASE_URL}/ws_ListaCRMs?${params.toString()}`, {
+    response = await apiFetch(`${BASE_URL}/ws_ListaCRMs?${params.toString()}`, {
       signal: controller.signal,
     });
   } catch (err: unknown) {
@@ -221,7 +235,7 @@ export async function alterarSenha(request: AlterarSenhaRequest): Promise<string
 
   let response: Response;
   try {
-    response = await fetch(`${BASE_URL}/ws_AlterarSenha?${params.toString()}`);
+    response = await apiFetch(`${BASE_URL}/ws_AlterarSenha?${params.toString()}`);
   } catch {
     throw new Error('Não foi possível alterar a senha. Tente novamente.');
   }
@@ -250,7 +264,7 @@ export async function getBoletosEmAberto(request: BoletosRequest): Promise<Bolet
 
   let response: Response;
   try {
-    response = await fetch(`${BASE_URL}/ws_BoletosEmAberto?${params.toString()}`, {
+    response = await apiFetch(`${BASE_URL}/ws_BoletosEmAberto?${params.toString()}`, {
       signal: controller.signal,
     });
   } catch (err: unknown) {
@@ -288,7 +302,7 @@ export async function getDadosBeneficiario(request: DadosBeneficiarioRequest): P
 
   let response: Response;
   try {
-    response = await fetch(`${BASE_URL}/ws_DadosDoBeneficiario?${params.toString()}`, {
+    response = await apiFetch(`${BASE_URL}/ws_DadosDoBeneficiario?${params.toString()}`, {
       signal: controller.signal,
     });
   } catch (err: unknown) {
@@ -326,7 +340,7 @@ export async function getRedeDoUsuario(request: RedeAtendimentoRequest): Promise
 
   let response: Response;
   try {
-    response = await fetch(`${BASE_URL}/ws_RedeDoUsuario?${params.toString()}`, {
+    response = await apiFetch(`${BASE_URL}/ws_RedeDoUsuario?${params.toString()}`, {
       signal: controller.signal,
     });
   } catch (err: unknown) {
@@ -370,7 +384,7 @@ export async function getBoleto2aVia(request: {
 
   let response: Response;
   try {
-    response = await fetch(`${BASE_URL}/ws_Boleto2aVia?${params.toString()}`, {
+    response = await apiFetch(`${BASE_URL}/ws_Boleto2aVia?${params.toString()}`, {
       signal: controller.signal,
     });
   } catch (err: unknown) {
