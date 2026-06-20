@@ -167,153 +167,171 @@ export default function Header({ currentPath }: HeaderProps) {
 
         {/* Desktop Navigation */}
         <nav className="hidden tablet:flex items-center gap-1" aria-label="Navegação principal">
-          {navItems.map((item) => {
-            // Render dropdown for Plans
-            if (item.children) {
-              return (
-                <div
-                  key={item.href}
-                  className="relative"
-                  ref={plansDropdownRef}
-                  onMouseEnter={openPlansDropdown}
-                  onMouseLeave={closePlansDropdown}
-                  onKeyDown={handleDropdownKeyDown}
-                >
-                  <button
-                    ref={plansButtonRef}
-                    type="button"
-                    onClick={togglePlansDropdown}
-                    onKeyDown={handlePlansButtonKeyDown}
-                    className={`relative text-[16px] px-4 py-2.5 rounded-lg transition-all duration-200 flex items-center gap-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 ${isPlansActive
-                        ? 'text-primary-600 font-semibold bg-primary-50'
-                        : 'text-warm-600 hover:text-primary-600 hover:bg-warm-50'
-                      }`}
-                    aria-expanded={isPlansDropdownOpen}
-                    aria-haspopup="true"
-                    aria-controls="plans-dropdown-menu"
-                  >
-                    {item.label}
-                    <svg
-                      className={`w-4 h-4 transition-transform duration-200 ${isPlansDropdownOpen ? 'rotate-180' : ''
-                        }`}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </svg>
-                    {isPlansActive && (
-                      <span className="absolute bottom-0.5 left-4 right-4 h-[2px] bg-primary-600 rounded-full" />
-                    )}
-                  </button>
-
-                  {/* Dropdown panel */}
-                  {isPlansDropdownOpen && (
-                    <div
-                      id="plans-dropdown-menu"
-                      role="menu"
-                      className="absolute top-full left-0 mt-2 w-56 bg-white rounded-2xl shadow-elevated border border-warm-100 py-2 z-50"
-                    >
-                      {item.children.map((child, index) => (
-                        <a
-                          key={child.href}
-                          ref={(el) => {
-                            dropdownItemsRef.current[index] = el
-                          }}
-                          href={child.href}
-                          role="menuitem"
-                          tabIndex={-1}
-                          onClick={closePlansDropdown}
-                          className={`block px-5 py-3 text-[16px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-600 ${currentPath === child.href
-                              ? 'text-primary-600 font-semibold bg-primary-50'
-                              : 'text-warm-600 hover:text-primary-600 hover:bg-warm-50'
-                            }`}
-                        >
-                          {child.label}
-                        </a>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              )
-            }
-
-            // Regular nav link
-            return (
+          {/* Se beneficiário logado, mostra apenas navegação do portal */}
+          {isBeneficiaryAuthenticated && !isAdminAuthenticated ? (
+            <>
               <a
-                key={item.href}
-                href={item.href}
-                className={`relative text-[16px] px-4 py-2.5 rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 ${isNavItemActive(item)
-                    ? 'text-primary-600 font-semibold bg-primary-50'
-                    : 'text-warm-600 hover:text-primary-600 hover:bg-warm-50'
+                href="/beneficiario/dados"
+                className={`relative text-[15px] px-3 py-2.5 rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 ${currentPath === '/beneficiario/dados'
+                  ? 'text-primary-600 font-semibold bg-primary-50'
+                  : 'text-warm-600 hover:text-primary-600 hover:bg-warm-50'
                   }`}
               >
-                {item.label}
-                {isNavItemActive(item) && (
-                  <span className="absolute bottom-0.5 left-4 right-4 h-[2px] bg-primary-600 rounded-full" />
-                )}
+                Meus Dados
               </a>
-            )
-          })}
-
-          {/* Conditional auth-based navigation */}
-          {isAdminAuthenticated && (
-            <>
-              {adminNavLinks.map((link) => (
-                <a
-                  key={link.path}
-                  href={link.path}
-                  className={`relative text-[16px] px-4 py-2.5 rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 ${currentPath === link.path
-                      ? 'text-primary-600 font-semibold bg-primary-50'
-                      : 'text-warm-600 hover:text-primary-600 hover:bg-warm-50'
-                    }`}
-                >
-                  {link.label}
-                  {currentPath === link.path && (
-                    <span className="absolute bottom-0.5 left-4 right-4 h-[2px] bg-primary-600 rounded-full" />
-                  )}
-                </a>
-              ))}
-              <button
-                type="button"
-                onClick={adminLogout}
-                className="text-[16px] px-4 py-2.5 rounded-lg transition-all duration-200 text-red-600 hover:bg-red-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2"
-              >
-                Sair
-              </button>
-            </>
-          )}
-
-          {isBeneficiaryAuthenticated && !isAdminAuthenticated && (
-            <>
               {beneficiaryNavLinks.map((link) => (
                 <a
                   key={link.path}
                   href={link.path}
-                  className={`relative text-[16px] px-4 py-2.5 rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 ${currentPath === link.path
-                      ? 'text-primary-600 font-semibold bg-primary-50'
-                      : 'text-warm-600 hover:text-primary-600 hover:bg-warm-50'
+                  className={`relative text-[15px] px-3 py-2.5 rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 ${currentPath === link.path
+                    ? 'text-primary-600 font-semibold bg-primary-50'
+                    : 'text-warm-600 hover:text-primary-600 hover:bg-warm-50'
                     }`}
                 >
                   {link.label}
                   {currentPath === link.path && (
-                    <span className="absolute bottom-0.5 left-4 right-4 h-[2px] bg-primary-600 rounded-full" />
+                    <span className="absolute bottom-0.5 left-3 right-3 h-[2px] bg-primary-600 rounded-full" />
                   )}
                 </a>
               ))}
+              <a
+                href="/"
+                className="text-[15px] px-3 py-2.5 rounded-lg transition-all duration-200 text-warm-600 hover:text-primary-600 hover:bg-warm-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2"
+              >
+                Site
+              </a>
               <button
                 type="button"
                 onClick={beneficiaryLogout}
-                className="text-[16px] px-4 py-2.5 rounded-lg transition-all duration-200 text-red-600 hover:bg-red-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2"
+                className="text-[15px] px-3 py-2.5 rounded-lg transition-all duration-200 text-red-600 hover:bg-red-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2"
               >
                 Sair
               </button>
+            </>
+          ) : (
+            <>
+              {navItems.map((item) => {
+                // Render dropdown for Plans
+                if (item.children) {
+                  return (
+                    <div
+                      key={item.href}
+                      className="relative"
+                      ref={plansDropdownRef}
+                      onMouseEnter={openPlansDropdown}
+                      onMouseLeave={closePlansDropdown}
+                      onKeyDown={handleDropdownKeyDown}
+                    >
+                      <button
+                        ref={plansButtonRef}
+                        type="button"
+                        onClick={togglePlansDropdown}
+                        onKeyDown={handlePlansButtonKeyDown}
+                        className={`relative text-[16px] px-4 py-2.5 rounded-lg transition-all duration-200 flex items-center gap-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 ${isPlansActive
+                          ? 'text-primary-600 font-semibold bg-primary-50'
+                          : 'text-warm-600 hover:text-primary-600 hover:bg-warm-50'
+                          }`}
+                        aria-expanded={isPlansDropdownOpen}
+                        aria-haspopup="true"
+                        aria-controls="plans-dropdown-menu"
+                      >
+                        {item.label}
+                        <svg
+                          className={`w-4 h-4 transition-transform duration-200 ${isPlansDropdownOpen ? 'rotate-180' : ''
+                            }`}
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          aria-hidden="true"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M19 9l-7 7-7-7"
+                          />
+                        </svg>
+                        {isPlansActive && (
+                          <span className="absolute bottom-0.5 left-4 right-4 h-[2px] bg-primary-600 rounded-full" />
+                        )}
+                      </button>
+
+                      {/* Dropdown panel */}
+                      {isPlansDropdownOpen && (
+                        <div
+                          id="plans-dropdown-menu"
+                          role="menu"
+                          className="absolute top-full left-0 mt-2 w-56 bg-white rounded-2xl shadow-elevated border border-warm-100 py-2 z-50"
+                        >
+                          {item.children.map((child, index) => (
+                            <a
+                              key={child.href}
+                              ref={(el) => {
+                                dropdownItemsRef.current[index] = el
+                              }}
+                              href={child.href}
+                              role="menuitem"
+                              tabIndex={-1}
+                              onClick={closePlansDropdown}
+                              className={`block px-5 py-3 text-[16px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-600 ${currentPath === child.href
+                                ? 'text-primary-600 font-semibold bg-primary-50'
+                                : 'text-warm-600 hover:text-primary-600 hover:bg-warm-50'
+                                }`}
+                            >
+                              {child.label}
+                            </a>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )
+                }
+
+                // Regular nav link
+                return (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    className={`relative text-[16px] px-4 py-2.5 rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 ${isNavItemActive(item)
+                      ? 'text-primary-600 font-semibold bg-primary-50'
+                      : 'text-warm-600 hover:text-primary-600 hover:bg-warm-50'
+                      }`}
+                  >
+                    {item.label}
+                    {isNavItemActive(item) && (
+                      <span className="absolute bottom-0.5 left-4 right-4 h-[2px] bg-primary-600 rounded-full" />
+                    )}
+                  </a>
+                )
+              })}
+
+              {/* Conditional auth-based navigation */}
+              {isAdminAuthenticated && (
+                <>
+                  {adminNavLinks.map((link) => (
+                    <a
+                      key={link.path}
+                      href={link.path}
+                      className={`relative text-[16px] px-4 py-2.5 rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 ${currentPath === link.path
+                        ? 'text-primary-600 font-semibold bg-primary-50'
+                        : 'text-warm-600 hover:text-primary-600 hover:bg-warm-50'
+                        }`}
+                    >
+                      {link.label}
+                      {currentPath === link.path && (
+                        <span className="absolute bottom-0.5 left-4 right-4 h-[2px] bg-primary-600 rounded-full" />
+                      )}
+                    </a>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={adminLogout}
+                    className="text-[16px] px-4 py-2.5 rounded-lg transition-all duration-200 text-red-600 hover:bg-red-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2"
+                  >
+                    Sair
+                  </button>
+                </>
+              )}
             </>
           )}
         </nav>
