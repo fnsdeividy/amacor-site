@@ -1,7 +1,7 @@
 [
   {
     "id": "prov-001",
-    "name": "Clínica Amacor",
+    "name": "Amacor Serviços Médicos",
     "type": "Clínica Ambulatorial",
     "specialties": [
       "Angiologia",
@@ -569,26 +569,6 @@
       "state": "RJ"
     },
     "phone": "(21) 2401-3889 / 2402-5162 / 2401-2014"
-  },
-  {
-    "id": "prov-015",
-    "name": "Clínica Polisaúde",
-    "type": "Clínica Ambulatorial",
-    "specialties": [
-      "NeuroPediatria",
-      "Neurologia",
-      "Ginecologia",
-      "Psicologia"
-    ],
-    "address": {
-      "street": "Avenida Cesário de Melo",
-      "number": "2855 - Sala 501",
-      "neighborhood": "Campo Grande",
-      "city": "Rio de Janeiro",
-      "state": "RJ"
-    },
-    "phone": "(21) 3394-1963",
-    "highlight": "Somente WhatsApp. Edifício Montblanc Towers, em frente ao Calçadão de Campo Grande."
   },
   {
     "id": "prov-016",

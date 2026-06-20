@@ -2,62 +2,28 @@ import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { getDadosBeneficiario } from '../../services/api';
 
-/** Mapeamento de campos da API para labels amigáveis */
-const FIELD_LABELS: Record<string, string> = {
-  NomeUSR: 'Nome',
-  NomeMae: 'Nome da Mãe',
-  Cpf: 'CPF',
-  dnasc: 'Data de Nascimento',
-  Matricula: 'Matrícula',
-  Sexo: 'Sexo',
-  Situacao: 'Situação',
-  NomeSocial: 'Nome Social',
-  Email: 'E-mail',
-  Telefone: 'Telefone',
-  Celular: 'Celular',
-  Endereco: 'Endereço',
-  Bairro: 'Bairro',
-  Cidade: 'Cidade',
-  UF: 'UF',
-  Cep: 'CEP',
-  Plano: 'Plano',
-  PlanoDescricao: 'Descrição do Plano',
-  DataAdesao: 'Data de Adesão',
-  CpfCnpj: 'CPF/CNPJ',
-  Nome: 'Nome',
-  Codigo: 'Código',
-};
-
-/** Campos que devem ser ocultados (dados internos/sensíveis) */
-const HIDDEN_FIELDS = ['Parse', 'parse', 'Senha', 'senha'];
-
-/** Formata o valor de acordo com o tipo do campo */
-function formatFieldValue(key: string, value: string): string {
-  if (!value || value.trim() === '') return '—';
-
-  const keyLower = key.toLowerCase();
-
-  // Formatar sexo
-  if (keyLower === 'sexo') {
-    if (value === 'M' || value === 'm') return 'Masculino';
-    if (value === 'F' || value === 'f') return 'Feminino';
-    return value;
+/** Formata datas YYYY-MM-DD → DD/MM/AAAA */
+function formatDate(value: string): string {
+  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+    const [ano, mes, dia] = value.split('-');
+    return `${dia}/${mes}/${ano}`;
   }
-
-  // Formatar situação
-  if (keyLower === 'situacao') {
-    if (value === 'A' || value === 'a') return 'Ativo';
-    if (value === 'I' || value === 'i') return 'Inativo';
-    if (value === 'S' || value === 's') return 'Suspenso';
-    return value;
-  }
-
   return value;
 }
 
-/** Retorna o label amigável para um campo */
-function getFieldLabel(key: string): string {
-  return FIELD_LABELS[key] || key.replace(/([A-Z])/g, ' $1').replace(/^./, (s) => s.toUpperCase()).trim();
+/** Formata sexo */
+function formatSexo(value: string): string {
+  if (value === 'M' || value === 'm') return 'Masculino';
+  if (value === 'F' || value === 'f') return 'Feminino';
+  return value;
+}
+
+/** Formata situação */
+function formatSituacao(value: string): string {
+  if (value === 'A' || value === 'a') return 'ATIVO';
+  if (value === 'I' || value === 'i') return 'INATIVO';
+  if (value === 'S' || value === 's') return 'SUSPENSO';
+  return value.toUpperCase();
 }
 
 export default function BeneficiaryDados() {
@@ -96,15 +62,13 @@ export default function BeneficiaryDados() {
   if (isLoading) {
     return (
       <section className="py-16 px-4">
-        <div className="max-w-3xl mx-auto">
-          <h1 className="text-3xl font-bold text-primary-600 mb-8">Meus Dados</h1>
-          <div className="bg-white rounded-lg shadow-md p-8 animate-pulse space-y-4">
-            {[1, 2, 3, 4, 5].map((i) => (
-              <div key={i} className="flex gap-4">
-                <div className="h-4 bg-gray-200 rounded w-1/4" />
-                <div className="h-4 bg-gray-200 rounded w-2/4" />
-              </div>
-            ))}
+        <div className="max-w-lg mx-auto">
+          <h1 className="text-3xl font-bold text-primary-600 mb-8 text-center">Carteirinha Digital</h1>
+          <div className="bg-white rounded-2xl shadow-xl p-8 animate-pulse space-y-4">
+            <div className="h-12 bg-gray-200 rounded w-1/2 mx-auto" />
+            <div className="h-4 bg-gray-200 rounded w-3/4 mx-auto" />
+            <div className="h-4 bg-gray-200 rounded w-2/3 mx-auto" />
+            <div className="h-4 bg-gray-200 rounded w-1/2 mx-auto" />
           </div>
         </div>
       </section>
@@ -114,9 +78,9 @@ export default function BeneficiaryDados() {
   if (error) {
     return (
       <section className="py-16 px-4">
-        <div className="max-w-3xl mx-auto">
-          <h1 className="text-3xl font-bold text-primary-600 mb-8">Meus Dados</h1>
-          <div className="bg-white rounded-lg shadow-md p-8 text-center">
+        <div className="max-w-lg mx-auto">
+          <h1 className="text-3xl font-bold text-primary-600 mb-8 text-center">Carteirinha Digital</h1>
+          <div className="bg-white rounded-2xl shadow-xl p-8 text-center">
             <p className="text-gray-700 mb-4">{error}</p>
             <button
               onClick={fetchDados}
@@ -130,27 +94,130 @@ export default function BeneficiaryDados() {
     );
   }
 
+  const nome = dados?.NomeUSR || dados?.Nome || session?.nome || '';
+  const cpf = dados?.Cpf || dados?.CpfCnpj || session?.cpfCnpj || '';
+  const nascimento = dados?.dnasc || '';
+  const matricula = session?.codigo || dados?.Codigo || '';
+  const plano = dados?.PlanoDescricao || dados?.Plano || '';
+  const situacao = dados?.Situacao || '';
+  const sexo = dados?.Sexo || '';
+  const dataAdesao = dados?.DataAdesao || dados?.Matricula || '';
+
+  const situacaoFormatada = formatSituacao(situacao);
+  const isAtivo = situacaoFormatada === 'ATIVO';
+
   return (
     <section className="py-16 px-4">
-      <div className="max-w-3xl mx-auto">
-        <h1 className="text-3xl font-bold text-primary-600 mb-8">Meus Dados</h1>
-        <div className="bg-white rounded-lg shadow-md p-8">
-          {dados && Object.keys(dados).length > 0 ? (
-            <dl className="divide-y divide-gray-200">
-              {Object.entries(dados)
-                .filter(([key]) => !HIDDEN_FIELDS.includes(key))
-                .filter(([, value]) => value && value.trim() !== '')
-                .map(([key, value]) => (
-                  <div key={key} className="py-4 flex flex-col sm:flex-row sm:gap-4">
-                    <dt className="text-sm font-medium text-gray-500 sm:w-1/3">{getFieldLabel(key)}</dt>
-                    <dd className="text-sm text-gray-900 sm:w-2/3 mt-1 sm:mt-0">{formatFieldValue(key, value)}</dd>
-                  </div>
-                ))}
-            </dl>
-          ) : (
-            <p className="text-gray-600 text-center">Nenhum dado disponível.</p>
-          )}
+      <div className="max-w-lg mx-auto">
+        <h1 className="text-3xl font-bold text-primary-600 mb-8 text-center">Carteirinha Digital</h1>
+
+        {/* Carteirinha */}
+        <div className="relative overflow-hidden rounded-2xl shadow-2xl bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800">
+          {/* Background decorativo */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
+
+          {/* Header da carteirinha */}
+          <div className="relative px-6 pt-6 pb-4 flex items-center justify-between border-b border-white/20">
+            <div className="flex items-center gap-3">
+              <img
+                src="/img/logo.png"
+                alt="Amacor"
+                className="h-10 w-auto brightness-0 invert"
+              />
+              <div>
+                <p className="text-white/80 text-xs font-medium uppercase tracking-wider">Plano de Saúde</p>
+                <p className="text-white font-bold text-sm">{plano || 'AMACOR'}</p>
+              </div>
+            </div>
+            <div className={`px-3 py-1 rounded-full text-xs font-bold ${isAtivo ? 'bg-green-400/20 text-green-300' : 'bg-red-400/20 text-red-300'}`}>
+              {situacaoFormatada || '—'}
+            </div>
+          </div>
+
+          {/* Corpo da carteirinha */}
+          <div className="relative px-6 py-5 space-y-4">
+            {/* Número da carteirinha (matrícula) - destaque */}
+            <div className="bg-white/10 rounded-xl px-4 py-3 backdrop-blur-sm">
+              <p className="text-white/60 text-xs font-medium uppercase tracking-wider mb-1">Nº da Carteirinha</p>
+              <p className="text-white text-2xl font-bold tracking-widest font-mono">{matricula || '—'}</p>
+            </div>
+
+            {/* Nome */}
+            <div>
+              <p className="text-white/60 text-xs font-medium uppercase tracking-wider">Beneficiário(a)</p>
+              <p className="text-white text-lg font-semibold">{nome || '—'}</p>
+            </div>
+
+            {/* Dados em grid */}
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <p className="text-white/60 text-xs font-medium uppercase tracking-wider">CPF</p>
+                <p className="text-white text-sm font-medium">{cpf || '—'}</p>
+              </div>
+              <div>
+                <p className="text-white/60 text-xs font-medium uppercase tracking-wider">Nascimento</p>
+                <p className="text-white text-sm font-medium">{nascimento ? formatDate(nascimento) : '—'}</p>
+              </div>
+              <div>
+                <p className="text-white/60 text-xs font-medium uppercase tracking-wider">Sexo</p>
+                <p className="text-white text-sm font-medium">{sexo ? formatSexo(sexo) : '—'}</p>
+              </div>
+              <div>
+                <p className="text-white/60 text-xs font-medium uppercase tracking-wider">Adesão</p>
+                <p className="text-white text-sm font-medium">{dataAdesao ? formatDate(dataAdesao) : '—'}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Footer */}
+          <div className="relative px-6 py-3 bg-black/20 flex items-center justify-between">
+            <p className="text-white/50 text-xs">amacor.cloud</p>
+            <p className="text-white/50 text-xs">Carteirinha Digital</p>
+          </div>
         </div>
+
+        {/* Info extra fora da carteirinha */}
+        {dados && (
+          <div className="mt-6 bg-white rounded-xl shadow-md p-6">
+            <h2 className="text-lg font-semibold text-gray-800 mb-4">Informações Complementares</h2>
+            <dl className="space-y-3">
+              {dados.NomeMae && (
+                <div className="flex flex-col sm:flex-row sm:gap-2">
+                  <dt className="text-sm font-medium text-gray-500 sm:w-1/3">Nome da Mãe</dt>
+                  <dd className="text-sm text-gray-900">{dados.NomeMae}</dd>
+                </div>
+              )}
+              {dados.Email && (
+                <div className="flex flex-col sm:flex-row sm:gap-2">
+                  <dt className="text-sm font-medium text-gray-500 sm:w-1/3">E-mail</dt>
+                  <dd className="text-sm text-gray-900">{dados.Email}</dd>
+                </div>
+              )}
+              {dados.Telefone && (
+                <div className="flex flex-col sm:flex-row sm:gap-2">
+                  <dt className="text-sm font-medium text-gray-500 sm:w-1/3">Telefone</dt>
+                  <dd className="text-sm text-gray-900">{dados.Telefone}</dd>
+                </div>
+              )}
+              {dados.Celular && (
+                <div className="flex flex-col sm:flex-row sm:gap-2">
+                  <dt className="text-sm font-medium text-gray-500 sm:w-1/3">Celular</dt>
+                  <dd className="text-sm text-gray-900">{dados.Celular}</dd>
+                </div>
+              )}
+              {(dados.Endereco || dados.Bairro || dados.Cidade) && (
+                <div className="flex flex-col sm:flex-row sm:gap-2">
+                  <dt className="text-sm font-medium text-gray-500 sm:w-1/3">Endereço</dt>
+                  <dd className="text-sm text-gray-900">
+                    {[dados.Endereco, dados.Bairro, dados.Cidade, dados.UF].filter(Boolean).join(', ')}
+                    {dados.Cep && ` - CEP: ${dados.Cep}`}
+                  </dd>
+                </div>
+              )}
+            </dl>
+          </div>
+        )}
       </div>
     </section>
   );
