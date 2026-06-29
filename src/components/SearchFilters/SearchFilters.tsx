@@ -1,6 +1,7 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import type { ProviderFilters } from '../../types/provider'
 import { validateCep } from '../../utils/validation'
+import { geocodeCep } from '../../services/geocoding'
 
 export interface SearchFiltersProps {
   specialties: string[]
@@ -23,11 +24,14 @@ export function SearchFilters({
 }: SearchFiltersProps) {
   const [cep, setCep] = useState('')
   const [cepError, setCepError] = useState<string | null>(null)
+  const [cepLoading, setCepLoading] = useState(false)
+  const [cepLocation, setCepLocation] = useState<{ lat: number; lng: number } | null>(null)
   const [city, setCity] = useState('')
   const [neighborhood, setNeighborhood] = useState('')
   const [specialty, setSpecialty] = useState('')
   const [plan, setPlan] = useState('')
   const [providerType, setProviderType] = useState('')
+  const geocodeAbortRef = useRef<AbortController | null>(null)
 
   const emitFilters = useCallback(
     (overrides: Partial<{
@@ -37,6 +41,7 @@ export function SearchFilters({
       specialty: string
       plan: string
       providerType: string
+      userLocation: { lat: number; lng: number } | null
     }> = {}) => {
       const currentCep = overrides.cep ?? cep
       const currentCity = overrides.city ?? city
@@ -44,11 +49,16 @@ export function SearchFilters({
       const currentSpecialty = overrides.specialty ?? specialty
       const currentPlan = overrides.plan ?? plan
       const currentProviderType = overrides.providerType ?? providerType
+      const currentLocation = overrides.userLocation !== undefined ? overrides.userLocation : cepLocation
 
       const filters: ProviderFilters = {}
 
       if (currentCep && validateCep(currentCep)) {
         filters.cep = currentCep.replace(/\D/g, '')
+      }
+      if (currentLocation) {
+        filters.userLocation = currentLocation
+        filters.radiusKm = 30
       }
       if (currentCity) {
         filters.city = currentCity
@@ -68,7 +78,7 @@ export function SearchFilters({
 
       onFiltersChange(filters)
     },
-    [cep, city, neighborhood, specialty, plan, providerType, onFiltersChange]
+    [cep, city, neighborhood, specialty, plan, providerType, cepLocation, onFiltersChange]
   )
 
   const handleCepChange = (value: string) => {
@@ -77,13 +87,47 @@ export function SearchFilters({
 
     const digitsOnly = sanitized.replace(/\D/g, '')
 
+    // Cancel any in-flight geocoding request
+    if (geocodeAbortRef.current) {
+      geocodeAbortRef.current.abort()
+      geocodeAbortRef.current = null
+    }
+
     if (digitsOnly.length === 0) {
       setCepError(null)
-      emitFilters({ cep: '' })
+      setCepLoading(false)
+      setCepLocation(null)
+      emitFilters({ cep: '', userLocation: null })
     } else if (digitsOnly.length === 8) {
       if (validateCep(sanitized)) {
         setCepError(null)
-        emitFilters({ cep: sanitized })
+        setCepLoading(true)
+
+        // Trigger geocoding
+        const abortController = new AbortController()
+        geocodeAbortRef.current = abortController
+
+        geocodeCep(digitsOnly).then((result) => {
+          if (abortController.signal.aborted) return
+
+          setCepLoading(false)
+          if (result) {
+            const location = { lat: result.lat, lng: result.lng }
+            setCepLocation(location)
+            setCepError(null)
+            emitFilters({ cep: sanitized, userLocation: location })
+          } else {
+            setCepLocation(null)
+            setCepError('CEP não encontrado. Verifique o número digitado.')
+            emitFilters({ cep: sanitized, userLocation: null })
+          }
+        }).catch(() => {
+          if (abortController.signal.aborted) return
+          setCepLoading(false)
+          setCepLocation(null)
+          setCepError('Erro ao buscar localização do CEP. Tente novamente.')
+          emitFilters({ cep: sanitized, userLocation: null })
+        })
       }
     } else if (digitsOnly.length > 0 && digitsOnly.length !== 8) {
       setCepError('Informe um CEP válido com 8 dígitos.')
@@ -171,22 +215,37 @@ export function SearchFilters({
         <div className="flex-1 grid grid-cols-1 tablet:grid-cols-3 gap-3">
           <div>
             <label htmlFor="search-cep" className={labelClasses}>CEP</label>
-            <input
-              id="search-cep"
-              type="text"
-              inputMode="numeric"
-              maxLength={9}
-              value={cep}
-              onChange={(e) => handleCepChange(e.target.value)}
-              onBlur={handleCepBlur}
-              placeholder="00000-000"
-              aria-describedby={cepError ? 'cep-error' : undefined}
-              aria-invalid={cepError ? true : undefined}
-              className={`${inputClasses} ${cepError ? 'border-error focus:ring-error/20 focus:border-error' : ''}`}
-            />
+            <div className="relative">
+              <input
+                id="search-cep"
+                type="text"
+                inputMode="numeric"
+                maxLength={9}
+                value={cep}
+                onChange={(e) => handleCepChange(e.target.value)}
+                onBlur={handleCepBlur}
+                placeholder="00000-000"
+                aria-describedby={cepError ? 'cep-error' : undefined}
+                aria-invalid={cepError ? true : undefined}
+                className={`${inputClasses} ${cepError ? 'border-error focus:ring-error/20 focus:border-error' : ''} ${cepLoading ? 'pr-10' : ''}`}
+              />
+              {cepLoading && (
+                <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                  <svg className="w-4 h-4 animate-spin text-primary-500" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  </svg>
+                </div>
+              )}
+            </div>
             {cepError && (
               <p id="cep-error" className="mt-1 text-xs text-error" role="alert">
                 {cepError}
+              </p>
+            )}
+            {cepLocation && !cepError && (
+              <p className="mt-1 text-xs text-green-600">
+                Localização encontrada. Mostrando prestadores próximos.
               </p>
             )}
           </div>

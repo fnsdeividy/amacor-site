@@ -47,6 +47,7 @@ export default function BeneficiaryNovaSolicitacao() {
   const { session } = useAuth();
 
   const [tipoExame, setTipoExame] = useState('');
+  const [nomeExame, setNomeExame] = useState('');
   const [prestador, setPrestador] = useState('');
   const [file, setFile] = useState<File | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
@@ -106,6 +107,7 @@ export default function BeneficiaryNovaSolicitacao() {
     try {
       const formData = new FormData();
       formData.append('tipoExame', tipoExame);
+      formData.append('nomeExame', nomeExame);
       formData.append('prestadorNome', prestador);
       formData.append('codigoBeneficiario', session!.codigo);
       formData.append('nomeBeneficiario', session!.nome);
@@ -182,6 +184,7 @@ export default function BeneficiaryNovaSolicitacao() {
                 onClick={() => {
                   setSuccessData(null);
                   setTipoExame('');
+                  setNomeExame('');
                   setPrestador('');
                   setFile(null);
                   setFileError(null);
@@ -232,6 +235,23 @@ export default function BeneficiaryNovaSolicitacao() {
                 </option>
               ))}
             </select>
+          </div>
+
+          {/* Nome do exame/procedimento */}
+          <div>
+            <label htmlFor="nomeExame" className="block text-sm font-medium text-gray-700 mb-1">
+              Nome do exame/procedimento <span className="text-red-500">*</span>
+            </label>
+            <input
+              id="nomeExame"
+              type="text"
+              value={nomeExame}
+              onChange={(e) => setNomeExame(e.target.value)}
+              required
+              maxLength={200}
+              placeholder="Ex: Ressonância magnética do joelho"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+            />
           </div>
 
           {/* Prestador */}

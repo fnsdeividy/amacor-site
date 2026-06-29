@@ -1,5 +1,5 @@
 import { useState, type FormEvent, type ChangeEvent } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 /**
@@ -25,6 +25,10 @@ export default function Login() {
   const [fieldErrors, setFieldErrors] = useState<{ codigo?: string; senha?: string }>({});
   const { login, isLoading, error, clearError } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // URL de destino após login — vem do BeneficiaryRoute guard ou fallback para /beneficiario
+  const redirectTo = (location.state as { from?: string } | null)?.from || '/beneficiario';
 
   function validateFields(): boolean {
     const errors: { codigo?: string; senha?: string } = {};
@@ -53,7 +57,7 @@ export default function Login() {
 
     try {
       await login({ tipo: 'USR', codigo: codigo.trim(), senha });
-      navigate('/beneficiario');
+      navigate(redirectTo, { replace: true });
     } catch {
       // Error is handled by AuthContext and displayed via the error state
     }

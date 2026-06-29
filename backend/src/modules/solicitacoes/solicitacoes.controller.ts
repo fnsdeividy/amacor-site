@@ -232,9 +232,13 @@ router.post(
         codigoBeneficiario: (req.body.codigoBeneficiario as string).trim(),
         nomeBeneficiario: (req.body.nomeBeneficiario as string).trim(),
         cpfCnpj: (req.body.cpfCnpj as string).trim(),
-        plano: (req.body.plano as string).trim(),
+        plano: req.body.plano
+          ? (req.body.plano as string).trim()
+          : '',
         tipoExame: (req.body.tipoExame as string).trim(),
-        nomeExame: (req.body.nomeExame as string).trim(),
+        nomeExame: req.body.nomeExame
+          ? (req.body.nomeExame as string).trim()
+          : '',
         prestadorNome: (req.body.prestadorNome as string).trim(),
         prestadorEndereco: req.body.prestadorEndereco
           ? (req.body.prestadorEndereco as string).trim()

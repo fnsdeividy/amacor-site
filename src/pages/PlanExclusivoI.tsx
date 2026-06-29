@@ -103,7 +103,7 @@ export default function PlanExclusivoI() {
           alt=""
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-950/90 via-primary-900/80 to-primary-900/60" />
+        <div className="absolute inset-0 bg-gradient-brand-overlay" />
         <div className="relative z-10 mx-auto max-w-5xl w-full px-4 tablet:px-8 py-20 tablet:py-24 text-center">
           <h1 className="text-heading-lg tablet:text-heading-xl text-white">
             Plano Individual Amacor {plan.name}

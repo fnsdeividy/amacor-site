@@ -5,7 +5,6 @@ import { formatDistance } from '../../utils/formatters'
 export interface ProviderCardProps {
   provider: Provider
   userLocation?: { lat: number; lng: number } | null
-  onShowOnMap?: (providerId: string) => void
 }
 
 const typeConfig: Record<string, { accent: string; bg: string; text: string; iconPath: string }> = {
@@ -44,7 +43,6 @@ const typeConfig: Record<string, { accent: string; bg: string; text: string; ico
 export function ProviderCard({
   provider,
   userLocation,
-  onShowOnMap,
 }: ProviderCardProps) {
   const distance =
     userLocation && provider.coordinates
@@ -196,20 +194,6 @@ export function ProviderCard({
           Rota
         </a>
 
-        {onShowOnMap && (
-          <button
-            type="button"
-            onClick={() => onShowOnMap(provider.id)}
-            className="inline-flex items-center gap-1.5 min-h-[40px] px-4 py-2 rounded-lg border border-warm-200 bg-white text-warm-600 text-xs font-medium hover:bg-warm-50 hover:border-warm-300 focus:outline-none focus:ring-2 focus:ring-primary-300 transition-colors"
-            aria-label={`Ver ${provider.name} no mapa`}
-          >
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-            Mapa
-          </button>
-        )}
       </div>
     </article>
   )

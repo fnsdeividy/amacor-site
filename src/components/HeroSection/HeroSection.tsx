@@ -139,7 +139,7 @@ export function HeroSection({
           <img
             src={backgroundImage}
             alt=""
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover scale-105 animate-[scale-in_1.2s_ease-out_both]"
           />
           <div className="absolute inset-0 bg-gradient-brand-overlay" aria-hidden="true" />
         </>
@@ -147,16 +147,21 @@ export function HeroSection({
         <div className="absolute inset-0 bg-gradient-brand" aria-hidden="true" />
       )}
 
+      {/* Floating decorative shapes */}
+      <div className="absolute top-16 right-[10%] w-24 h-24 tablet:w-32 tablet:h-32 rounded-full bg-white/5 animate-float-gentle" aria-hidden="true" />
+      <div className="absolute bottom-24 right-[20%] w-16 h-16 tablet:w-20 tablet:h-20 rounded-full bg-accent-400/10 animate-float-slow" aria-hidden="true" />
+      <div className="absolute top-1/3 right-[5%] w-10 h-10 rounded-full bg-cyan-400/15 animate-pulse-soft" aria-hidden="true" />
+
       {/* Content */}
       <div className="relative z-10 mx-auto max-w-7xl w-full px-4 tablet:px-8 py-24 tablet:py-32 desktop:py-40">
         <div className="flex flex-col gap-8 max-w-2xl">
-          <h1 className="text-heading-lg tablet:text-heading-xl text-white leading-tight tracking-tight">
+          <h1 className="text-heading-lg tablet:text-heading-xl text-white leading-tight tracking-tight animate-fade-in-up">
             {headline}
           </h1>
-          <p className="text-body-lg text-white/85 leading-relaxed max-w-xl">
+          <p className="text-body-lg text-white/85 leading-relaxed max-w-xl animate-fade-in-up delay-200">
             {subtitle}
           </p>
-          <div className="mt-2 flex flex-wrap gap-4">
+          <div className="mt-2 flex flex-wrap gap-4 animate-fade-in-up delay-400">
             {resolvedPrimaryCTA && renderPrimaryCTA(resolvedPrimaryCTA)}
             {secondaryCTA && renderSecondaryCTA(secondaryCTA)}
           </div>

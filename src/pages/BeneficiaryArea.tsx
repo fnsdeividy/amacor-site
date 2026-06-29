@@ -68,6 +68,17 @@ const serviceCards: ServiceCard[] = [
     href: '/beneficiario/alterar-senha',
   },
   {
+    id: 'solicitar-exame',
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8" aria-hidden="true">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    ),
+    title: 'Solicitar exame',
+    description: 'Peça autorização para exames e procedimentos.',
+    href: '/beneficiario/solicitacoes/nova',
+  },
+  {
     id: 'telemedicina',
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8" aria-hidden="true">
@@ -80,6 +91,16 @@ const serviceCards: ServiceCard[] = [
   },
 ]
 
+/**
+ * Gera iniciais do nome do beneficiário para exibir no avatar.
+ */
+function getInitials(name: string): string {
+  if (!name) return '?'
+  const parts = name.trim().split(/\s+/)
+  if (parts.length === 1) return parts[0][0].toUpperCase()
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+}
+
 export default function BeneficiaryArea() {
   const { session, logout } = useAuth()
   const navigate = useNavigate()
@@ -90,59 +111,106 @@ export default function BeneficiaryArea() {
   }
 
   return (
-    <section className="w-full py-20 tablet:py-28 px-4 tablet:px-8 bg-background-light">
-      <div className="mx-auto max-w-5xl">
-        {/* Page heading */}
-        <div className="text-center mb-14">
-          <h1 className="text-heading-md tablet:text-heading-lg text-primary-900">
-            Área do Beneficiário
-          </h1>
-          <p className="mt-4 text-body text-warm-600 max-w-2xl mx-auto">
-            {session ? `Olá, ${session.nome || session.codigo}!` : 'Acesse os serviços disponíveis para associados de forma rápida e prática.'}
-          </p>
-          {session && (
+    <div className="w-full min-h-[calc(100vh-80px)]">
+      {/* Banner de contexto — deixa claro que é uma área logada/restrita */}
+      {session && (
+        <div className="w-full bg-gradient-brand text-white">
+          <div className="mx-auto max-w-5xl px-4 tablet:px-8 py-6 tablet:py-8 flex flex-col tablet:flex-row items-center gap-4 tablet:gap-6">
+            {/* Avatar */}
+            <div className="flex-shrink-0 w-14 h-14 rounded-full bg-white/20 border-2 border-white/40 flex items-center justify-center text-xl font-bold">
+              {getInitials(session.nome || session.codigo)}
+            </div>
+
+            {/* Info do usuário */}
+            <div className="flex-1 text-center tablet:text-left">
+              <div className="flex items-center justify-center tablet:justify-start gap-2 mb-1">
+                <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider bg-white/20 px-2.5 py-1 rounded-full">
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                  Área Restrita
+                </span>
+              </div>
+              <h1 className="text-xl tablet:text-2xl font-bold">
+                Olá, {session.nome || session.codigo}!
+              </h1>
+              <p className="text-sm text-white/80 mt-0.5">
+                Matrícula: {session.codigo}
+              </p>
+            </div>
+
+            {/* Ação de sair */}
             <button
               onClick={handleLogout}
-              className="mt-4 inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-red-600 bg-red-50 border border-red-200 rounded-lg hover:bg-red-100 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="flex-shrink-0 inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium bg-white/10 border border-white/30 rounded-lg hover:bg-white/20 transition-colors focus:outline-none focus:ring-2 focus:ring-white/50"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
               </svg>
               Sair da conta
             </button>
-          )}
+          </div>
         </div>
+      )}
 
-        {/* Service cards grid: 2-col <768px, 3-col >=768px */}
-        <div
-          className="grid grid-cols-2 tablet:grid-cols-3 gap-6"
-          role="list"
-          aria-label="Serviços para beneficiários"
-        >
-          {serviceCards.map((card) => (
-            <Link
-              key={card.id}
-              to={card.href}
-              role="listitem"
-              aria-label={`${card.title}: ${card.description}`}
-              className="group flex flex-col items-center text-center p-6 tablet:p-8 bg-white rounded-2xl shadow-card hover:shadow-card-hover border border-warm-200 hover:border-primary-300 transition-all duration-300 min-w-[120px] min-h-[120px] focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-            >
-              {/* Icon with touch-target sizing */}
-              <div className="flex items-center justify-center w-touch h-touch rounded-xl bg-primary-50 text-primary-600 group-hover:bg-primary-100 group-hover:text-primary-700 transition-colors mb-4">
-                {card.icon}
-              </div>
-              {/* Title */}
-              <h2 className="text-[18px] font-bold text-primary-900 leading-tight mb-2">
-                {card.title}
-              </h2>
-              {/* Description (≤60 chars) */}
-              <p className="text-[15px] text-warm-600 leading-snug">
-                {card.description}
+      {/* Conteúdo principal */}
+      <section className="w-full py-12 tablet:py-16 px-4 tablet:px-8 bg-background-light">
+        <div className="mx-auto max-w-5xl">
+          {/* Heading (somente se não está logado — caso improvável mas defensivo) */}
+          {!session && (
+            <div className="text-center mb-14">
+              <h1 className="text-heading-md tablet:text-heading-lg text-primary-900">
+                Área do Beneficiário
+              </h1>
+              <p className="mt-4 text-body text-warm-600 max-w-2xl mx-auto">
+                Acesse os serviços disponíveis para associados de forma rápida e prática.
               </p>
-            </Link>
-          ))}
+            </div>
+          )}
+
+          {/* Subtítulo quando logado */}
+          {session && (
+            <div className="text-center mb-10">
+              <h2 className="text-heading-sm tablet:text-heading-md text-primary-900">
+                O que deseja fazer?
+              </h2>
+              <p className="mt-2 text-[15px] text-warm-500">
+                Selecione um dos serviços abaixo para continuar.
+              </p>
+            </div>
+          )}
+
+          {/* Service cards grid: 2-col <768px, 3-col >=768px */}
+          <div
+            className="grid grid-cols-2 tablet:grid-cols-3 gap-6"
+            role="list"
+            aria-label="Serviços para beneficiários"
+          >
+            {serviceCards.map((card) => (
+              <Link
+                key={card.id}
+                to={card.href}
+                role="listitem"
+                aria-label={`${card.title}: ${card.description}`}
+                className="group flex flex-col items-center text-center p-6 tablet:p-8 bg-white rounded-2xl shadow-card hover:shadow-card-hover border border-warm-200 hover:border-primary-300 transition-all duration-300 min-w-[120px] min-h-[120px] focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+              >
+                {/* Icon with touch-target sizing */}
+                <div className="flex items-center justify-center w-touch h-touch rounded-xl bg-primary-50 text-primary-600 group-hover:bg-primary-100 group-hover:text-primary-700 transition-colors mb-4">
+                  {card.icon}
+                </div>
+                {/* Title */}
+                <h2 className="text-[18px] font-bold text-primary-900 leading-tight mb-2">
+                  {card.title}
+                </h2>
+                {/* Description (≤60 chars) */}
+                <p className="text-[15px] text-warm-600 leading-snug">
+                  {card.description}
+                </p>
+              </Link>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   )
 }

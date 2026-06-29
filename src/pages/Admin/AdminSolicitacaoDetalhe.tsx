@@ -263,8 +263,12 @@ export default function AdminSolicitacaoDetalhe() {
         throw new Error(`HTTP ${response.status}`);
       }
 
-      const data: SolicitacaoDetalhe = await response.json();
-      setSolicitacao(data);
+      const data = await response.json();
+      const merged: SolicitacaoDetalhe = {
+        ...data.solicitacao,
+        anexos: data.anexos || [],
+      };
+      setSolicitacao(merged);
       setFetchState('success');
     } catch {
       setFetchState('error');
@@ -415,11 +419,45 @@ export default function AdminSolicitacaoDetalhe() {
   // --- Handlers for Attachments ---
 
   function handleVisualizar(anexoId: string) {
-    window.open(`${API_BASE_URL}/anexos/${anexoId}/visualizar`, '_blank');
+    if (!session?.token) return;
+    fetch(`${API_BASE_URL}/anexos/${anexoId}/visualizar`, {
+      headers: { Authorization: `Bearer ${session.token}` },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error('Erro ao carregar arquivo');
+        return res.blob();
+      })
+      .then((blob) => {
+        const url = URL.createObjectURL(blob);
+        window.open(url, '_blank');
+      })
+      .catch(() => {
+        alert('Não foi possível abrir o arquivo.');
+      });
   }
 
-  function handleDownload(anexoId: string) {
-    window.open(`${API_BASE_URL}/anexos/${anexoId}/download`, '_blank');
+  function handleDownload(anexoId: string, nomeOriginal?: string) {
+    if (!session?.token) return;
+    fetch(`${API_BASE_URL}/anexos/${anexoId}/download`, {
+      headers: { Authorization: `Bearer ${session.token}` },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error('Erro ao baixar arquivo');
+        return res.blob();
+      })
+      .then((blob) => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = nomeOriginal || 'arquivo';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      })
+      .catch(() => {
+        alert('Não foi possível baixar o arquivo.');
+      });
   }
 
   // --- Render States ---
@@ -593,7 +631,7 @@ export default function AdminSolicitacaoDetalhe() {
                       </button>
                       <button
                         type="button"
-                        onClick={() => handleDownload(anexo.id)}
+                        onClick={() => handleDownload(anexo.id, anexo.nomeOriginal)}
                         className="p-2 text-primary-600 hover:bg-primary-50 rounded-lg transition-colors"
                         title="Download"
                         aria-label={`Download ${anexo.nomeOriginal}`}

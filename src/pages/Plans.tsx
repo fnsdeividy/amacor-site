@@ -37,36 +37,36 @@ export default function Plans() {
   return (
     <div className="w-full">
       {/* Page Header with photo background */}
-      <section className="relative w-full overflow-hidden min-h-[280px] tablet:min-h-[380px] flex items-center">
+      <section className="relative w-full overflow-hidden min-h-[200px] tablet:min-h-[260px] flex items-center">
         <img
           src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1920&q=80"
           alt=""
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-950/90 via-primary-900/80 to-primary-900/60" />
-        <div className="relative z-10 mx-auto max-w-7xl w-full px-4 tablet:px-8 py-20 tablet:py-24">
+        <div className="absolute inset-0 bg-gradient-brand-overlay" />
+        <div className="relative z-10 mx-auto max-w-7xl w-full px-4 tablet:px-8 py-14 tablet:py-16">
           <h1 className="text-heading-lg tablet:text-heading-xl text-white text-center">
             Nossos Planos de Saúde
           </h1>
-          <p className="mt-4 text-body-lg text-white/80 text-center max-w-2xl mx-auto">
+          <p className="mt-3 text-body-lg text-white/80 text-center max-w-2xl mx-auto">
             Conheça os planos ambulatoriais da Amacor e escolha o ideal para você ou sua empresa.
           </p>
         </div>
       </section>
 
       {/* Simulation Widget */}
-      <section className="px-4 tablet:px-8 max-w-7xl mx-auto -mt-12 relative z-20">
+      <section className="px-4 tablet:px-8 max-w-7xl mx-auto -mt-8 relative z-20">
         <SimulationWidget className="border border-warm-200" />
       </section>
 
       {/* Filter Tabs + Plans Grid */}
-      <section className="px-4 py-16 tablet:py-20 tablet:px-8 max-w-7xl mx-auto">
-        <h2 className="text-heading-md tablet:text-heading-lg text-primary-900 text-center mb-8">
+      <section className="px-4 py-10 tablet:py-12 tablet:px-8 max-w-7xl mx-auto">
+        <h2 className="text-heading-md tablet:text-heading-lg text-primary-900 text-center mb-6">
           Escolha o plano ideal
         </h2>
 
         {/* Filter Tabs */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12" role="tablist" aria-label="Filtrar planos por categoria">
+        <div className="flex flex-wrap justify-center gap-2 mb-8" role="tablist" aria-label="Filtrar planos por categoria">
           {FILTER_TABS.map((tab) => (
             <button
               key={tab}
@@ -75,8 +75,8 @@ export default function Plans() {
               aria-selected={activeFilter === tab}
               onClick={() => setActiveFilter(tab)}
               className={`min-h-touch px-6 py-3 rounded-xl font-semibold text-body transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-primary-300 ${activeFilter === tab
-                  ? 'bg-primary-600 text-white shadow-sm'
-                  : 'bg-white text-warm-600 border border-warm-300 hover:bg-primary-50 hover:text-primary-700'
+                ? 'bg-primary-600 text-white shadow-sm'
+                : 'bg-white text-warm-600 border border-warm-300 hover:bg-primary-50 hover:text-primary-700'
                 }`}
             >
               {tab}
@@ -86,7 +86,7 @@ export default function Plans() {
 
         {/* Plans Grid */}
         <div
-          className="grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-4 gap-6"
+          className="grid grid-cols-1 tablet:grid-cols-2 gap-8"
           role="tabpanel"
           aria-label={`Planos: ${activeFilter}`}
         >
@@ -116,13 +116,13 @@ export default function Plans() {
       </section>
 
       {/* Plan Comparison Table */}
-      <section className="w-full py-16 tablet:py-20 px-4 tablet:px-8 bg-warm-50">
+      <section className="w-full py-10 tablet:py-14 px-4 tablet:px-8 bg-warm-50">
         <div className="mx-auto max-w-7xl">
-          <div className="text-center mb-10">
+          <div className="text-center mb-8">
             <h2 className="text-heading-md tablet:text-heading-lg text-primary-900">
               Compare os planos
             </h2>
-            <p className="mt-3 text-body text-warm-600 max-w-2xl mx-auto">
+            <p className="mt-2 text-body text-warm-600 max-w-2xl mx-auto">
               Veja as diferenças entre os planos e escolha o que mais se encaixa nas suas necessidades.
             </p>
           </div>
@@ -234,12 +234,12 @@ export default function Plans() {
       </section>
 
       {/* Bottom CTA */}
-      <section className="w-full py-20 tablet:py-24 px-4 tablet:px-8 bg-primary-900 relative overflow-hidden">
+      <section className="w-full py-12 tablet:py-16 px-4 tablet:px-8 bg-primary-900 relative overflow-hidden">
         <div className="relative mx-auto max-w-4xl text-center">
-          <h2 className="text-heading-md tablet:text-heading-lg text-white mb-5">
+          <h2 className="text-heading-md tablet:text-heading-lg text-white mb-4">
             Pronto para cuidar da sua saúde?
           </h2>
-          <p className="text-body-lg text-white/75 mb-10 max-w-2xl mx-auto">
+          <p className="text-body-lg text-white/75 mb-8 max-w-2xl mx-auto">
             Entre em contato e receba uma cotação personalizada. Nossa equipe está pronta para ajudar você a encontrar o plano ideal.
           </p>
           <div className="flex flex-col items-center gap-4 tablet:flex-row tablet:justify-center">

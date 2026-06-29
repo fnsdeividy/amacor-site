@@ -1,13 +1,13 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import { errorHandler } from './middleware/errorHandler';
 import authRouter from './modules/auth/auth.controller';
 import solicitacoesRouter from './modules/solicitacoes/solicitacoes.controller';
 import crmRouter from './modules/crm/crm.controller';
 import anexosRouter from './modules/anexos/anexos.controller';
-
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;

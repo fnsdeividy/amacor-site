@@ -1,3 +1,5 @@
+import { useInView } from '../../hooks/useInView'
+
 export interface TrustStat {
   id: string
   value: string
@@ -12,8 +14,11 @@ export interface TrustSectionProps {
 }
 
 export function TrustSection({ title, stats, className = '' }: TrustSectionProps) {
+  const { ref, isInView } = useInView({ threshold: 0.1 })
+
   return (
     <section
+      ref={ref}
       className={`w-full py-20 tablet:py-24 px-4 tablet:px-8 bg-background-light relative overflow-hidden ${className}`}
       aria-labelledby="trust-section-heading"
     >
@@ -22,16 +27,19 @@ export function TrustSection({ title, stats, className = '' }: TrustSectionProps
       <div className="relative mx-auto max-w-6xl">
         <h2
           id="trust-section-heading"
-          className="text-heading-md tablet:text-heading-lg text-primary-900 text-center mb-12 tablet:mb-16"
+          className={`text-heading-md tablet:text-heading-lg text-primary-900 text-center mb-12 tablet:mb-16 ${isInView ? 'animate-fade-in-up' : 'opacity-0'
+            }`}
         >
           {title}
         </h2>
 
         <div className="grid grid-cols-2 tablet:grid-cols-3 desktop:grid-cols-3 gap-4 tablet:gap-6">
-          {stats.map((stat) => (
+          {stats.map((stat, index) => (
             <div
               key={stat.id}
-              className="flex flex-col items-center justify-center rounded-xl shadow-soft bg-white p-6 text-center transition-shadow duration-200 hover:shadow-card-hover"
+              className={`flex flex-col items-center justify-center rounded-xl shadow-soft bg-white p-6 text-center hover-lift hover:shadow-card-hover transition-all duration-300 ${isInView ? 'animate-fade-in-up' : 'opacity-0'
+                }`}
+              style={{ animationDelay: `${150 + index * 100}ms` }}
             >
               {stat.icon && (
                 <span

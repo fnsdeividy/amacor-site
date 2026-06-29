@@ -50,12 +50,15 @@ export function useProviderSearch(options: UseProviderSearchOptions): UseProvide
     [providers, filters]
   );
 
+  // Effective user location: browser geolocation takes priority, then CEP-based location from filters
+  const effectiveLocation = userLocation || filters.userLocation || null;
+
   // Apply sorting to filtered results
   const sortedProviders = useMemo(() => {
     switch (sortBy) {
       case 'proximity':
-        if (userLocation) {
-          return sortProvidersByDistance(filteredProviders, userLocation.lat, userLocation.lng);
+        if (effectiveLocation) {
+          return sortProvidersByDistance(filteredProviders, effectiveLocation.lat, effectiveLocation.lng);
         }
         // Fallback to alphabetical if no user location
         return sortProvidersByName(filteredProviders);
@@ -70,7 +73,7 @@ export function useProviderSearch(options: UseProviderSearchOptions): UseProvide
       default:
         return filteredProviders;
     }
-  }, [filteredProviders, sortBy, userLocation]);
+  }, [filteredProviders, sortBy, effectiveLocation]);
 
   // Pagination (20 items per page)
   const totalResults = sortedProviders.length;
@@ -85,7 +88,7 @@ export function useProviderSearch(options: UseProviderSearchOptions): UseProvide
   // When filters change, reset to page 1
   const setFilters = useCallback(
     (newFilters: Partial<ProviderFilters>) => {
-      setFiltersState((prev) => ({ ...prev, ...newFilters }));
+      setFiltersState(newFilters as ProviderFilters);
       pagination.goToPage(1);
     },
     [pagination]

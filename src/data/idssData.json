@@ -1,26 +1,110 @@
 [
   {
     "year": 2020,
+    "anoBase": 2019,
+    "registroAns": "41201-5",
+    "cnpj": "03.670.297/0001-90",
+    "razaoSocial": "MH VIDA - OPERADORA DE PLANOS DE SAÚDE LTDA",
+    "nomeFantasia": "MHVIDA - Operadora de Planos de Saúde LTDA",
+    "situacao": "Ativa",
+    "totalConsumidores": 2045,
+    "tipo": "Operadora médico-hospitalar",
+    "modalidade": "Medicina de Grupo",
     "indicators": {
-      "IDSS": 0.4512,
-      "IDQS": 0.1234,
-      "IDGA": 0.2100,
-      "IDSM": 0.8750,
-      "IDGR": 0.5000
+      "IDSS": 0.5838,
+      "IDQS": 0.9922,
+      "IDGA": 0.3062,
+      "IDSM": 0.7286,
+      "IDGR": 0.7348
+    }
+  },
+  {
+    "year": 2021,
+    "anoBase": 2020,
+    "registroAns": "41201-5",
+    "cnpj": "03.670.297/0001-90",
+    "razaoSocial": "MH VIDA - OPERADORA DE PLANOS DE SAÚDE LTDA",
+    "nomeFantasia": "MHVIDA - Operadora de Planos de Saúde LTDA",
+    "situacao": "Ativa",
+    "totalConsumidores": 1908,
+    "tipo": "Operadora médico-hospitalar",
+    "modalidade": "Medicina de Grupo",
+    "indicators": {
+      "IDSS": 0.5730,
+      "IDQS": 0.5280,
+      "IDGA": 0.3122,
+      "IDSM": 0.8993,
+      "IDGR": 0.7018
+    }
+  },
+  {
+    "year": 2022,
+    "anoBase": 2021,
+    "registroAns": "41201-5",
+    "cnpj": "03.670.297/0001-90",
+    "razaoSocial": "MH VIDA - OPERADORA DE PLANOS DE SAÚDE LTDA",
+    "nomeFantasia": "MHVIDA - Operadora de Planos de Saúde LTDA",
+    "situacao": "Ativa",
+    "totalConsumidores": 1764,
+    "tipo": "Operadora médico-hospitalar",
+    "modalidade": "Medicina de Grupo",
+    "indicators": {
+      "IDSS": 0.6773,
+      "IDQS": 0.6385,
+      "IDGA": 0.3693,
+      "IDSM": 0.7907,
+      "IDGR": 0.7788
     }
   },
   {
     "year": 2023,
+    "anoBase": 2022,
+    "registroAns": "41201-5",
+    "cnpj": "03.670.297/0001-90",
+    "razaoSocial": "MH VIDA - OPERADORA DE PLANOS DE SAÚDE LTDA",
+    "nomeFantasia": "MHVIDA - Operadora de Planos de Saúde LTDA",
+    "situacao": "Ativa",
+    "totalConsumidores": 2682,
+    "tipo": "Operadora médico-hospitalar",
+    "modalidade": "Medicina de Grupo",
     "indicators": {
-      "IDSS": 0.3800,
-      "IDQS": 0.0500,
-      "IDGA": 0.1000,
-      "IDSM": 0.9000,
-      "IDGR": 0.4000
+      "IDSS": 0.4160,
+      "IDQS": 0.4546,
+      "IDGA": 0.0036,
+      "IDSM": 0.6847,
+      "IDGR": 0.7311
+    }
+  },
+  {
+    "year": 2024,
+    "anoBase": 2023,
+    "registroAns": "41201-5",
+    "cnpj": "03.670.297/0001-90",
+    "razaoSocial": "MH VIDA - OPERADORA DE PLANOS DE SAÚDE LTDA",
+    "nomeFantasia": "MH VIDA - OPERADORA DE PLANOS DE SAÚDE LTDA",
+    "situacao": "Ativa",
+    "totalConsumidores": 2517,
+    "tipo": "Operadora médico-hospitalar",
+    "modalidade": "Medicina de Grupo",
+    "indicators": {
+      "IDSS": 0.6243,
+      "IDQS": 0.7192,
+      "IDGA": 0.2010,
+      "IDSM": 0.9318,
+      "IDGR": 0.6865
     }
   },
   {
     "year": 2025,
+    "anoBase": 2024,
+    "registroAns": "41201-5",
+    "cnpj": "03.670.297/0001-90",
+    "razaoSocial": "MH VIDA - OPERADORA DE PLANOS DE SAÚDE LTDA",
+    "nomeFantasia": "MH VIDA - OPERADORA DE PLANOS DE SAÚDE LTDA",
+    "situacao": "Ativa",
+    "totalConsumidores": 2165,
+    "tipo": "Operadora médico-hospitalar",
+    "modalidade": "Medicina de Grupo",
     "indicators": {
       "IDSS": 0.3095,
       "IDQS": 0.0000,

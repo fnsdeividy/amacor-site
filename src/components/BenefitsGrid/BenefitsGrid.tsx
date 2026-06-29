@@ -1,4 +1,5 @@
 import type { BenefitItem } from '../../types/simulation'
+import { useInView } from '../../hooks/useInView'
 
 export interface BenefitsGridProps {
   benefits: BenefitItem[]
@@ -48,17 +49,22 @@ function BenefitIcon({ icon }: { icon: string }) {
 }
 
 export function BenefitsGrid({ benefits, className = '' }: BenefitsGridProps) {
+  const { ref, isInView } = useInView({ threshold: 0.1 })
+
   return (
     <section
+      ref={ref}
       className={`grid grid-cols-2 tablet:grid-cols-3 desktop:grid-cols-3 gap-4 tablet:gap-6 ${className}`}
       aria-label="Benefícios do plano"
     >
-      {benefits.map((benefit) => (
+      {benefits.map((benefit, index) => (
         <article
           key={benefit.id}
-          className="flex flex-col items-center text-center rounded-2xl bg-white p-6 shadow-soft border border-warm-100 transition-shadow duration-200 hover:shadow-card-hover"
+          className={`flex flex-col items-center text-center rounded-2xl bg-white p-6 shadow-soft border border-warm-100 hover-lift hover:shadow-card-hover transition-all duration-300 ${isInView ? 'animate-fade-in-up' : 'opacity-0'
+            }`}
+          style={{ animationDelay: `${index * 100}ms` }}
         >
-          <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-primary-50 text-primary-600 mb-4">
+          <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-primary-50 text-primary-600 mb-4 group-hover:scale-110 transition-transform">
             <BenefitIcon icon={benefit.icon} />
           </div>
 

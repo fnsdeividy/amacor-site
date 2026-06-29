@@ -1,4 +1,5 @@
 import type { Testimonial } from '../../types'
+import { useInView } from '../../hooks/useInView'
 
 export interface TestimonialsSectionProps {
   title?: string
@@ -41,7 +42,7 @@ function StarRating({ rating }: { rating: number }) {
 
 function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   return (
-    <article className="rounded-2xl shadow-soft bg-white p-6 tablet:p-8 flex flex-col gap-4">
+    <article className="rounded-2xl shadow-soft bg-white p-6 tablet:p-8 flex flex-col gap-4 hover-lift hover:shadow-card-hover transition-all duration-300">
       <blockquote className="text-body italic text-warm-700 leading-relaxed flex-1">
         &ldquo;{testimonial.quote}&rdquo;
       </blockquote>
@@ -74,18 +75,30 @@ export function TestimonialsSection({
   testimonials,
   className = '',
 }: TestimonialsSectionProps) {
+  const { ref, isInView } = useInView({ threshold: 0.1 })
+
   return (
-    <section className={`w-full py-20 tablet:py-24 px-4 tablet:px-8 ${className}`}>
-      <div className="mx-auto max-w-7xl">
+    <section ref={ref} className={`w-full py-20 tablet:py-24 px-4 tablet:px-8 relative overflow-hidden ${className}`}>
+      {/* Subtle background texture */}
+      <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'url(/img/textures/waves.svg)', backgroundSize: '800px', backgroundPosition: 'top center', backgroundRepeat: 'no-repeat' }} aria-hidden="true" />
+
+      <div className="relative mx-auto max-w-7xl">
         {title && (
-          <h2 className="text-heading-md tablet:text-heading-lg text-primary-900 text-center mb-12">
+          <h2 className={`text-heading-md tablet:text-heading-lg text-primary-900 text-center mb-12 ${isInView ? 'animate-fade-in-up' : 'opacity-0'
+            }`}>
             {title}
           </h2>
         )}
 
         <div className="grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-3 gap-6">
-          {testimonials.map((testimonial) => (
-            <TestimonialCard key={testimonial.id} testimonial={testimonial} />
+          {testimonials.map((testimonial, index) => (
+            <div
+              key={testimonial.id}
+              className={`${isInView ? 'animate-fade-in-up' : 'opacity-0'}`}
+              style={{ animationDelay: `${150 + index * 120}ms` }}
+            >
+              <TestimonialCard testimonial={testimonial} />
+            </div>
           ))}
         </div>
       </div>

@@ -38,8 +38,8 @@ export function validateCriarSolicitacao(body: unknown): ValidationResult {
   }
 
   if (!data.plano || typeof data.plano !== 'string' || data.plano.trim().length === 0) {
-    campos.plano = 'Plano é obrigatório';
-  } else if (data.plano.trim().length > 100) {
+    // plano é opcional — beneficiário pode não saber
+  } else if (typeof data.plano === 'string' && data.plano.trim().length > 100) {
     campos.plano = 'Plano deve ter no máximo 100 caracteres';
   }
 
@@ -50,8 +50,8 @@ export function validateCriarSolicitacao(body: unknown): ValidationResult {
   }
 
   if (!data.nomeExame || typeof data.nomeExame !== 'string' || data.nomeExame.trim().length === 0) {
-    campos.nomeExame = 'Nome do exame é obrigatório';
-  } else if (data.nomeExame.trim().length > 200) {
+    // nomeExame é opcional
+  } else if (typeof data.nomeExame === 'string' && data.nomeExame.trim().length > 200) {
     campos.nomeExame = 'Nome do exame deve ter no máximo 200 caracteres';
   }
 

@@ -95,7 +95,7 @@ export function filterProviders(
 
   // Filter by radius from user location
   if (filters.userLocation) {
-    const radiusKm = filters.radiusKm ?? 10;
+    const radiusKm = filters.radiusKm ?? 30;
     result = result.filter((provider) => {
       if (!provider.coordinates) return false;
       const distance = haversineDistance(

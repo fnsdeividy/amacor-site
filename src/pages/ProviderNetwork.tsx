@@ -1,4 +1,5 @@
-import type { Provider, Specialty, PlanType, ProviderType } from '../types/provider'
+import { useState } from 'react'
+import type { Provider, ProviderFilters, Specialty, PlanType, ProviderType } from '../types/provider'
 import { useGeolocation } from '../hooks/useGeolocation'
 import { useProviderSearch } from '../hooks/useProviderSearch'
 import { SearchFilters } from '../components/SearchFilters/SearchFilters'
@@ -35,6 +36,10 @@ const PROVIDER_TYPES: ProviderType[] = [
 
 export default function ProviderNetwork() {
   const geolocation = useGeolocation()
+  const [cepLocation, setCepLocation] = useState<{ lat: number; lng: number } | null>(null)
+
+  // Effective location: browser geolocation takes priority, then CEP-based location
+  const effectiveLocation = geolocation.position || cepLocation
 
   const {
     results,
@@ -45,13 +50,23 @@ export default function ProviderNetwork() {
     totalPages,
   } = useProviderSearch({
     providers,
-    userLocation: geolocation.position,
+    userLocation: effectiveLocation,
   })
+
+  const handleFiltersChange = (filters: ProviderFilters) => {
+    // Track CEP-derived location for ProviderCard distance display
+    if (filters.userLocation) {
+      setCepLocation(filters.userLocation)
+    } else if (!geolocation.position) {
+      setCepLocation(null)
+    }
+    setFilters(filters)
+  }
 
   return (
     <div className="w-full min-h-screen bg-background-light">
       {/* Hero Section */}
-      <section className="relative w-full bg-gradient-to-br from-primary-950 via-primary-900 to-primary-800 overflow-hidden">
+      <section className="relative w-full bg-gradient-brand overflow-hidden">
         {/* Abstract geometric decoration */}
         <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
           <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-primary-700/20 blur-3xl" />
@@ -120,7 +135,7 @@ export default function ProviderNetwork() {
               specialties={SPECIALTIES}
               plans={PLANS}
               providerTypes={PROVIDER_TYPES}
-              onFiltersChange={setFilters}
+              onFiltersChange={handleFiltersChange}
               onGeolocationRequest={geolocation.requestLocation}
               isGeolocating={geolocation.isLoading}
               geolocationError={geolocation.error}
@@ -159,8 +174,7 @@ export default function ProviderNetwork() {
                     <ProviderCard
                       key={provider.id}
                       provider={provider}
-                      userLocation={geolocation.position}
-                      onShowOnMap={() => { }}
+                      userLocation={effectiveLocation}
                     />
                   ))}
                 </div>

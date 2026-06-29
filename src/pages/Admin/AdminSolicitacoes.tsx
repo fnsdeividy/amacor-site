@@ -233,8 +233,8 @@ function FilterPanel({ filtros, errors, onFiltrosChange, onSubmit, onClear }: Fi
                 onChange={(e) => handleChange('cpfCnpj', e.target.value)}
                 placeholder="000.000.000-00"
                 className={`w-full rounded-lg border px-3 py-2 text-sm text-warm-800 placeholder:text-warm-400 focus:outline-none transition-colors ${errors.cpfCnpj
-                    ? 'border-red-300 focus:border-red-400 focus:ring-2 focus:ring-red-100'
-                    : 'border-warm-200 focus:border-primary-400 focus:ring-2 focus:ring-primary-100'
+                  ? 'border-red-300 focus:border-red-400 focus:ring-2 focus:ring-red-100'
+                  : 'border-warm-200 focus:border-primary-400 focus:ring-2 focus:ring-primary-100'
                   }`}
                 aria-invalid={!!errors.cpfCnpj}
                 aria-describedby={errors.cpfCnpj ? 'filter-cpf-error' : undefined}
@@ -307,8 +307,8 @@ function FilterPanel({ filtros, errors, onFiltrosChange, onSubmit, onClear }: Fi
                 value={filtros.dataInicio}
                 onChange={(e) => handleChange('dataInicio', e.target.value)}
                 className={`w-full rounded-lg border px-3 py-2 text-sm text-warm-800 focus:outline-none transition-colors ${errors.periodo
-                    ? 'border-red-300 focus:border-red-400 focus:ring-2 focus:ring-red-100'
-                    : 'border-warm-200 focus:border-primary-400 focus:ring-2 focus:ring-primary-100'
+                  ? 'border-red-300 focus:border-red-400 focus:ring-2 focus:ring-red-100'
+                  : 'border-warm-200 focus:border-primary-400 focus:ring-2 focus:ring-primary-100'
                   }`}
                 aria-invalid={!!errors.periodo}
                 aria-describedby={errors.periodo ? 'filter-periodo-error' : undefined}
@@ -326,8 +326,8 @@ function FilterPanel({ filtros, errors, onFiltrosChange, onSubmit, onClear }: Fi
                 value={filtros.dataFim}
                 onChange={(e) => handleChange('dataFim', e.target.value)}
                 className={`w-full rounded-lg border px-3 py-2 text-sm text-warm-800 focus:outline-none transition-colors ${errors.periodo
-                    ? 'border-red-300 focus:border-red-400 focus:ring-2 focus:ring-red-100'
-                    : 'border-warm-200 focus:border-primary-400 focus:ring-2 focus:ring-primary-100'
+                  ? 'border-red-300 focus:border-red-400 focus:ring-2 focus:ring-red-100'
+                  : 'border-warm-200 focus:border-primary-400 focus:ring-2 focus:ring-primary-100'
                   }`}
                 aria-invalid={!!errors.periodo}
               />
@@ -636,19 +636,15 @@ export default function AdminSolicitacoes() {
             {/* Table */}
             <div className="rounded-xl border border-warm-200 bg-white shadow-sm overflow-hidden">
               <div className="overflow-x-auto">
-                <table className="w-full min-w-[1000px] text-sm text-left">
+                <table className="w-full text-sm text-left">
                   <thead className="border-b border-warm-100 bg-warm-50">
                     <tr>
                       <th scope="col" className="px-4 py-3 font-medium text-warm-700 whitespace-nowrap">Nº</th>
-                      <th scope="col" className="px-4 py-3 font-medium text-warm-700 whitespace-nowrap">Protocolo</th>
                       <th scope="col" className="px-4 py-3 font-medium text-warm-700 whitespace-nowrap">Nome</th>
-                      <th scope="col" className="px-4 py-3 font-medium text-warm-700 whitespace-nowrap">Código</th>
-                      <th scope="col" className="px-4 py-3 font-medium text-warm-700 whitespace-nowrap">CPF/CNPJ</th>
-                      <th scope="col" className="px-4 py-3 font-medium text-warm-700 whitespace-nowrap">Tipo</th>
+                      <th scope="col" className="px-4 py-3 font-medium text-warm-700 whitespace-nowrap">Carteirinha</th>
                       <th scope="col" className="px-4 py-3 font-medium text-warm-700 whitespace-nowrap">Exame</th>
                       <th scope="col" className="px-4 py-3 font-medium text-warm-700 whitespace-nowrap">Data</th>
                       <th scope="col" className="px-4 py-3 font-medium text-warm-700 whitespace-nowrap">Status</th>
-                      <th scope="col" className="px-4 py-3 font-medium text-warm-700 whitespace-nowrap">Envio CRM</th>
                       <th scope="col" className="px-4 py-3 font-medium text-warm-700 whitespace-nowrap">Ação</th>
                     </tr>
                   </thead>
@@ -656,26 +652,16 @@ export default function AdminSolicitacoes() {
                     {solicitacoes.map((sol) => (
                       <tr key={sol.id} className="hover:bg-warm-50 transition-colors">
                         <td className="px-4 py-3 text-warm-800 font-medium">{sol.numeroInterno}</td>
-                        <td className="px-4 py-3 text-warm-700 font-mono text-xs">{sol.protocolo}</td>
-                        <td className="px-4 py-3 text-warm-800 max-w-[200px] truncate" title={sol.nomeBeneficiario}>
+                        <td className="px-4 py-3 text-warm-800 max-w-[180px] truncate" title={sol.nomeBeneficiario}>
                           {sol.nomeBeneficiario}
                         </td>
                         <td className="px-4 py-3 text-warm-700">{sol.codigoBeneficiario}</td>
-                        <td className="px-4 py-3 text-warm-700 whitespace-nowrap">{sol.cpfCnpj}</td>
-                        <td className="px-4 py-3 text-warm-700 max-w-[120px] truncate" title={sol.tipoExame}>
-                          {sol.tipoExame}
-                        </td>
-                        <td className="px-4 py-3 text-warm-700 max-w-[150px] truncate" title={sol.nomeExame}>
-                          {sol.nomeExame}
+                        <td className="px-4 py-3 text-warm-700 max-w-[150px] truncate" title={`${sol.tipoExame} — ${sol.nomeExame}`}>
+                          {sol.nomeExame || sol.tipoExame}
                         </td>
                         <td className="px-4 py-3 text-warm-700 whitespace-nowrap">{formatDate(sol.criadoEm)}</td>
                         <td className="px-4 py-3">
                           <StatusBadge status={sol.status} />
-                        </td>
-                        <td className="px-4 py-3">
-                          <span className={`inline-flex items-center text-xs font-medium ${sol.enviadoCrm ? 'text-green-700' : 'text-warm-500'}`}>
-                            {sol.enviadoCrm ? 'Sim' : 'Não'}
-                          </span>
                         </td>
                         <td className="px-4 py-3">
                           <Link

@@ -15,7 +15,7 @@ export default function Institutional() {
           alt=""
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-950/90 via-primary-900/80 to-primary-800/70" />
+        <div className="absolute inset-0 bg-gradient-brand-overlay" />
         <div className="relative z-10 mx-auto max-w-7xl w-full px-4 tablet:px-8 py-20 tablet:py-28">
           <span className="inline-block text-sm font-semibold text-accent-300 uppercase tracking-wider mb-4">
             Quem somos

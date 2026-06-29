@@ -46,6 +46,10 @@
       "city": "Rio de Janeiro",
       "state": "RJ"
     },
+    "coordinates": {
+      "lat": -22.9012,
+      "lng": -43.5637
+    },
     "phone": "(21) 3405-9494",
     "whatsapp": "(21) 98391-0224",
     "operatingHours": {
@@ -73,6 +77,10 @@
       "neighborhood": "Bangu",
       "city": "Rio de Janeiro",
       "state": "RJ"
+    },
+    "coordinates": {
+      "lat": -22.8830,
+      "lng": -43.4667
     },
     "phone": "(21) 2401-7396 / 3291-0494",
     "operatingHours": {
@@ -138,6 +146,10 @@
       "neighborhood": "Guaratiba",
       "city": "Rio de Janeiro",
       "state": "RJ"
+    },
+    "coordinates": {
+      "lat": -23.0500,
+      "lng": -43.5833
     },
     "phone": "(21) 3420-3141 / 3802-9490 / 3490-2220",
     "whatsapp": "(21) 96747-3702",
@@ -209,6 +221,10 @@
       "city": "Rio de Janeiro",
       "state": "RJ"
     },
+    "coordinates": {
+      "lat": -22.9230,
+      "lng": -43.2376
+    },
     "phone": "(21) 2142-7150 / 2142-7171",
     "operatingHours": {
       "weekdays": "07:00 às 18:00"
@@ -272,6 +288,10 @@
       "city": "São João de Meriti",
       "state": "RJ"
     },
+    "coordinates": {
+      "lat": -22.8008,
+      "lng": -43.3647
+    },
     "whatsapp": "(21) 3668-3131",
     "operatingHours": {
       "weekdays": "08:00 às 17:00",
@@ -300,6 +320,10 @@
       "state": "RJ",
       "cep": "21810-009"
     },
+    "coordinates": {
+      "lat": -22.8791,
+      "lng": -43.4439
+    },
     "phone": "(21) 3159-8717 / 2401-9095",
     "highlight": "Em frente ao Hospital Bangu."
   },
@@ -321,6 +345,10 @@
       "neighborhood": "Campo Grande",
       "city": "Rio de Janeiro",
       "state": "RJ"
+    },
+    "coordinates": {
+      "lat": -22.9015,
+      "lng": -43.5630
     },
     "whatsapp": "(22) 98248-1571",
     "phone": "(22) 2442-6727",
@@ -358,6 +386,10 @@
       "city": "Rio de Janeiro",
       "state": "RJ"
     },
+    "coordinates": {
+      "lat": -22.8744,
+      "lng": -43.4190
+    },
     "phone": "(21) 2401-1721 / 2401-9912 / 3332-2511",
     "highlight": "Em frente ao Supermercado Guanabara."
   },
@@ -380,6 +412,10 @@
       "neighborhood": "Bangu",
       "city": "Rio de Janeiro",
       "state": "RJ"
+    },
+    "coordinates": {
+      "lat": -22.8835,
+      "lng": -43.4670
     },
     "phone": "(21) 3421-2030 / 2301-7726 / 3421-2288 / 3337-2150",
     "whatsapp": "(21) 96449-8583",
@@ -412,6 +448,10 @@
       "neighborhood": "Bangu",
       "city": "Rio de Janeiro",
       "state": "RJ"
+    },
+    "coordinates": {
+      "lat": -22.8825,
+      "lng": -43.4660
     },
     "phone": "(21) 2401-5451",
     "whatsapp": "(21) 97150-5451",
@@ -485,6 +525,10 @@
       "city": "Rio de Janeiro",
       "state": "RJ"
     },
+    "coordinates": {
+      "lat": -22.9944,
+      "lng": -43.3019
+    },
     "phone": "(21) 3154-3050"
   },
   {
@@ -506,6 +550,10 @@
       "neighborhood": "Campo Grande",
       "city": "Rio de Janeiro",
       "state": "RJ"
+    },
+    "coordinates": {
+      "lat": -22.9020,
+      "lng": -43.5610
     },
     "phone": "(21) 3649-4204 / 96437-0154 / 3649-4209",
     "highlight": "Edifício West Medical Center."
@@ -535,6 +583,10 @@
       "neighborhood": "Vila Valqueire",
       "city": "Rio de Janeiro",
       "state": "RJ"
+    },
+    "coordinates": {
+      "lat": -22.8828,
+      "lng": -43.3572
     },
     "phone": "(21) 2453-2932 / 2454-9119"
   },
@@ -568,6 +620,10 @@
       "city": "Rio de Janeiro",
       "state": "RJ"
     },
+    "coordinates": {
+      "lat": -22.8827,
+      "lng": -43.4655
+    },
     "phone": "(21) 2401-3889 / 2402-5162 / 2401-2014"
   },
   {
@@ -598,6 +654,10 @@
       "city": "Rio de Janeiro",
       "state": "RJ"
     },
+    "coordinates": {
+      "lat": -22.8840,
+      "lng": -43.4675
+    },
     "phone": "(21) 3338-7350 / 3332-5838 / 98921-3522 / 4063-9311",
     "highlight": "Centro Profissional de Bangu - Em frente a Casas Bahia."
   },
@@ -616,6 +676,10 @@
       "neighborhood": "Copacabana",
       "city": "Rio de Janeiro",
       "state": "RJ"
+    },
+    "coordinates": {
+      "lat": -22.9711,
+      "lng": -43.1863
     },
     "phone": "(21) 2523-4708 / 2267-2576"
   },
@@ -649,6 +713,10 @@
       "city": "Rio de Janeiro",
       "state": "RJ"
     },
+    "coordinates": {
+      "lat": -22.9219,
+      "lng": -43.6745
+    },
     "phone": "(21) 3305-2392 / 2051-7825 / 2051-7876",
     "highlight": "Praça Marquês de Herval."
   },
@@ -673,6 +741,10 @@
       "city": "Rio de Janeiro",
       "state": "RJ"
     },
+    "coordinates": {
+      "lat": -22.8838,
+      "lng": -43.4662
+    },
     "phone": "(21) 3518-8384",
     "highlight": "Calçadão de Bangu."
   },
@@ -693,6 +765,10 @@
       "city": "Rio de Janeiro",
       "state": "RJ"
     },
+    "coordinates": {
+      "lat": -22.9005,
+      "lng": -43.5620
+    },
     "phone": "(21) 2415-9820 / 2415-5374",
     "highlight": "Hospital do Olho de Campo Grande."
   },
@@ -710,6 +786,10 @@
       "city": "Rio de Janeiro",
       "state": "RJ"
     },
+    "coordinates": {
+      "lat": -22.9018,
+      "lng": -43.5650
+    },
     "phone": "(21) 2416-2392 / 2412-1125"
   },
   {
@@ -726,6 +806,10 @@
       "neighborhood": "Botafogo",
       "city": "Rio de Janeiro",
       "state": "RJ"
+    },
+    "coordinates": {
+      "lat": -22.9519,
+      "lng": -43.1828
     },
     "phone": "(21) 2537-5454"
   },
@@ -753,6 +837,10 @@
       "city": "Rio de Janeiro",
       "state": "RJ"
     },
+    "coordinates": {
+      "lat": -22.9525,
+      "lng": -43.1823
+    },
     "phone": "(21) 2669-4644",
     "highlight": "Também em Nova Iguaçu: Rua Bernardino de Mello, 1399 - Sala 103."
   },
@@ -771,6 +859,10 @@
       "neighborhood": "Campo Grande",
       "city": "Rio de Janeiro",
       "state": "RJ"
+    },
+    "coordinates": {
+      "lat": -22.9008,
+      "lng": -43.5645
     },
     "phone": "(21) 3269-3735",
     "highlight": "Dentro do Centro Empresarial CAMO - fundos."
@@ -807,6 +899,10 @@
       "city": "Nova Iguaçu",
       "state": "RJ"
     },
+    "coordinates": {
+      "lat": -22.7592,
+      "lng": -43.4510
+    },
     "phone": "(21) 2668-4881"
   },
   {
@@ -823,6 +919,10 @@
       "city": "Rio de Janeiro",
       "state": "RJ"
     },
+    "coordinates": {
+      "lat": -22.9068,
+      "lng": -43.1729
+    },
     "phone": "(21) 2220-3150 / 2220-1300"
   },
   {
@@ -838,6 +938,10 @@
       "neighborhood": "Flamengo",
       "city": "Rio de Janeiro",
       "state": "RJ"
+    },
+    "coordinates": {
+      "lat": -22.9332,
+      "lng": -43.1771
     },
     "phone": "(21) 2556-5541 / 2557-4038 / 2557-4731"
   },
@@ -860,6 +964,10 @@
       "city": "Rio de Janeiro",
       "state": "RJ"
     },
+    "coordinates": {
+      "lat": -22.9010,
+      "lng": -43.5635
+    },
     "phone": "(21) 2413-1784",
     "whatsapp": "(21) 99648-4944",
     "highlight": "Calçadão de Campo Grande. WhatsApp somente agendamento."
@@ -878,6 +986,10 @@
       "city": "Rio de Janeiro",
       "state": "RJ"
     },
+    "coordinates": {
+      "lat": -22.9235,
+      "lng": -43.2380
+    },
     "phone": "(21) 2571-6582 / 2208-3147"
   },
   {
@@ -893,6 +1005,10 @@
       "neighborhood": "Centro",
       "city": "Niterói",
       "state": "RJ"
+    },
+    "coordinates": {
+      "lat": -22.8833,
+      "lng": -43.1036
     },
     "phone": "(21) 2621-6161",
     "highlight": "Central de Atendimento. Múltiplas unidades: Icaraí, São Francisco, São Gonçalo."
@@ -910,6 +1026,10 @@
       "neighborhood": "Centro",
       "city": "Rio de Janeiro",
       "state": "RJ"
+    },
+    "coordinates": {
+      "lat": -22.9060,
+      "lng": -43.1735
     },
     "phone": "(21) 3852-5435"
   },
@@ -935,6 +1055,10 @@
       "neighborhood": "Campo Grande",
       "city": "Rio de Janeiro",
       "state": "RJ"
+    },
+    "coordinates": {
+      "lat": -22.9000,
+      "lng": -43.5625
     },
     "phone": "(21) 3511-8181 / 2529-2269",
     "highlight": "Múltiplas unidades: Campo Grande, Centro, Leblon, Icaraí-Niterói."
@@ -964,6 +1088,10 @@
       "neighborhood": "Centro",
       "city": "Rio de Janeiro",
       "state": "RJ"
+    },
+    "coordinates": {
+      "lat": -22.9072,
+      "lng": -43.1740
     },
     "phone": "(21) 4002-0203",
     "whatsapp": "(21) 4002-0203",
@@ -1008,6 +1136,10 @@
       "city": "Rio de Janeiro",
       "state": "RJ"
     },
+    "coordinates": {
+      "lat": -23.0130,
+      "lng": -43.4697
+    },
     "phone": "(21) 3556-0101",
     "highlight": "Condomínio Americas Avenue Business Square."
   },
@@ -1027,6 +1159,10 @@
       "neighborhood": "Campo Grande",
       "city": "Rio de Janeiro",
       "state": "RJ"
+    },
+    "coordinates": {
+      "lat": -22.9025,
+      "lng": -43.5618
     },
     "phone": "(21) 2567-1556 / 2412-1355 / 2423-1155",
     "highlight": "Agendamento apenas por telefone. Também em Copacabana: Rua Siqueira Campos, 59 - Grupo 507."
@@ -1059,6 +1195,10 @@
       "city": "Rio de Janeiro",
       "state": "RJ"
     },
+    "coordinates": {
+      "lat": -22.9014,
+      "lng": -43.5632
+    },
     "phone": "(21) 2412-0528 / 2411-7999 / 2411-8308 / 2415-1482",
     "highlight": "Calçadão de Campo Grande."
   },
@@ -1075,6 +1215,10 @@
       "neighborhood": "Campo Grande",
       "city": "Rio de Janeiro",
       "state": "RJ"
+    },
+    "coordinates": {
+      "lat": -22.9022,
+      "lng": -43.5608
     },
     "phone": "(21) 2412-5793",
     "whatsapp": "(21) 99880-0158",
@@ -1106,6 +1250,10 @@
       "city": "São Gonçalo",
       "state": "RJ"
     },
+    "coordinates": {
+      "lat": -22.8269,
+      "lng": -43.0539
+    },
     "phone": "(21) 3799-8988 / 2602-3750",
     "whatsapp": "(21) 98604-3860"
   },
@@ -1128,6 +1276,10 @@
       "city": "Rio de Janeiro",
       "state": "RJ"
     },
+    "coordinates": {
+      "lat": -22.8832,
+      "lng": -43.4660
+    },
     "whatsapp": "(21) 99333-2990",
     "highlight": "Em frente ao Centro Comercial, próximo ao calçadão de Bangu."
   },
@@ -1147,6 +1299,10 @@
       "neighborhood": "Centro",
       "city": "Nova Iguaçu",
       "state": "RJ"
+    },
+    "coordinates": {
+      "lat": -22.7590,
+      "lng": -43.4515
     },
     "phone": "(21) 2797-4504"
   },
@@ -1172,6 +1328,10 @@
       "neighborhood": "Campo Grande",
       "city": "Rio de Janeiro",
       "state": "RJ"
+    },
+    "coordinates": {
+      "lat": -22.9030,
+      "lng": -43.5590
     },
     "phone": "(21) 2413-2000"
   }

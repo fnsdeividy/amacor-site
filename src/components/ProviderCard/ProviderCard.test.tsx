@@ -113,17 +113,7 @@ describe('ProviderCard', () => {
     )
   })
 
-  it('renders show on map button and calls onShowOnMap', () => {
-    const onShowOnMap = vi.fn()
-    render(
-      <ProviderCard provider={mockProvider} onShowOnMap={onShowOnMap} />
-    )
-    const mapButton = screen.getByRole('button', { name: /ver.*no mapa/i })
-    fireEvent.click(mapButton)
-    expect(onShowOnMap).toHaveBeenCalledWith('prov-001')
-  })
-
-  it('does not render show on map button when onShowOnMap is not provided', () => {
+  it('does not render show on map button (removed feature)', () => {
     render(<ProviderCard provider={mockProvider} />)
     expect(
       screen.queryByRole('button', { name: /ver.*no mapa/i })
@@ -131,7 +121,7 @@ describe('ProviderCard', () => {
   })
 
   it('action buttons have minimum 40px touch targets', () => {
-    render(<ProviderCard provider={mockProvider} onShowOnMap={() => { }} />)
+    render(<ProviderCard provider={mockProvider} />)
     const callButton = screen.getByRole('link', { name: /ligar/i })
     expect(callButton.className).toContain('min-h-[40px]')
   })
