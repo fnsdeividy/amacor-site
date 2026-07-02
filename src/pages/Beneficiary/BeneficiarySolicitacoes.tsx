@@ -2,6 +2,8 @@ import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || '/api';
+
 /**
  * Interface para solicitação exibida na listagem do beneficiário.
  */
@@ -77,7 +79,7 @@ export default function BeneficiarySolicitacoes() {
 
     try {
       const response = await fetch(
-        `/api/solicitacoes/beneficiario/${encodeURIComponent(session.codigo)}?pagina=${page}&limite=${PAGE_SIZE}`
+        `${API_BASE_URL}/solicitacoes/beneficiario/${encodeURIComponent(session.codigo)}?pagina=${page}&limite=${PAGE_SIZE}`
       );
 
       if (!response.ok) {

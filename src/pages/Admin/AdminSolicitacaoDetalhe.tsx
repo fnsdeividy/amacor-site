@@ -54,7 +54,7 @@ type FetchState = 'loading' | 'success' | 'error' | 'not-found';
 
 // --- Constants ---
 
-const API_BASE_URL = '/api';
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || '/api';
 const OBSERVACAO_MIN = 1;
 const OBSERVACAO_MAX = 1000;
 const HISTORICO_POR_PAGINA = 50;

@@ -168,7 +168,7 @@ function PendenciaIcon() {
 
 // --- Main Component ---
 
-const API_BASE_URL = '/api';
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || '/api';
 
 function getGreeting(): string {
   const hour = new Date().getHours();

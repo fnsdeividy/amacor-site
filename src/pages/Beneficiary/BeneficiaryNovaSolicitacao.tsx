@@ -5,6 +5,7 @@ import providersData from '../../data/providers.json';
 
 const ALLOWED_TYPES = ['application/pdf', 'image/jpeg', 'image/png'];
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || '/api';
 
 const TIPO_EXAME_OPTIONS = [
   'Consulta',
@@ -114,7 +115,7 @@ export default function BeneficiaryNovaSolicitacao() {
       formData.append('cpfCnpj', session!.cpfCnpj);
       formData.append('pedidoMedico', file);
 
-      const response = await fetch('/api/solicitacoes', {
+      const response = await fetch(`${API_BASE_URL}/solicitacoes`, {
         method: 'POST',
         body: formData,
       });

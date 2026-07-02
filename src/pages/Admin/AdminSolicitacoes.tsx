@@ -45,7 +45,7 @@ type FetchState = 'loading' | 'success' | 'error';
 
 // --- Constants ---
 
-const API_BASE_URL = '/api';
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || '/api';
 const ITENS_POR_PAGINA = 20;
 
 const STATUS_OPTIONS = [

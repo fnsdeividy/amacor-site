@@ -28,7 +28,7 @@ interface AdminAuthContextType {
 const ADMIN_TOKEN_KEY = 'admin_token';
 const ADMIN_USER_KEY = 'admin_user';
 const TOKEN_CHECK_INTERVAL_MS = 60_000; // 60 seconds
-const API_BASE_URL = '/api';
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || '/api';
 
 // --- Helpers ---
 

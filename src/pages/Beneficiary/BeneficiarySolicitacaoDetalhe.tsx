@@ -27,7 +27,7 @@ type FetchState = 'loading' | 'success' | 'error' | 'not-found';
 
 // --- Constants ---
 
-const API_BASE_URL = '/api';
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || '/api';
 
 // --- Helper Functions ---
 
