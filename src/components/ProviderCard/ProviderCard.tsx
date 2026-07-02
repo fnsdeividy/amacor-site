@@ -76,7 +76,17 @@ export function ProviderCard({
   }
 
   return (
-    <article className="group rounded-2xl bg-white border border-warm-200 overflow-hidden shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-300">
+    <article className={`group rounded-2xl bg-white border overflow-hidden shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-300 ${provider.redePropria ? 'border-primary-300 ring-1 ring-primary-200' : 'border-warm-200'}`}>
+      {/* Rede Própria highlight banner */}
+      {provider.redePropria && (
+        <div className="bg-gradient-to-r from-primary-600 to-primary-500 px-5 py-2.5 flex items-center gap-2">
+          <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+          <span className="text-xs font-bold text-white uppercase tracking-wider">Rede Própria Amacor</span>
+        </div>
+      )}
+
       {/* Content */}
       <div className="p-5 tablet:p-6">
         {/* Top row: type badge + distance */}
@@ -96,6 +106,13 @@ export function ProviderCard({
 
         {/* Name */}
         <h3 className="text-lg font-bold text-primary-900 leading-snug mb-2.5">{provider.name}</h3>
+
+        {/* Highlight description for rede própria */}
+        {provider.redePropria && provider.highlight && (
+          <p className="text-sm text-primary-700 bg-primary-50 rounded-lg px-3 py-2 mb-3 font-medium">
+            {provider.highlight}
+          </p>
+        )}
 
         {/* Specialties */}
         <div className="flex flex-wrap gap-1.5 mb-4">

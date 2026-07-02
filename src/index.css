@@ -4,7 +4,7 @@
 
 @layer base {
   html {
-    font-size: 16px;
+    font-size: 18px;
     scroll-behavior: smooth;
     overflow-x: hidden;
   }
@@ -41,7 +41,7 @@
   }
 
   p {
-    @apply text-[17px] leading-relaxed;
+    @apply text-[19px] leading-relaxed;
   }
 
   /* Focus indicators for accessibility */

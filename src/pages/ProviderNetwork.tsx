@@ -86,14 +86,14 @@ export default function ProviderNetwork() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </li>
-                <li className="text-white/80 font-medium">Rede Credenciada</li>
+                <li className="text-white/80 font-medium">Rede de Atendimento</li>
               </ol>
             </nav>
 
             <div className="flex flex-col desktop:flex-row desktop:items-end desktop:justify-between gap-8">
               <div className="max-w-2xl">
                 <h1 className="font-display text-heading-lg tablet:text-heading-xl text-white tracking-tight">
-                  Rede Credenciada
+                  Rede de Atendimento
                 </h1>
                 <p className="mt-4 text-body-lg text-white/70 leading-relaxed">
                   Encontre hospitais, clínicas e laboratórios perto de você. Filtre por especialidade, localização ou tipo de prestador.

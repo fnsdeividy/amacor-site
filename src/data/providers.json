@@ -56,7 +56,8 @@
       "weekdays": "07:00 às 19:00",
       "saturday": "07:00 às 13:00"
     },
-    "highlight": "AMA - Atendimento Médico Ambulatorial 12 horas diurno. Ao lado do Corpo de Bombeiros, em frente ao Pátio Campo Grande."
+    "highlight": "AMA - Atendimento Médico Ambulatorial 12 horas diurno. Ao lado do Corpo de Bombeiros, em frente ao Pátio Campo Grande.",
+    "redePropria": true
   },
   {
     "id": "prov-002",

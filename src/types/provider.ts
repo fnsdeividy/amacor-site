@@ -46,6 +46,7 @@ export interface Provider {
   };
   acceptedPlans?: PlanType[];
   highlight?: string;
+  redePropria?: boolean;
 }
 
 export interface ProviderFilters {

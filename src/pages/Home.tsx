@@ -93,7 +93,7 @@ function PlanCardsSection({ plans, whatsappPhone }: { plans: any[]; whatsappPhon
   const planCoverImages: Record<string, string> = {
     'exclusivo-i': 'https://images.unsplash.com/photo-1491013516836-7db643ee125a?auto=format&fit=crop&w=600&q=80',
     'exclusivo-ii': 'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=600&q=80',
-    'mais-com-franquia': 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80',
+    'mais-com-franquia': '/img/home.png',
     'empresarial': 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=600&q=80',
   }
 
@@ -286,13 +286,13 @@ function ProviderNetworkSection() {
             Encontre um prestador perto de você
           </h2>
           <p className="text-body-lg text-white/75 mb-10 max-w-2xl mx-auto">
-            Consulte nossa rede credenciada com hospitais, clínicas e laboratórios na Zona Oeste do Rio de Janeiro.
+            Consulte nossa rede de atendimento com hospitais, clínicas e laboratórios na Zona Oeste do Rio de Janeiro.
           </p>
           <Link
             to="/rede-credenciada"
             className="inline-flex items-center justify-center min-h-touch px-10 py-4 rounded-xl bg-white text-primary-900 font-bold text-body shadow-lg hover:bg-warm-50 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-white/30 transition-all duration-300"
           >
-            Consultar rede credenciada
+            Consultar rede de atendimento
           </Link>
         </div>
       </div>

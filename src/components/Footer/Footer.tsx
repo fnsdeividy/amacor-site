@@ -48,7 +48,7 @@ export function Footer(_props: FooterProps) {
                   { label: 'Ouvidoria', href: '/contato' },
                   { label: '2ª Via de Boletos', href: '/beneficiario/boletos' },
                   { label: 'Manual do Associado', href: '#' },
-                  { label: 'Rede Credenciada', href: '/rede-credenciada' },
+                  { label: 'Rede de Atendimento', href: '/rede-credenciada' },
                   { label: 'Telemedicina', href: '/telemedicina' },
                   { label: 'IDSS', href: '/idss' },
                 ].map((link) => (

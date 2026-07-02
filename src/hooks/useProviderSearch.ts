@@ -75,14 +75,21 @@ export function useProviderSearch(options: UseProviderSearchOptions): UseProvide
     }
   }, [filteredProviders, sortBy, effectiveLocation]);
 
+  // Prioriza rede própria no topo dos resultados
+  const prioritizedProviders = useMemo(() => {
+    const propria = sortedProviders.filter((p) => p.redePropria);
+    const credenciada = sortedProviders.filter((p) => !p.redePropria);
+    return [...propria, ...credenciada];
+  }, [sortedProviders]);
+
   // Pagination (20 items per page)
-  const totalResults = sortedProviders.length;
+  const totalResults = prioritizedProviders.length;
   const pagination = usePagination(totalResults, DEFAULT_PAGE_SIZE);
 
   // Paginated results
   const results = useMemo(
-    () => sortedProviders.slice(pagination.startIndex, pagination.endIndex),
-    [sortedProviders, pagination.startIndex, pagination.endIndex]
+    () => prioritizedProviders.slice(pagination.startIndex, pagination.endIndex),
+    [prioritizedProviders, pagination.startIndex, pagination.endIndex]
   );
 
   // When filters change, reset to page 1

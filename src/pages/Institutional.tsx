@@ -96,7 +96,7 @@ export default function Institutional() {
       </section>
 
       {/* Mission / Vision / Values Section */}
-      <section className="w-full py-20 tablet:py-28 px-4 tablet:px-8 bg-primary-900 relative overflow-hidden">
+      <section className="w-full py-20 tablet:py-28 px-4 tablet:px-8 bg-gradient-brand relative overflow-hidden">
         {/* Subtle pattern overlay */}
         <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} aria-hidden="true" />
         <div className="relative mx-auto max-w-7xl">

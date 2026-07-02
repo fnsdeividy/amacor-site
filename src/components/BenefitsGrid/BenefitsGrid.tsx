@@ -48,6 +48,46 @@ function BenefitIcon({ icon }: { icon: string }) {
   )
 }
 
+/**
+ * Destaca palavras-chave no título dos benefícios.
+ * Aplica cor accent em: números, "24h", "2 mil", e a primeira palavra do título.
+ */
+function HighlightTitle({ text }: { text: string }) {
+  // Highlight numbers and key phrases
+  const highlighted = text.replace(
+    /(24h|2 mil|2\.000|\d+)/gi,
+    '{{$1}}'
+  )
+
+  if (highlighted.includes('{{')) {
+    const parts = highlighted.split(/\{\{|\}\}/)
+    return (
+      <>
+        {parts.map((part, i) =>
+          i % 2 === 1 ? (
+            <span key={i} className="text-accent-500">{part}</span>
+          ) : (
+            <span key={i}>{part}</span>
+          )
+        )}
+      </>
+    )
+  }
+
+  // If no numbers, highlight first word
+  const spaceIndex = text.indexOf(' ')
+  if (spaceIndex > 0) {
+    return (
+      <>
+        <span className="text-primary-500">{text.slice(0, spaceIndex)}</span>
+        {text.slice(spaceIndex)}
+      </>
+    )
+  }
+
+  return <>{text}</>
+}
+
 export function BenefitsGrid({ benefits, className = '' }: BenefitsGridProps) {
   const { ref, isInView } = useInView({ threshold: 0.1 })
 
@@ -60,19 +100,22 @@ export function BenefitsGrid({ benefits, className = '' }: BenefitsGridProps) {
       {benefits.map((benefit, index) => (
         <article
           key={benefit.id}
-          className={`flex flex-col items-center text-center rounded-2xl bg-white p-6 shadow-soft border border-warm-100 hover-lift hover:shadow-card-hover transition-all duration-300 ${isInView ? 'animate-fade-in-up' : 'opacity-0'
+          className={`group relative flex flex-col items-center text-center rounded-2xl bg-white p-6 tablet:p-8 shadow-card border border-primary-100 hover:border-primary-300 hover:shadow-card-hover transition-all duration-300 overflow-hidden ${isInView ? 'animate-fade-in-up' : 'opacity-0'
             }`}
           style={{ animationDelay: `${index * 100}ms` }}
         >
-          <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-primary-50 text-primary-600 mb-4 group-hover:scale-110 transition-transform">
+          {/* Top accent bar */}
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 to-cyan-400 opacity-80 group-hover:opacity-100 transition-opacity" />
+
+          <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-50 to-cyan-50 text-primary-500 mb-5 group-hover:scale-110 group-hover:shadow-md transition-all duration-300">
             <BenefitIcon icon={benefit.icon} />
           </div>
 
-          <h3 className="text-body font-semibold text-primary-900 mb-2">
-            {benefit.title}
+          <h3 className="text-[17px] tablet:text-lg font-bold text-primary-900 mb-2">
+            <HighlightTitle text={benefit.title} />
           </h3>
 
-          <p className="text-body text-warm-600 leading-relaxed">
+          <p className="text-[15px] text-warm-600 leading-relaxed">
             {benefit.description}
           </p>
         </article>
