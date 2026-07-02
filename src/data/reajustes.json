@@ -1,325 +1,86 @@
 {
-  "indices": [
+  "title": "Reajuste Anual",
+  "intro": "Acreditamos na importância da transparência e do compromisso com nossos clientes. Por isso, dedicamos esta página para esclarecer tudo sobre o reajuste anual do plano de saúde PME.",
+  "explanation": {
+    "title": "Entendendo o Reajuste",
+    "content": "O reajuste anual dos planos de saúde é regulamentado pela Agência Nacional de Saúde Suplementar (ANS), através da Resolução Normativa nº 482/2010. Essa norma visa garantir o equilíbrio financeiro das operadoras e a sustentabilidade dos planos, assegurando a qualidade dos serviços prestados aos beneficiários.",
+    "calculation": "O cálculo do reajuste leva em consideração os custos assistenciais incorridos pela operadora em um período determinado, suavizados ao longo dos anos. No nosso caso, o reajuste considera os anos base 2022 e 2023, conforme detalhado abaixo:"
+  },
+  "rates": [
     {
-      "ano": 2022,
-      "descricao": "05/2022 a 04/2023",
-      "percentual": "10,54%"
+      "year": 2022,
+      "rate": "10,54%"
     },
     {
-      "ano": 2023,
-      "descricao": "05/2023 a 04/2024",
-      "percentual": "1,86%"
+      "year": 2023,
+      "rate": "1,85%"
     },
     {
-      "ano": 2024,
-      "descricao": "05/2024 a 04/2025",
-      "percentual": "17,75%"
+      "year": 2024,
+      "rate": "17,71%"
     },
     {
-      "ano": 2025,
-      "descricao": "05/2025 a 04/2026",
-      "percentual": "8,44%"
+      "year": 2025,
+      "rate": "8,44%"
     },
     {
-      "ano": 2026,
-      "descricao": "05/2026 a 04/2027",
-      "percentual": "1,85%"
+      "year": 2026,
+      "rate": "1,81%"
     }
   ],
   "pools": [
     {
-      "ano": 2022,
-      "descricao": "05/2022 a 04/2023",
-      "arquivo": "/docs/pool-risco-2022.pdf",
-      "contratos": [
-        {
-          "proposta": "20021361",
-          "codigoAns": "477.355/16-1",
-          "produto": "VIDA LIGHT CORP"
-        },
-        {
-          "proposta": "200205160",
-          "codigoAns": "477.355/16-1",
-          "produto": "VIDA LIGHT CORP"
-        },
-        {
-          "proposta": "200254650",
-          "codigoAns": "477.355/16-1",
-          "produto": "VIDA LIGHT CORP"
-        },
-        {
-          "proposta": "5611651",
-          "codigoAns": "489.364/21-6",
-          "produto": "AMACOR CLASSICO EMPRESARIAL"
-        },
-        {
-          "proposta": "20010103",
-          "codigoAns": "477.354/16-3",
-          "produto": "VIDA PLUS CORP"
-        },
-        {
-          "proposta": "5651651651",
-          "codigoAns": "489.364/21-6",
-          "produto": "AMACOR CLASSICO EMPRESARIAL"
-        },
-        {
-          "proposta": "2000074",
-          "codigoAns": "471.728/14-7",
-          "produto": "MedCorp Especial"
-        },
-        {
-          "proposta": "5554156561",
-          "codigoAns": "489.364/21-6",
-          "produto": "AMACOR CLASSICO EMPRESARIAL"
-        },
-        {
-          "proposta": "5564561465",
-          "codigoAns": "489.364/21-6",
-          "produto": "AMACOR CLASSICO EMPRESARIAL"
-        },
-        {
-          "proposta": "6165156165",
-          "codigoAns": "489.364/21-6",
-          "produto": "AMACOR CLASSICO EMPRESARIAL"
-        },
-        {
-          "proposta": "51561651",
-          "codigoAns": "489.364/21-6",
-          "produto": "AMACOR CLASSICO EMPRESARIAL"
-        },
-        {
-          "proposta": "1566565",
-          "codigoAns": "489.364/21-6",
-          "produto": "AMACOR CLASSICO EMPRESARIAL"
-        },
-        {
-          "proposta": "542558787",
-          "codigoAns": "489.364/21-6",
-          "produto": "AMACOR CLASSICO EMPRESARIAL"
-        },
-        {
-          "proposta": "1656161",
-          "codigoAns": "489.364/21-6",
-          "produto": "AMACOR CLASSICO EMPRESARIAL"
-        },
-        {
-          "proposta": "1651516",
-          "codigoAns": "489.365/21-4",
-          "produto": "AMACOR MAIS EMPRESARIAL"
-        },
-        {
-          "proposta": "2000073",
-          "codigoAns": "471.725/14-2",
-          "produto": "MedCorp"
-        },
-        {
-          "proposta": "614561665",
-          "codigoAns": "489.364/21-6",
-          "produto": "AMACOR CLASSICO EMPRESARIAL"
-        },
-        {
-          "proposta": "116165",
-          "codigoAns": "489.364/21-6",
-          "produto": "AMACOR CLASSICO EMPRESARIAL"
-        },
-        {
-          "proposta": "2000068",
-          "codigoAns": "471.725/14-2",
-          "produto": "MedCorp"
-        },
-        {
-          "proposta": "20010119",
-          "codigoAns": "477.355/16-1",
-          "produto": "VIDA LIGHT CORP"
-        },
-        {
-          "proposta": "20010130",
-          "codigoAns": "477.355/16-1",
-          "produto": "VIDA LIGHT CORP"
-        },
-        {
-          "proposta": "20010110",
-          "codigoAns": "477.355/16-1",
-          "produto": "VIDA LIGHT CORP"
-        },
-        {
-          "proposta": "20010117",
-          "codigoAns": "477.355/16-1",
-          "produto": "VIDA LIGHT CORP"
-        }
-      ]
+      "year": 2022,
+      "label": "Ano Base 2022",
+      "file": "/docs/pool-de-risco/2022-Pool-de-Risco-Coletivo-Empresarial.pdf"
     },
     {
-      "ano": 2023,
-      "descricao": "05/2023 a 04/2024",
-      "arquivo": "/docs/pool-risco-2023.pdf",
-      "contratos": [
-        {
-          "proposta": "20021361",
-          "codigoAns": "477.355/16-1",
-          "produto": "VIDA LIGHT CORP"
-        },
-        {
-          "proposta": "200205160",
-          "codigoAns": "477.355/16-1",
-          "produto": "VIDA LIGHT CORP"
-        },
-        {
-          "proposta": "200254650",
-          "codigoAns": "477.355/16-1",
-          "produto": "VIDA LIGHT CORP"
-        },
-        {
-          "proposta": "A000024",
-          "codigoAns": "489.361/21-1",
-          "produto": "AMACOR MAIS EMPRESARIAL COM FRANQUIA"
-        },
-        {
-          "proposta": "20010103",
-          "codigoAns": "477.355/16-1",
-          "produto": "VIDA LIGHT CORP"
-        },
-        {
-          "proposta": "5651651651",
-          "codigoAns": "489.364/21-6",
-          "produto": "AMACOR CLASSICO EMPRESARIAL"
-        },
-        {
-          "proposta": "2000074",
-          "codigoAns": "471.725/14-2",
-          "produto": "MedCorp"
-        },
-        {
-          "proposta": "5554156561",
-          "codigoAns": "489.364/21-6",
-          "produto": "AMACOR CLASSICO EMPRESARIAL"
-        },
-        {
-          "proposta": "40000220",
-          "codigoAns": "489.364/21-6",
-          "produto": "AMACOR CLASSICO EMPRESARIAL"
-        },
-        {
-          "proposta": "40000A58",
-          "codigoAns": "489.364/21-6",
-          "produto": "AMACOR CLASSICO EMPRESARIAL"
-        },
-        {
-          "proposta": "40000005",
-          "codigoAns": "489.364/21-6",
-          "produto": "AMACOR CLASSICO EMPRESARIAL"
-        },
-        {
-          "proposta": "40003331",
-          "codigoAns": "489.365/21-4",
-          "produto": "AMACOR MAIS EMPRESARIAL"
-        },
-        {
-          "proposta": "4000047A",
-          "codigoAns": "489.365/21-4",
-          "produto": "AMACOR MAIS EMPRESARIAL"
-        },
-        {
-          "proposta": "6165156165",
-          "codigoAns": "489.365/21-4",
-          "produto": "AMACOR MAIS EMPRESARIAL"
-        },
-        {
-          "proposta": "40000018",
-          "codigoAns": "489.364/21-6",
-          "produto": "AMACOR CLASSICO EMPRESARIAL"
-        },
-        {
-          "proposta": "40012347",
-          "codigoAns": "489.364/21-6",
-          "produto": "AMACOR CLASSICO EMPRESARIAL"
-        },
-        {
-          "proposta": "1566565",
-          "codigoAns": "489.364/21-6",
-          "produto": "AMACOR CLASSICO EMPRESARIAL"
-        },
-        {
-          "proposta": "542558787",
-          "codigoAns": "489.364/21-6",
-          "produto": "AMACOR CLASSICO EMPRESARIAL"
-        },
-        {
-          "proposta": "400000044",
-          "codigoAns": "489.365/21-4",
-          "produto": "AMACOR MAIS EMPRESARIAL"
-        },
-        {
-          "proposta": "400000488",
-          "codigoAns": "489.364/21-6",
-          "produto": "AMACOR CLASSICO EMPRESARIAL"
-        },
-        {
-          "proposta": "1651516",
-          "codigoAns": "489.365/21-4",
-          "produto": "AMACOR MAIS EMPRESARIAL"
-        },
-        {
-          "proposta": "40008529",
-          "codigoAns": "489.365/21-4",
-          "produto": "AMACOR MAIS EMPRESARIAL"
-        },
-        {
-          "proposta": "400000336",
-          "codigoAns": "489.365/21-4",
-          "produto": "AMACOR MAIS EMPRESARIAL"
-        },
-        {
-          "proposta": "400000339",
-          "codigoAns": "489.365/21-4",
-          "produto": "AMACOR MAIS EMPRESARIAL"
-        },
-        {
-          "proposta": "40000446",
-          "codigoAns": "489.364/21-6",
-          "produto": "AMACOR CLASSICO EMPRESARIAL"
-        },
-        {
-          "proposta": "2000073",
-          "codigoAns": "471.725/14-2",
-          "produto": "MedCorp"
-        },
-        {
-          "proposta": "614561665",
-          "codigoAns": "489.364/21-6",
-          "produto": "AMACOR CLASSICO EMPRESARIAL"
-        },
-        {
-          "proposta": "2000068",
-          "codigoAns": "471.725/14-2",
-          "produto": "MedCorp"
-        },
-        {
-          "proposta": "40000449",
-          "codigoAns": "489.365/21-4",
-          "produto": "AMACOR MAIS EMPRESARIAL"
-        },
-        {
-          "proposta": "40000009",
-          "codigoAns": "489.364/21-6",
-          "produto": "AMACOR CLASSICO EMPRESARIAL"
-        },
-        {
-          "proposta": "20010119",
-          "codigoAns": "477.355/16-1",
-          "produto": "VIDA LIGHT CORP"
-        },
-        {
-          "proposta": "12345678",
-          "codigoAns": "489.365/21-4",
-          "produto": "AMACOR MAIS EMPRESARIAL"
-        },
-        {
-          "proposta": "40000005",
-          "codigoAns": "489.365/21-4",
-          "produto": "AMACOR MAIS EMPRESARIAL"
-        }
-      ]
+      "year": 2023,
+      "label": "Ano Base 2023",
+      "file": "/docs/pool-de-risco/2023-Pool-de-Risco-Coletivo-Empresarial.pdf"
+    },
+    {
+      "year": 2024,
+      "label": "Ano Base 2024",
+      "file": "/docs/pool-de-risco/2024-Pool-de-Risco-Coletivo-Empresarial.pdf"
+    },
+    {
+      "year": 2025,
+      "label": "Ano Base 2025",
+      "file": "/docs/pool-de-risco/2025-Pool-de-Risco-Coletivo-Empresarial.pdf"
+    },
+    {
+      "year": 2026,
+      "label": "Ano Base 2026",
+      "file": "/docs/pool-de-risco/2026-Pool-de-Risco-Coletivo-Empresarial.pdf"
     }
-  ]
+  ],
+  "factors": {
+    "title": "Fatores que Influenciam o Reajuste",
+    "description": "Diversos fatores podem influenciar o índice de reajuste, como:",
+    "items": [
+      {
+        "title": "Sinistralidade do plano",
+        "description": "Quantidade de recursos utilizados pelos beneficiários para serviços de saúde."
+      },
+      {
+        "title": "Variação dos custos médico-hospitalares",
+        "description": "Aumento dos preços de consultas, exames, internações e outros procedimentos médicos."
+      },
+      {
+        "title": "Índice Geral de Preços do Consumidor Amplo Nacional (IPCA)",
+        "description": "Indicador oficial da inflação no país."
+      }
+    ]
+  },
+  "contact": {
+    "title": "Central de Atendimento",
+    "description": "Para mais informações sobre o reajuste ou para esclarecer qualquer dúvida, entre em contato com nossa Central de Atendimento:",
+    "email": "Ouvidoria@mhvida.com.br",
+    "phone": "(21) 3405-9466"
+  },
+  "commitment": {
+    "title": "Compromisso com a Qualidade",
+    "content": "Mantemos nosso compromisso em oferecer um plano de saúde de qualidade, com ampla rede credenciada, serviços personalizados e atendimento humanizado. Acreditamos que a comunicação clara e transparente com nossos clientes é fundamental para construir uma relação de confiança e respeito mútuo."
+  }
 }

@@ -44,7 +44,7 @@ export function PlanCard({
     >
       {/* Cover image */}
       {coverImage && (
-        <div className="relative w-full h-48 overflow-hidden">
+        <div className="relative w-full aspect-[16/10] overflow-hidden">
           <img
             src={coverImage}
             alt={`Imagem do plano ${name}`}

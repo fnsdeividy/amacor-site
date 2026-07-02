@@ -76,14 +76,18 @@ export function ProviderCard({
   }
 
   return (
-    <article className={`group rounded-2xl bg-white border overflow-hidden shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-300 ${provider.redePropria ? 'border-primary-300 ring-1 ring-primary-200' : 'border-warm-200'}`}>
+    <article className={`group rounded-2xl bg-white border overflow-hidden shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-300 ${provider.redePropria ? 'border-primary-400 ring-2 ring-primary-200/60 shadow-elevated' : 'border-warm-200'}`}>
       {/* Rede Própria highlight banner */}
       {provider.redePropria && (
-        <div className="bg-gradient-to-r from-primary-600 to-primary-500 px-5 py-2.5 flex items-center gap-2">
-          <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <div className="relative bg-gradient-to-r from-primary-700 via-primary-600 to-cyan-500 px-5 py-3 flex items-center gap-2.5 overflow-hidden">
+          {/* Subtle pattern texture */}
+          <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '16px 16px' }} aria-hidden="true" />
+          {/* Shine effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent" aria-hidden="true" />
+          <svg className="relative w-5 h-5 text-white drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
           </svg>
-          <span className="text-xs font-bold text-white uppercase tracking-wider">Rede Própria Amacor</span>
+          <span className="relative text-sm font-bold text-white uppercase tracking-wider drop-shadow-sm">Rede Própria Amacor</span>
         </div>
       )}
 

@@ -115,7 +115,7 @@ export function BenefitsGrid({ benefits, className = '' }: BenefitsGridProps) {
             <HighlightTitle text={benefit.title} />
           </h3>
 
-          <p className="text-[15px] text-warm-600 leading-relaxed">
+          <p className="text-base text-warm-600 leading-relaxed">
             {benefit.description}
           </p>
         </article>

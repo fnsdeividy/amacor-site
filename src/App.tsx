@@ -24,6 +24,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import BeneficiaryArea from './pages/BeneficiaryArea'
 import ExamSearch from './pages/ExamSearch'
+import ReajusteAnual from './pages/ReajusteAnual'
 
 // Admin pages
 import AdminLogin from './pages/Admin/AdminLogin'
@@ -70,6 +71,7 @@ function Layout() {
           <Route path="/beneficiario" element={<BeneficiaryArea />} />
           <Route path="/area-do-beneficiario" element={<BeneficiaryArea />} />
           <Route path="/buscar-exames" element={<ExamSearch />} />
+          <Route path="/reajuste-anual" element={<ReajusteAnual />} />
 
           {/* Admin routes */}
           <Route path="/admin/login" element={<AdminLogin />} />

@@ -91,9 +91,9 @@ function PlanCardsSection({ plans, whatsappPhone }: { plans: any[]; whatsappPhon
 
   // Cover images for each plan - diverse families and people
   const planCoverImages: Record<string, string> = {
-    'exclusivo-i': 'https://images.unsplash.com/photo-1491013516836-7db643ee125a?auto=format&fit=crop&w=600&q=80',
+    'exclusivo-i': '/img/doctor.png',
     'exclusivo-ii': 'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=600&q=80',
-    'mais-com-franquia': '/img/home.png',
+    'mais-com-franquia': '/img/care.png',
     'empresarial': 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=600&q=80',
   }
 

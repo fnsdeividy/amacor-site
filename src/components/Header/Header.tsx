@@ -29,6 +29,7 @@ const navItems: NavItem[] = [
   { label: 'Rede de Atendimento', href: '/rede-credenciada' },
   { label: 'Área do Beneficiário', href: '/area-do-beneficiario' },
   { label: 'Institucional', href: '/institucional' },
+  { label: 'Reajuste Anual', href: '/reajuste-anual' },
   { label: 'Contato', href: '/contato' },
 ]
 
