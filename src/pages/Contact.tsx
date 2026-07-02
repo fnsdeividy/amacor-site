@@ -150,10 +150,10 @@ export default function Contact() {
                   <div>
                     <h3 className="text-[17px] font-semibold text-primary-900">Telefone</h3>
                     <a
-                      href="tel:+552140200639"
+                      href="tel:+5521972318026"
                       className="text-body text-primary-600 hover:text-primary-700 mt-1 inline-block"
                     >
-                      (21) 4020-0639
+                      (21) 97231-8026
                     </a>
                   </div>
                 </div>
@@ -237,7 +237,7 @@ export default function Contact() {
           <div className="bg-white rounded-2xl shadow-soft border border-warm-200 overflow-hidden">
             <iframe
               title="Localização da Amacor no mapa"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3675.356!2d-43.1729!3d-22.9068!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDU0JzI0LjUiUyA0M8KwMTAnMjIuNCJX!5e0!3m2!1spt-BR!2sbr!4v1700000000000"
+              src="https://maps.google.com/maps?q=Rua+Augusto+Vasconcelos,+544,+Campo+Grande,+Rio+de+Janeiro,+RJ&t=&z=16&ie=UTF8&iwloc=&output=embed"
               width="100%"
               height="400"
               style={{ border: 0 }}

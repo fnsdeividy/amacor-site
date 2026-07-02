@@ -6,11 +6,16 @@ import * as dotenv from 'dotenv';
 // Carrega variáveis de ambiente
 dotenv.config({ path: path.resolve(__dirname, '..', '.env') });
 
-const MIGRATIONS_DIR = path.resolve(__dirname, '..', 'migrations');
+// Em desenvolvimento: __dirname = backend/scripts
+// Em produção (compilado): __dirname = backend/dist/scripts → migrations está em backend/migrations
+const MIGRATIONS_DIR = fs.existsSync(path.resolve(__dirname, '..', 'migrations'))
+  ? path.resolve(__dirname, '..', 'migrations')
+  : path.resolve(__dirname, '..', '..', 'migrations');
 
 async function runMigrations(): Promise<void> {
   const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
+    ssl: process.env.DATABASE_URL?.includes('render.com') ? { rejectUnauthorized: false } : undefined,
     max: 5,
     idleTimeoutMillis: 10000,
     connectionTimeoutMillis: 5000,

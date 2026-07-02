@@ -117,7 +117,7 @@ function PlanCardsSection({ plans, whatsappPhone }: { plans: any[]; whatsappPhon
             Encontre o plano ideal para você, sua família ou sua empresa.
           </p>
         </div>
-        <div className="grid grid-cols-1 tablet:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 tablet:grid-cols-2 gap-5 tablet:gap-8">
           {plans.map((plan, index) => (
             <div
               key={plan.id}
@@ -371,7 +371,7 @@ export default function Home() {
           link: WHATSAPP_PHONE,
           variant: 'whatsapp',
         }}
-        backgroundImage="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1920&q=80"
+        backgroundImage="https://images.unsplash.com/photo-1609220136736-443140cffec6?auto=format&fit=crop&w=1920&q=80"
       />
 
       {/* 2. Benefits Grid (6 cards) */}

@@ -198,7 +198,7 @@ export default function PlanMaisComFranquia() {
         }}
         secondaryAction={{
           text: 'Ligue para nos',
-          link: 'tel:+552140200639',
+          link: 'tel:+5521972318026',
           variant: 'phone',
         }}
       />

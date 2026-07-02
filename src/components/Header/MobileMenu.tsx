@@ -34,8 +34,8 @@ export default function MobileMenu({
   return (
     <div
       className={`tablet:hidden fixed inset-0 top-[80px] z-40 transition-all duration-300 ease-in-out ${isOpen
-          ? 'translate-x-0 opacity-100 pointer-events-auto'
-          : 'translate-x-full opacity-0 pointer-events-none'
+        ? 'translate-x-0 opacity-100 pointer-events-auto'
+        : 'translate-x-full opacity-0 pointer-events-none'
         }`}
       aria-hidden={!isOpen}
     >
@@ -70,8 +70,8 @@ export default function MobileMenu({
                     aria-expanded={isExpanded}
                     aria-controls={`mobile-submenu-${item.href.replace(/\//g, '-')}`}
                     className={`flex items-center justify-between w-full min-h-[48px] px-5 py-3.5 rounded-xl text-[16px] transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 ${isActive
-                        ? 'text-primary-600 bg-primary-50 font-semibold'
-                        : 'text-warm-700 hover:bg-warm-50 hover:text-primary-600'
+                      ? 'text-primary-600 bg-primary-50 font-semibold'
+                      : 'text-warm-700 hover:bg-warm-50 hover:text-primary-600'
                       }`}
                   >
                     <span className="flex items-center">
@@ -110,8 +110,8 @@ export default function MobileMenu({
                           href={child.href}
                           onClick={onClose}
                           className={`flex items-center min-h-[48px] pl-10 pr-5 py-3 rounded-xl text-[16px] transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 ${currentPath === child.href
-                              ? 'text-primary-600 bg-primary-50 font-semibold'
-                              : 'text-warm-600 hover:bg-warm-50 hover:text-primary-600'
+                            ? 'text-primary-600 bg-primary-50 font-semibold'
+                            : 'text-warm-600 hover:bg-warm-50 hover:text-primary-600'
                             }`}
                         >
                           {currentPath === child.href && (
@@ -133,8 +133,8 @@ export default function MobileMenu({
                   href={item.href}
                   onClick={onClose}
                   className={`flex items-center min-h-[48px] px-5 py-3.5 rounded-xl text-[16px] transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 ${currentPath === item.href
-                      ? 'text-primary-600 bg-primary-50 font-semibold'
-                      : 'text-warm-700 hover:bg-warm-50 hover:text-primary-600'
+                    ? 'text-primary-600 bg-primary-50 font-semibold'
+                    : 'text-warm-700 hover:bg-warm-50 hover:text-primary-600'
                     }`}
                 >
                   {currentPath === item.href && (
@@ -154,8 +154,8 @@ export default function MobileMenu({
                   href={link.path}
                   onClick={onClose}
                   className={`flex items-center min-h-[48px] px-5 py-3.5 rounded-xl text-[16px] transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 ${currentPath === link.path
-                      ? 'text-primary-600 bg-primary-50 font-semibold'
-                      : 'text-warm-700 hover:bg-warm-50 hover:text-primary-600'
+                    ? 'text-primary-600 bg-primary-50 font-semibold'
+                    : 'text-warm-700 hover:bg-warm-50 hover:text-primary-600'
                     }`}
                 >
                   {currentPath === link.path && (
@@ -189,7 +189,7 @@ export default function MobileMenu({
             Contato
           </p>
           <a
-            href="tel:+552140200639"
+            href="tel:+5521972318026"
             className="flex items-center gap-2 text-[16px] text-warm-700 py-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 rounded"
           >
             <svg
@@ -206,7 +206,7 @@ export default function MobileMenu({
                 d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
               />
             </svg>
-            (21) 4020-0639
+            (21) 97231-8026
           </a>
         </div>
       </nav>

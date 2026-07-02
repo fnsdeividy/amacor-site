@@ -32,7 +32,7 @@ export function Footer(_props: FooterProps) {
                 </a>
               </li>
               <li>
-                <span className="font-medium">PLANO AMBULATORIAL:</span> (21) 3405-9466
+                <span className="font-medium">PLANO AMBULATORIAL:</span>(21) 99018-4171
               </li>
               <li>RT: Dr. Raíssa Heber Pinto Lima</li>
             </ul>

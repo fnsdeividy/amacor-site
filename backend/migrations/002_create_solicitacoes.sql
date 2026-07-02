@@ -1,5 +1,5 @@
 -- Migration 002: solicitacoes
-CREATE TABLE solicitacoes (
+CREATE TABLE IF NOT EXISTS solicitacoes (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     numero_interno SERIAL UNIQUE,
     protocolo VARCHAR(50) NOT NULL UNIQUE,
@@ -22,6 +22,6 @@ CREATE TABLE solicitacoes (
     atualizado_em TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
 );
 
-CREATE INDEX idx_solicitacoes_codigo_benef ON solicitacoes(codigo_beneficiario);
-CREATE INDEX idx_solicitacoes_status ON solicitacoes(status);
-CREATE INDEX idx_solicitacoes_criado_em ON solicitacoes(criado_em DESC);
+CREATE INDEX IF NOT EXISTS idx_solicitacoes_codigo_benef ON solicitacoes(codigo_beneficiario);
+CREATE INDEX IF NOT EXISTS idx_solicitacoes_status ON solicitacoes(status);
+CREATE INDEX IF NOT EXISTS idx_solicitacoes_criado_em ON solicitacoes(criado_em DESC);

@@ -118,9 +118,15 @@ export default function ReajusteAnual() {
                       <table className="w-full text-left">
                         <thead className="bg-warm-50">
                           <tr>
-                            <th className="px-6 py-3 text-xs font-semibold text-warm-600 uppercase tracking-wide">Produto</th>
-                            <th className="px-6 py-3 text-xs font-semibold text-warm-600 uppercase tracking-wide">Proposta</th>
-                            <th className="px-6 py-3 text-xs font-semibold text-warm-600 uppercase tracking-wide">Código ANS</th>
+                            <th className="px-6 py-3 text-xs font-semibold text-warm-600 uppercase tracking-wide">
+                              {pool.year >= 2026 ? 'Responsável do Contrato' : 'Produto'}
+                            </th>
+                            <th className="px-6 py-3 text-xs font-semibold text-warm-600 uppercase tracking-wide">
+                              {pool.year >= 2026 ? 'Nº Contrato' : 'Proposta'}
+                            </th>
+                            <th className="px-6 py-3 text-xs font-semibold text-warm-600 uppercase tracking-wide">
+                              {pool.year >= 2026 ? 'Grupo de Reajuste' : 'Código ANS'}
+                            </th>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-warm-100">

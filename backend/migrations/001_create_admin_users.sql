@@ -1,5 +1,5 @@
 -- Migration 001: admin_users
-CREATE TABLE admin_users (
+CREATE TABLE IF NOT EXISTS admin_users (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     nome VARCHAR(200) NOT NULL,
     email VARCHAR(254) NOT NULL UNIQUE,

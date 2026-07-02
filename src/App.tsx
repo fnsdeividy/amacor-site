@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer'
@@ -42,11 +43,22 @@ import BeneficiaryAlterarSenha from './pages/Beneficiary/BeneficiaryAlterarSenha
 import BeneficiaryProtocolos from './pages/Beneficiary/BeneficiaryProtocolos'
 import BeneficiaryRede from './pages/Beneficiary/BeneficiaryRede'
 
+function ScrollToTop() {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+
+  return null
+}
+
 function Layout() {
   const { pathname } = useLocation()
 
   return (
     <div className="min-h-screen flex flex-col bg-background-white">
+      <ScrollToTop />
       <Header currentPath={pathname} />
       <main className="flex-1 pt-[80px]">
         <Routes>

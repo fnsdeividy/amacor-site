@@ -13,6 +13,7 @@ const ADMIN_PERFIL = 'admin';
 async function seedAdmin(): Promise<void> {
   const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
+    ssl: process.env.DATABASE_URL?.includes('render.com') ? { rejectUnauthorized: false } : undefined,
     max: 5,
     connectionTimeoutMillis: 5000,
   });

@@ -1,5 +1,5 @@
 -- Migration 004: historico_eventos
-CREATE TABLE historico_eventos (
+CREATE TABLE IF NOT EXISTS historico_eventos (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     solicitacao_id UUID NOT NULL REFERENCES solicitacoes(id) ON DELETE CASCADE,
     tipo_evento VARCHAR(50) NOT NULL,
@@ -9,5 +9,5 @@ CREATE TABLE historico_eventos (
     criado_em TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
 );
 
-CREATE INDEX idx_historico_solicitacao ON historico_eventos(solicitacao_id);
-CREATE INDEX idx_historico_criado_em ON historico_eventos(criado_em DESC);
+CREATE INDEX IF NOT EXISTS idx_historico_solicitacao ON historico_eventos(solicitacao_id);
+CREATE INDEX IF NOT EXISTS idx_historico_criado_em ON historico_eventos(criado_em DESC);

@@ -304,26 +304,28 @@ export default function Header({ currentPath }: HeaderProps) {
                         <div
                           id="plans-dropdown-menu"
                           role="menu"
-                          className="absolute top-full left-0 mt-2 w-56 bg-white rounded-2xl shadow-elevated border border-warm-100 py-2 z-50"
+                          className="absolute top-full left-0 pt-1 z-50"
                         >
-                          {item.children.map((child, index) => (
-                            <a
-                              key={child.href}
-                              ref={(el) => {
-                                dropdownItemsRef.current[index] = el
-                              }}
-                              href={child.href}
-                              role="menuitem"
-                              tabIndex={-1}
-                              onClick={closePlansDropdown}
-                              className={`block px-5 py-3 text-[16px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-600 ${currentPath === child.href
-                                ? 'text-primary-600 font-semibold bg-primary-50'
-                                : 'text-warm-600 hover:text-primary-600 hover:bg-warm-50'
-                                }`}
-                            >
-                              {child.label}
-                            </a>
-                          ))}
+                          <div className="w-56 bg-white rounded-2xl shadow-elevated border border-warm-100 py-2">
+                            {item.children.map((child, index) => (
+                              <a
+                                key={child.href}
+                                ref={(el) => {
+                                  dropdownItemsRef.current[index] = el
+                                }}
+                                href={child.href}
+                                role="menuitem"
+                                tabIndex={-1}
+                                onClick={closePlansDropdown}
+                                className={`block px-5 py-3 text-[16px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-600 ${currentPath === child.href
+                                  ? 'text-primary-600 font-semibold bg-primary-50'
+                                  : 'text-warm-600 hover:text-primary-600 hover:bg-warm-50'
+                                  }`}
+                              >
+                                {child.label}
+                              </a>
+                            ))}
+                          </div>
                         </div>
                       )}
                     </div>
@@ -350,7 +352,8 @@ export default function Header({ currentPath }: HeaderProps) {
 
               {/* No admin links here — handled by the admin-only branch above */}
             </>
-          )}
+          )
+          }
         </nav>
 
         {/* Mobile Hamburger Button */}

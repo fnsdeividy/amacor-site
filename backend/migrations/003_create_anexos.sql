@@ -1,5 +1,5 @@
 -- Migration 003: anexos
-CREATE TABLE anexos (
+CREATE TABLE IF NOT EXISTS anexos (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     solicitacao_id UUID NOT NULL REFERENCES solicitacoes(id) ON DELETE CASCADE,
     nome_original VARCHAR(255) NOT NULL,
@@ -10,4 +10,4 @@ CREATE TABLE anexos (
     criado_em TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
 );
 
-CREATE INDEX idx_anexos_solicitacao ON anexos(solicitacao_id);
+CREATE INDEX IF NOT EXISTS idx_anexos_solicitacao ON anexos(solicitacao_id);
