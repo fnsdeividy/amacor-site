@@ -33,6 +33,7 @@ export function SearchFilters({
   const [specialty, setSpecialty] = useState('')
   const [plan, setPlan] = useState('')
   const [providerType, setProviderType] = useState('')
+  const [serviceType, setServiceType] = useState('')
   const geocodeAbortRef = useRef<AbortController | null>(null)
 
   const emitFilters = useCallback(
@@ -43,6 +44,7 @@ export function SearchFilters({
       specialty: string
       plan: string
       providerType: string
+      serviceType: string
       userLocation: { lat: number; lng: number } | null
     }> = {}) => {
       const currentCep = overrides.cep ?? cep
@@ -51,6 +53,7 @@ export function SearchFilters({
       const currentSpecialty = overrides.specialty ?? specialty
       const currentPlan = overrides.plan ?? plan
       const currentProviderType = overrides.providerType ?? providerType
+      const currentServiceType = overrides.serviceType ?? serviceType
       const currentLocation = overrides.userLocation !== undefined ? overrides.userLocation : cepLocation
 
       const filters: ProviderFilters = {}
@@ -77,10 +80,13 @@ export function SearchFilters({
       if (currentProviderType) {
         filters.providerType = currentProviderType as ProviderFilters['providerType']
       }
+      if (currentServiceType) {
+        filters.serviceType = currentServiceType as ProviderFilters['serviceType']
+      }
 
       onFiltersChange(filters)
     },
-    [cep, city, neighborhood, specialty, plan, providerType, cepLocation, onFiltersChange]
+    [cep, city, neighborhood, specialty, plan, providerType, serviceType, cepLocation, onFiltersChange]
   )
 
   const handleCepChange = (value: string) => {
@@ -168,6 +174,11 @@ export function SearchFilters({
     emitFilters({ providerType: value })
   }
 
+  const handleServiceTypeChange = (value: string) => {
+    setServiceType(value)
+    emitFilters({ serviceType: value })
+  }
+
   const inputClasses = 'w-full min-h-[44px] px-4 py-2.5 rounded-xl border border-warm-200 text-sm text-primary-900 bg-warm-50 placeholder:text-warm-400 hover:border-warm-300 focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 focus:bg-white transition-all'
   const selectClasses = `${inputClasses} appearance-none cursor-pointer`
   const labelClasses = 'block text-xs font-semibold text-warm-600 uppercase tracking-wide mb-1.5'
@@ -183,8 +194,8 @@ export function SearchFilters({
             onClick={onGeolocationRequest}
             disabled={isGeolocating}
             className={`w-full tablet:w-auto min-h-[44px] px-5 py-2.5 rounded-xl font-semibold text-sm focus:outline-none focus:ring-2 focus:ring-primary-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 ${geolocationSuccess
-                ? 'bg-green-600 text-white hover:bg-green-700'
-                : 'bg-primary-600 text-white hover:bg-primary-700'
+              ? 'bg-green-600 text-white hover:bg-green-700'
+              : 'bg-primary-600 text-white hover:bg-primary-700'
               }`}
             aria-label="Usar minha localização atual"
           >
@@ -304,7 +315,21 @@ export function SearchFilters({
       </div>
 
       {/* Filters row */}
-      <div className="grid grid-cols-1 tablet:grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 tablet:grid-cols-4 gap-3">
+        <div>
+          <label htmlFor="search-service-type" className={labelClasses}>Serviço</label>
+          <select
+            id="search-service-type"
+            value={serviceType}
+            onChange={(e) => handleServiceTypeChange(e.target.value)}
+            className={selectClasses}
+          >
+            <option value="">Consultas e Exames</option>
+            <option value="Consulta">Consultas</option>
+            <option value="Exame">Exames</option>
+          </select>
+        </div>
+
         <div>
           <label htmlFor="search-specialty" className={labelClasses}>Especialidade</label>
           <select

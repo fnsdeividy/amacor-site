@@ -57,9 +57,12 @@ export interface ProviderFilters {
   specialty?: Specialty | null;
   plan?: PlanType | null;
   providerType?: ProviderType | null;
+  serviceType?: ServiceType | null;
   userLocation?: { lat: number; lng: number } | null;
   radiusKm?: number;
 }
+
+export type ServiceType = 'Consulta' | 'Exame';
 
 export type SortOption = 'proximity' | 'alphabetical' | 'specialty' | 'city' | 'neighborhood';
 

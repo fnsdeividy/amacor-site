@@ -1,4 +1,4 @@
-import type { Provider, ProviderFilters, Specialty, PlanType, ProviderType } from '../types/provider';
+import type { Provider, ProviderFilters, Specialty, PlanType, ProviderType, ServiceType } from '../types/provider';
 import { haversineDistance } from './distance';
 
 /**
@@ -75,6 +75,20 @@ export function filterProviders(
   if (filters.providerType) {
     const providerType: ProviderType = filters.providerType;
     result = result.filter((provider) => provider.type === providerType);
+  }
+
+  // Filter by service type (Consulta = has specialties, Exame = has exams)
+  if (filters.serviceType) {
+    const serviceType: ServiceType = filters.serviceType;
+    if (serviceType === 'Consulta') {
+      result = result.filter((provider) =>
+        (provider.specialties || []).length > 0
+      );
+    } else if (serviceType === 'Exame') {
+      result = result.filter((provider) =>
+        (provider.exams || []).length > 0
+      );
+    }
   }
 
   // Filter by city
