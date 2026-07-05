@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import type { Provider, ProviderFilters, Specialty, PlanType, ProviderType } from '../types/provider'
 import { useGeolocation } from '../hooks/useGeolocation'
 import { useProviderSearch } from '../hooks/useProviderSearch'
@@ -37,6 +37,7 @@ const PROVIDER_TYPES: ProviderType[] = [
 export default function ProviderNetwork() {
   const geolocation = useGeolocation()
   const [cepLocation, setCepLocation] = useState<{ lat: number; lng: number } | null>(null)
+  const prevPositionRef = useRef<{ lat: number; lng: number } | null>(null)
 
   // Effective location: browser geolocation takes priority, then CEP-based location
   const effectiveLocation = geolocation.position || cepLocation
@@ -45,6 +46,7 @@ export default function ProviderNetwork() {
     results,
     totalResults,
     setFilters,
+    setSortBy,
     currentPage,
     setCurrentPage,
     totalPages,
@@ -52,6 +54,15 @@ export default function ProviderNetwork() {
     providers,
     userLocation: effectiveLocation,
   })
+
+  // When geolocation resolves, switch to proximity sort and re-emit filters
+  useEffect(() => {
+    if (geolocation.position && !prevPositionRef.current) {
+      setSortBy('proximity')
+      setFilters({ userLocation: geolocation.position, radiusKm: 30 })
+    }
+    prevPositionRef.current = geolocation.position
+  }, [geolocation.position, setSortBy, setFilters])
 
   const handleFiltersChange = (filters: ProviderFilters) => {
     // Track CEP-derived location for ProviderCard distance display
@@ -119,7 +130,7 @@ export default function ProviderNetwork() {
                   <svg className="w-4 h-4 text-accent-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                   </svg>
-                  <span className="text-sm font-medium text-white/90">13 especialidades</span>
+                  <span className="text-sm font-medium text-white/90">+13 especialidades</span>
                 </div>
               </div>
             </div>
@@ -139,6 +150,7 @@ export default function ProviderNetwork() {
               onGeolocationRequest={geolocation.requestLocation}
               isGeolocating={geolocation.isLoading}
               geolocationError={geolocation.error}
+              geolocationSuccess={!!geolocation.position}
             />
           </div>
         </div>

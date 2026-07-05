@@ -129,8 +129,8 @@ export function ProviderCard({
             </span>
           ))}
           {(provider.specialties || []).length > 4 && (
-            <span className="text-xs font-medium text-warm-400 px-2 py-0.5">
-              +{(provider.specialties || []).length - 4}
+            <span className="text-xs font-medium text-warm-500 bg-warm-100 px-2 py-0.5 rounded-md">
+              +{(provider.specialties || []).length - 4} especialidades
             </span>
           )}
         </div>
