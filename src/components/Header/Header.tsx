@@ -28,7 +28,6 @@ const navItems: NavItem[] = [
   { label: 'Telemedicina', href: '/telemedicina' },
   { label: 'Rede de Atendimento', href: '/rede-credenciada' },
   { label: 'Área do Beneficiário', href: '/area-do-beneficiario' },
-  { label: 'Institucional', href: '/institucional' },
   { label: 'Reajuste Anual', href: '/reajuste-anual' },
   { label: 'Politica de Reembolso', href: '/politica-de-reembolso' },
   { label: 'Contato', href: '/contato' },
