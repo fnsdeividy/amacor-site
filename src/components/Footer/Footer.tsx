@@ -50,6 +50,7 @@ export function Footer(_props: FooterProps) {
                   { label: 'Manual do Associado', href: '#' },
                   { label: 'Rede de Atendimento', href: '/rede-credenciada' },
                   { label: 'Telemedicina', href: '/telemedicina' },
+                  { label: 'Politica de Reembolso', href: '/politica-de-reembolso' },
                   { label: 'IDSS', href: '/idss' },
                 ].map((link) => (
                   <li key={link.label}>

@@ -30,6 +30,7 @@ const navItems: NavItem[] = [
   { label: 'Área do Beneficiário', href: '/area-do-beneficiario' },
   { label: 'Institucional', href: '/institucional' },
   { label: 'Reajuste Anual', href: '/reajuste-anual' },
+  { label: 'Politica de Reembolso', href: '/politica-de-reembolso' },
   { label: 'Contato', href: '/contato' },
 ]
 
