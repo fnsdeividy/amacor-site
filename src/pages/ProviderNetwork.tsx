@@ -162,8 +162,8 @@ export default function ProviderNetwork() {
           {/* Result count */}
           <div className="mb-8">
             <p className="text-body font-medium text-warm-600">
-              <span className="text-primary-900 font-bold text-lg">{totalResults}</span>{' '}
-              {totalResults === 1 ? 'prestador encontrado' : 'prestadores encontrados'}
+              + <span className="text-primary-900 font-bold text-lg">{totalResults}</span>{' '}
+              prestadores encontrados
             </p>
           </div>
 
