@@ -16,6 +16,7 @@ import PlanCorporate from './pages/PlanCorporate'
 import Telemedicine from './pages/Telemedicine'
 import Institutional from './pages/Institutional'
 import ProviderNetwork from './pages/ProviderNetwork'
+import ProviderDetail from './pages/ProviderDetail'
 import WaitingPeriodsIndividual from './pages/WaitingPeriodsIndividual'
 import WaitingPeriodsCorporate from './pages/WaitingPeriodsCorporate'
 import IDSS from './pages/IDSS'
@@ -74,6 +75,7 @@ function Layout() {
           <Route path="/telemedicina" element={<Telemedicine />} />
           <Route path="/institucional" element={<Institutional />} />
           <Route path="/rede-credenciada" element={<ProviderNetwork />} />
+          <Route path="/rede-credenciada/:id" element={<ProviderDetail />} />
           <Route path="/carencia-individual" element={<WaitingPeriodsIndividual />} />
           <Route path="/carencia-empresarial" element={<WaitingPeriodsCorporate />} />
           <Route path="/idss" element={<IDSS />} />

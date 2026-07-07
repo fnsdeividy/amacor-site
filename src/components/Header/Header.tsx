@@ -153,7 +153,7 @@ export default function Header({ currentPath }: HeaderProps) {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/98 backdrop-blur-sm border-b border-warm-100 shadow-soft">
-      <div className="max-w-7xl mx-auto px-4 tablet:px-6 flex items-center h-[80px]">
+      <div className="max-w-7xl mx-auto px-4 tablet:px-6 flex items-center gap-8 h-[80px]">
         {/* Logo / Brand */}
         <a
           href="/"
@@ -270,7 +270,7 @@ export default function Header({ currentPath }: HeaderProps) {
                         type="button"
                         onClick={togglePlansDropdown}
                         onKeyDown={handlePlansButtonKeyDown}
-                        className={`relative text-[16px] px-4 py-2.5 rounded-lg transition-all duration-200 flex items-center gap-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 ${isPlansActive
+                        className={`relative text-[14px] px-2.5 py-2 rounded-lg transition-all duration-200 flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 ${isPlansActive
                           ? 'text-primary-600 font-semibold bg-primary-50'
                           : 'text-warm-600 hover:text-primary-600 hover:bg-warm-50'
                           }`}
@@ -295,7 +295,7 @@ export default function Header({ currentPath }: HeaderProps) {
                           />
                         </svg>
                         {isPlansActive && (
-                          <span className="absolute bottom-0.5 left-4 right-4 h-[2px] bg-primary-600 rounded-full" />
+                          <span className="absolute bottom-0.5 left-2.5 right-2.5 h-[2px] bg-primary-600 rounded-full" />
                         )}
                       </button>
 
@@ -337,14 +337,14 @@ export default function Header({ currentPath }: HeaderProps) {
                   <a
                     key={item.href}
                     href={item.href}
-                    className={`relative text-[16px] px-4 py-2.5 rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 ${isNavItemActive(item)
+                    className={`relative text-[14px] px-2.5 py-2 rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 ${isNavItemActive(item)
                       ? 'text-primary-600 font-semibold bg-primary-50'
                       : 'text-warm-600 hover:text-primary-600 hover:bg-warm-50'
                       }`}
                   >
                     {item.label}
                     {isNavItemActive(item) && (
-                      <span className="absolute bottom-0.5 left-4 right-4 h-[2px] bg-primary-600 rounded-full" />
+                      <span className="absolute bottom-0.5 left-2.5 right-2.5 h-[2px] bg-primary-600 rounded-full" />
                     )}
                   </a>
                 )
