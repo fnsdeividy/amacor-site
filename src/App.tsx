@@ -39,6 +39,7 @@ import AdminSolicitacaoDetalhe from './pages/Admin/AdminSolicitacaoDetalhe'
 import BeneficiaryBoletos from './pages/Beneficiary/BeneficiaryBoletos'
 import BeneficiarySolicitacoes from './pages/Beneficiary/BeneficiarySolicitacoes'
 import BeneficiaryNovaSolicitacao from './pages/Beneficiary/BeneficiaryNovaSolicitacao'
+import BeneficiaryNovoReembolso from './pages/Beneficiary/BeneficiaryNovoReembolso'
 import BeneficiarySolicitacaoDetalhe from './pages/Beneficiary/BeneficiarySolicitacaoDetalhe'
 import BeneficiaryDados from './pages/Beneficiary/BeneficiaryDados'
 import BeneficiaryAlterarSenha from './pages/Beneficiary/BeneficiaryAlterarSenha'
@@ -99,6 +100,7 @@ function Layout() {
           <Route path="/beneficiario/boletos" element={<BeneficiaryRoute><BeneficiaryBoletos /></BeneficiaryRoute>} />
           <Route path="/beneficiario/solicitacoes" element={<BeneficiaryRoute><BeneficiarySolicitacoes /></BeneficiaryRoute>} />
           <Route path="/beneficiario/solicitacoes/nova" element={<BeneficiaryRoute><BeneficiaryNovaSolicitacao /></BeneficiaryRoute>} />
+          <Route path="/beneficiario/solicitacoes/reembolso" element={<BeneficiaryRoute><BeneficiaryNovoReembolso /></BeneficiaryRoute>} />
           <Route path="/beneficiario/solicitacoes/:id" element={<BeneficiaryRoute><BeneficiarySolicitacaoDetalhe /></BeneficiaryRoute>} />
           <Route path="/beneficiario/dados" element={<BeneficiaryRoute><BeneficiaryDados /></BeneficiaryRoute>} />
           <Route path="/beneficiario/alterar-senha" element={<BeneficiaryRoute><BeneficiaryAlterarSenha /></BeneficiaryRoute>} />

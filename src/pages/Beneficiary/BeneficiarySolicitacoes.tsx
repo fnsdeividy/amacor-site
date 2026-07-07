@@ -194,6 +194,12 @@ export default function BeneficiarySolicitacoes() {
             >
               Nova Solicitação
             </Link>
+            <Link
+              to="/beneficiario/solicitacoes/reembolso"
+              className="inline-block mt-4 ml-3 px-6 py-2 bg-white border-2 border-primary-600 text-primary-600 rounded-lg font-semibold hover:bg-primary-50 transition-colors"
+            >
+              Solicitar Reembolso
+            </Link>
           </div>
         </div>
       </section>
@@ -206,15 +212,26 @@ export default function BeneficiarySolicitacoes() {
       <div className="max-w-4xl mx-auto">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
           <h1 className="text-3xl font-bold text-primary-600">Minhas Solicitações</h1>
-          <Link
-            to="/beneficiario/solicitacoes/nova"
-            className="inline-flex items-center px-4 py-2 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition-colors text-sm"
-          >
-            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-            </svg>
-            Nova Solicitação
-          </Link>
+          <div className="flex flex-wrap gap-3">
+            <Link
+              to="/beneficiario/solicitacoes/nova"
+              className="inline-flex items-center px-4 py-2 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition-colors text-sm"
+            >
+              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+              Nova Solicitação
+            </Link>
+            <Link
+              to="/beneficiario/solicitacoes/reembolso"
+              className="inline-flex items-center px-4 py-2 border-2 border-primary-600 text-primary-600 rounded-lg font-semibold hover:bg-primary-50 transition-colors text-sm"
+            >
+              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+              </svg>
+              Solicitar Reembolso
+            </Link>
+          </div>
         </div>
 
         {/* Solicitações list */}
