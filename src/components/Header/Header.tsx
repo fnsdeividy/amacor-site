@@ -153,11 +153,11 @@ export default function Header({ currentPath }: HeaderProps) {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/98 backdrop-blur-sm border-b border-warm-100 shadow-soft">
-      <div className="max-w-7xl mx-auto px-4 tablet:px-6 flex items-center justify-between h-[80px]">
+      <div className="max-w-7xl mx-auto px-4 tablet:px-6 flex items-center h-[80px]">
         {/* Logo / Brand */}
         <a
           href="/"
-          className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 rounded-lg"
+          className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 rounded-lg flex-shrink-0"
         >
           <img
             src="/img/logo.png"
@@ -167,7 +167,7 @@ export default function Header({ currentPath }: HeaderProps) {
         </a>
 
         {/* Desktop Navigation */}
-        <nav className="hidden tablet:flex items-center gap-1" aria-label="Navegação principal">
+        <nav className="hidden tablet:flex items-center gap-1 ml-auto" aria-label="Navegação principal">
           {/* Se beneficiário logado, mostra apenas navegação do portal */}
           {isBeneficiaryAuthenticated && !isAdminAuthenticated ? (
             <>
