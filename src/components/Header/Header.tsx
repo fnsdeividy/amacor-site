@@ -162,7 +162,7 @@ export default function Header({ currentPath }: HeaderProps) {
           <img
             src="/img/logo.png"
             alt="Amacor Planos de Saúde"
-            className="h-11 w-auto"
+            className="h-16 w-auto"
           />
         </a>
 
