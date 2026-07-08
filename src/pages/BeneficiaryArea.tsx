@@ -100,6 +100,21 @@ export default function BeneficiaryArea() {
 
   return (
     <div className="w-full min-h-[calc(100vh-80px)]">
+      {/* Banner de contexto — quando NÃO logado */}
+      {!session && (
+        <section className="relative w-full overflow-hidden min-h-[280px] tablet:min-h-[340px] flex items-center">
+          <div className="absolute inset-0 bg-gradient-brand" />
+          <div className="relative z-10 mx-auto max-w-6xl w-full px-4 tablet:px-8 py-20 tablet:py-24 text-center">
+            <h1 className="text-heading-lg tablet:text-heading-xl text-white">
+              Área do Beneficiário
+            </h1>
+            <p className="text-body-lg text-white/80 mt-3 max-w-2xl mx-auto">
+              Acesse os serviços disponíveis para associados de forma rápida e prática.
+            </p>
+          </div>
+        </section>
+      )}
+
       {/* Banner de contexto — deixa claro que é uma área logada/restrita */}
       {session && (
         <div className="w-full bg-gradient-brand text-white">
@@ -144,18 +159,6 @@ export default function BeneficiaryArea() {
       {/* Conteúdo principal */}
       <section className="w-full py-12 tablet:py-16 px-4 tablet:px-8 bg-background-light">
         <div className="mx-auto max-w-5xl">
-          {/* Heading (somente se não está logado — caso improvável mas defensivo) */}
-          {!session && (
-            <div className="text-center mb-14">
-              <h1 className="text-heading-md tablet:text-heading-lg text-primary-900">
-                Área do Beneficiário
-              </h1>
-              <p className="mt-4 text-body text-warm-600 max-w-2xl mx-auto">
-                Acesse os serviços disponíveis para associados de forma rápida e prática.
-              </p>
-            </div>
-          )}
-
           {/* Subtítulo quando logado */}
           {session && (
             <div className="text-center mb-10">

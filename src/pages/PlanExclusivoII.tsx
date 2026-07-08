@@ -151,7 +151,7 @@ export default function PlanExclusivoII() {
           variant: 'whatsapp',
         }}
         secondaryAction={{
-          text: 'Ligue para nos',
+          text: 'Ligue para nós',
           link: 'tel:+5521972318026',
           variant: 'phone',
         }}
@@ -162,14 +162,14 @@ export default function PlanExclusivoII() {
         <div className="mx-auto max-w-2xl">
           <div className="text-center mb-10">
             <span className="inline-block text-sm font-semibold text-accent-500 uppercase tracking-wider mb-3">
-              Formulario
+              Formulário
             </span>
             <h2 className="text-heading-md tablet:text-heading-lg text-primary-900">
               Solicite um Contato
             </h2>
             <p className="text-body text-warm-600 mt-3">
-              Preencha o formulario abaixo e nossa equipe entrara em contato com
-              voce para apresentar o plano Exclusivo II.
+              Preencha o formulário abaixo e nossa equipe entrará em contato com
+              você para apresentar o plano Exclusivo II.
             </p>
           </div>
           <div className="bg-white rounded-2xl shadow-soft border border-warm-200 p-8 tablet:p-10">
@@ -177,7 +177,7 @@ export default function PlanExclusivoII() {
               fields={formFields}
               onSubmit={handleFormSubmit}
               submitButtonText="Solicitar contato"
-              successMessage="Solicitacao enviada com sucesso! Nossa equipe entrara em contato em breve."
+              successMessage="Solicitação enviada com sucesso! Nossa equipe entrará em contato em breve."
             />
           </div>
         </div>

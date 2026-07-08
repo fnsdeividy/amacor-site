@@ -20,12 +20,12 @@ export default function ReimbursementPolicy() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </li>
-                <li className="text-white/80 font-medium">Politica de Reembolso</li>
+                <li className="text-white/80 font-medium">Política de Reembolso</li>
               </ol>
             </nav>
 
             <h1 className="font-display text-heading-lg tablet:text-heading-xl text-white tracking-tight">
-              Politica de <span className="text-accent-300">Reembolso</span>
+              Política de <span className="text-accent-300">Reembolso</span>
             </h1>
             <p className="mt-4 text-body-lg text-white/70 leading-relaxed max-w-3xl">
               Saiba como funciona o processo de reembolso para procedimentos ambulatoriais realizados fora da rede credenciada.

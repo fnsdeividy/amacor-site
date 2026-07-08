@@ -1,127 +1,75 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { render, screen, fireEvent } from '@testing-library/react'
+import { describe, it, expect } from 'vitest'
 import TISSManual from './TISSManual'
 
 describe('TISSManual', () => {
-  beforeEach(() => {
-    vi.restoreAllMocks()
-  })
-
-  it('renders the page heading "Manual TISS"', () => {
+  it('renders the page heading "Padrão TISS"', () => {
     render(<TISSManual />)
 
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Manual TISS')
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Padrão TISS')
   })
 
-  it('renders a description about the TISS standard for health information exchange', () => {
+  it('renders a description about the TISS standard', () => {
     render(<TISSManual />)
 
-    expect(screen.getByText(/TISS.*Troca de Informacoes na Saude Suplementar/)).toBeInTheDocument()
-    expect(screen.getByText(/intercambio de dados/)).toBeInTheDocument()
+    expect(screen.getAllByText(/Troca de Informações na Saúde Suplementar/).length).toBeGreaterThanOrEqual(1)
   })
 
-  it('displays at least one downloadable document link with name and file format', () => {
+  it('displays all 5 TISS component cards', () => {
     render(<TISSManual />)
 
-    const downloadLinks = screen.getAllByRole('link')
-    expect(downloadLinks.length).toBeGreaterThanOrEqual(1)
+    expect(screen.getByText('Componente Organizacional')).toBeInTheDocument()
+    expect(screen.getByText('Componente Conteúdo e Estrutura')).toBeInTheDocument()
+    expect(screen.getByText('Componente Representação de Conceitos em Saúde')).toBeInTheDocument()
+    expect(screen.getByText('Componente Segurança e Privacidade')).toBeInTheDocument()
+    expect(screen.getByText('Componente Comunicação')).toBeInTheDocument()
+  })
 
-    // Each link should have a download attribute
-    downloadLinks.forEach((link) => {
-      expect(link).toHaveAttribute('download')
+  it('expands a card when clicked and shows description', () => {
+    render(<TISSManual />)
+
+    const card = screen.getByText('Componente Organizacional').closest('[role="button"]')!
+    fireEvent.click(card)
+
+    expect(screen.getByText(/regras operacionais/)).toBeInTheDocument()
+  })
+
+  it('shows download button when card with documents is expanded', () => {
+    render(<TISSManual />)
+
+    const card = screen.getByText('Componente Organizacional').closest('[role="button"]')!
+    fireEvent.click(card)
+
+    expect(screen.getByText(/Baixar PDF/)).toBeInTheDocument()
+  })
+
+  it('shows "documento em breve" for components without documents', () => {
+    render(<TISSManual />)
+
+    const card = screen.getByText('Componente Comunicação').closest('[role="button"]')!
+    fireEvent.click(card)
+
+    expect(screen.getByText(/Documento em breve disponível/)).toBeInTheDocument()
+  })
+
+  it('collapses card when clicked again', () => {
+    render(<TISSManual />)
+
+    const card = screen.getByText('Componente Organizacional').closest('[role="button"]')!
+    fireEvent.click(card)
+    expect(screen.getByText(/regras operacionais/)).toBeInTheDocument()
+
+    fireEvent.click(card)
+    expect(screen.queryByText(/regras operacionais/)).not.toBeInTheDocument()
+  })
+
+  it('cards have proper accessibility attributes', () => {
+    render(<TISSManual />)
+
+    const buttons = screen.getAllByRole('button')
+    buttons.forEach((button) => {
+      expect(button).toHaveAttribute('tabIndex', '0')
+      expect(button).toHaveAttribute('aria-expanded')
     })
-
-    // Check that document name and format are visible
-    expect(screen.getByText(/Manual TISS 4\.0/)).toBeInTheDocument()
-    expect(screen.getAllByText(/PDF/).length).toBeGreaterThanOrEqual(1)
-  })
-
-  it('download links have the download attribute for initiating file download', () => {
-    render(<TISSManual />)
-
-    const downloadLinks = screen.getAllByRole('link')
-    downloadLinks.forEach((link) => {
-      expect(link).toHaveAttribute('download')
-      expect(link).toHaveAttribute('href')
-    })
-  })
-
-  it('shows error message when download fails', async () => {
-    vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('Network error'))
-
-    render(<TISSManual />)
-
-    const downloadLinks = screen.getAllByRole('link')
-    fireEvent.click(downloadLinks[0])
-
-    await waitFor(() => {
-      expect(
-        screen.getByText('Arquivo indisponivel. Tente novamente mais tarde.')
-      ).toBeInTheDocument()
-    })
-  })
-
-  it('shows error message when server returns non-ok response', async () => {
-    vi.spyOn(globalThis, 'fetch').mockResolvedValue(
-      new Response(null, { status: 404 })
-    )
-
-    render(<TISSManual />)
-
-    const downloadLinks = screen.getAllByRole('link')
-    fireEvent.click(downloadLinks[0])
-
-    await waitFor(() => {
-      expect(
-        screen.getByText('Arquivo indisponivel. Tente novamente mais tarde.')
-      ).toBeInTheDocument()
-    })
-  })
-
-  it('clears error when a new download is attempted', async () => {
-    vi.spyOn(globalThis, 'fetch')
-      .mockRejectedValueOnce(new Error('Network error'))
-      .mockResolvedValueOnce(new Response(null, { status: 200 }))
-
-    render(<TISSManual />)
-
-    const downloadLinks = screen.getAllByRole('link')
-    fireEvent.click(downloadLinks[0])
-
-    await waitFor(() => {
-      expect(
-        screen.getByText('Arquivo indisponivel. Tente novamente mais tarde.')
-      ).toBeInTheDocument()
-    })
-
-    fireEvent.click(downloadLinks[0])
-
-    await waitFor(() => {
-      expect(
-        screen.queryByText('Arquivo indisponivel. Tente novamente mais tarde.')
-      ).not.toBeInTheDocument()
-    })
-  })
-
-  it('error message has role="alert" for accessibility', async () => {
-    vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('Network error'))
-
-    render(<TISSManual />)
-
-    const downloadLinks = screen.getAllByRole('link')
-    fireEvent.click(downloadLinks[0])
-
-    await waitFor(() => {
-      const alert = screen.getByRole('alert')
-      expect(alert).toHaveTextContent('Arquivo indisponivel. Tente novamente mais tarde.')
-    })
-  })
-
-  it('download links have accessible labels', () => {
-    render(<TISSManual />)
-
-    expect(
-      screen.getByLabelText(/Baixar Manual TISS 4\.0 em formato PDF/)
-    ).toBeInTheDocument()
   })
 })

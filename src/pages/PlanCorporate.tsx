@@ -10,7 +10,7 @@ const corporateBenefits = [
   {
     title: 'Carencias Reduzidas',
     description:
-      'Prazos de carencia reduzidos para grupos empresariais, garantindo acesso rapido aos servicos de saude.',
+      'Prazos de carência reduzidos para grupos empresariais, garantindo acesso rápido aos serviços de saúde.',
   },
   {
     title: 'Gestao Simplificada para RH',
@@ -25,7 +25,7 @@ const corporateBenefits = [
   {
     title: 'Telemedicina para Colaboradores',
     description:
-      'Atendimento medico online disponivel para todos os colaboradores, com praticidade e agilidade.',
+      'Atendimento médico online disponível para todos os colaboradores, com praticidade e agilidade.',
   },
   {
     title: 'Franquia com Economia',
@@ -175,10 +175,10 @@ export default function PlanCorporate() {
         <div className="max-w-6xl mx-auto">
           <div className="mb-12">
             <span className="inline-block text-sm font-semibold text-accent-500 uppercase tracking-wider mb-3">
-              Beneficios
+              Benefícios
             </span>
             <h2 className="text-heading-md tablet:text-heading-lg text-primary-900">
-              Coberturas e Beneficios
+              Coberturas e Benefícios
             </h2>
           </div>
 
@@ -211,7 +211,7 @@ export default function PlanCorporate() {
               Solicite uma Proposta
             </h2>
             <p className="text-body text-warm-600 mt-3">
-              Preencha o formulario abaixo e nossa equipe entrara em contato com
+              Preencha o formulário abaixo e nossa equipe entrará em contato com
               uma proposta personalizada para sua empresa.
             </p>
           </div>
@@ -221,7 +221,7 @@ export default function PlanCorporate() {
               fields={proposalFormFields}
               onSubmit={handleProposalSubmit}
               submitButtonText="Solicitar proposta"
-              successMessage="Proposta solicitada com sucesso! Nossa equipe entrara em contato em breve."
+              successMessage="Proposta solicitada com sucesso! Nossa equipe entrará em contato em breve."
             />
           </div>
         </div>

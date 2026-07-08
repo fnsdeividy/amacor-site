@@ -98,7 +98,7 @@ export default function PlanMaisComFranquia() {
               Coberturas
             </span>
             <h2 className="text-heading-md tablet:text-heading-lg text-primary-900">
-              Beneficios do Plano
+              Benefícios do Plano
             </h2>
           </div>
           <div className="grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-3 gap-6">
@@ -156,13 +156,13 @@ export default function PlanMaisComFranquia() {
         <div className="mx-auto max-w-4xl">
           <div className="bg-primary-50 border border-primary-200 rounded-2xl p-8 tablet:p-10">
             <h3 className="text-heading-sm text-primary-900 mb-4">
-              Regras de Coparticipacao
+              Regras de Coparticipação
             </h3>
             <p className="text-body text-warm-700">
               {plan.coParticipation}
             </p>
             <p className="text-body text-warm-600 mt-4">
-              Com o modelo de coparticipacao, voce paga uma mensalidade mais acessivel e contribui apenas quando utiliza os servicos. E a forma inteligente de cuidar da saude sem comprometer o orcamento.
+              Com o modelo de coparticipação, você paga uma mensalidade mais acessível e contribui apenas quando utiliza os serviços. É uma forma inteligente de cuidar da saúde sem comprometer seu orçamento.
             </p>
           </div>
         </div>
@@ -197,7 +197,7 @@ export default function PlanMaisComFranquia() {
           variant: 'whatsapp',
         }}
         secondaryAction={{
-          text: 'Ligue para nos',
+          text: 'Ligue para nós',
           link: 'tel:+5521972318026',
           variant: 'phone',
         }}
@@ -208,14 +208,14 @@ export default function PlanMaisComFranquia() {
         <div className="mx-auto max-w-2xl">
           <div className="text-center mb-10">
             <span className="inline-block text-sm font-semibold text-accent-500 uppercase tracking-wider mb-3">
-              Formulario
+              Formulário
             </span>
             <h2 className="text-heading-md tablet:text-heading-lg text-primary-900">
               Solicite um Contato
             </h2>
             <p className="text-body text-warm-600 mt-3">
-              Preencha o formulario abaixo e nossa equipe entrara em contato com
-              voce para apresentar o plano Amacor Mais com Franquia.
+              Preencha o formulário abaixo e nossa equipe entrará em contato com
+              você para apresentar o plano Amacor Mais com Franquia.
             </p>
           </div>
           <div className="bg-white rounded-2xl shadow-soft border border-warm-200 p-8 tablet:p-10">
@@ -223,7 +223,7 @@ export default function PlanMaisComFranquia() {
               fields={formFields}
               onSubmit={handleFormSubmit}
               submitButtonText="Solicitar contato"
-              successMessage="Solicitacao enviada com sucesso! Nossa equipe entrara em contato em breve."
+              successMessage="Solicitação enviada com sucesso! Nossa equipe entrará em contato em breve."
             />
           </div>
         </div>

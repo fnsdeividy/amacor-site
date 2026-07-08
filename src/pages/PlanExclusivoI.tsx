@@ -122,10 +122,10 @@ export default function PlanExclusivoI() {
         <div className="mx-auto max-w-6xl">
           <div className="text-center mb-12">
             <span className="inline-block text-sm font-semibold text-accent-500 uppercase tracking-wider mb-3">
-              Beneficios
+              Benefícios
             </span>
             <h2 id="benefits-heading" className="text-heading-md tablet:text-heading-lg text-primary-900">
-              Beneficios do Plano
+              Benefícios do Plano
             </h2>
           </div>
           <div className="grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-3 gap-6">
@@ -172,10 +172,10 @@ export default function PlanExclusivoI() {
         <div className="mx-auto max-w-4xl">
           <div className="text-center mb-12">
             <span className="inline-block text-sm font-semibold text-accent-500 uppercase tracking-wider mb-3">
-              Coparticipacao
+              Coparticipação
             </span>
             <h2 id="coparticipation-heading" className="text-heading-md tablet:text-heading-lg text-primary-900">
-              Regras de Coparticipacao
+              Regras de Coparticipação
             </h2>
           </div>
           <div className="bg-confirmation-light rounded-2xl border border-green-200 p-8 tablet:p-10 text-center">
@@ -186,7 +186,7 @@ export default function PlanExclusivoI() {
               {plan.coParticipation}
             </p>
             <p className="mt-2 text-body text-green-700">
-              Voce nao paga nenhum valor adicional ao utilizar os servicos cobertos pelo plano.
+              Você não paga nenhum valor adicional ao utilizar os serviços cobertos pelo plano.
             </p>
           </div>
         </div>
@@ -200,7 +200,7 @@ export default function PlanExclusivoI() {
               Rede Credenciada
             </span>
             <h2 id="network-heading" className="text-heading-md tablet:text-heading-lg text-primary-900">
-              Informacoes da Rede
+              Informações da Rede
             </h2>
           </div>
           <div className="bg-white rounded-2xl shadow-soft border border-warm-200 p-8 tablet:p-10 text-center">
@@ -213,7 +213,7 @@ export default function PlanExclusivoI() {
             </p>
             {plan.includesTelemedicine && (
               <p className="mt-3 text-body text-warm-600">
-                Inclui telemedicina 24 horas — atendimento medico online de qualquer lugar.
+                Inclui telemedicina 24 horas — atendimento médico online de qualquer lugar.
               </p>
             )}
           </div>
@@ -227,7 +227,7 @@ export default function PlanExclusivoI() {
             Contrate agora pelo WhatsApp
           </h2>
           <p className="text-body text-warm-600 mb-8">
-            Fale com um consultor e contrate o plano {plan.name} de forma rapida e facil.
+            Fale com um consultor e contrate o plano {plan.name} de forma rápida e fácil.
           </p>
           <WhatsAppCTA
             phoneNumber="5521999999999"
@@ -243,14 +243,14 @@ export default function PlanExclusivoI() {
         <div className="mx-auto max-w-2xl">
           <div className="text-center mb-10">
             <span className="inline-block text-sm font-semibold text-accent-500 uppercase tracking-wider mb-3">
-              Formulario
+              Formulário
             </span>
             <h2 id="contact-form-heading" className="text-heading-md tablet:text-heading-lg text-primary-900">
               Solicite um Contato
             </h2>
             <p className="text-body text-warm-600 mt-3">
-              Preencha o formulario abaixo e nossa equipe entrara em contato com
-              voce para apresentar o plano {plan.name}.
+              Preencha o formulário abaixo e nossa equipe entrará em contato com
+              você para apresentar o plano {plan.name}.
             </p>
           </div>
           <div className="bg-white rounded-2xl shadow-soft border border-warm-200 p-8 tablet:p-10">
@@ -258,7 +258,7 @@ export default function PlanExclusivoI() {
               fields={formFields}
               onSubmit={handleFormSubmit}
               submitButtonText="Solicitar contato"
-              successMessage="Solicitacao enviada com sucesso! Nossa equipe entrara em contato em breve."
+              successMessage="Solicitação enviada com sucesso! Nossa equipe entrará em contato em breve."
             />
           </div>
         </div>

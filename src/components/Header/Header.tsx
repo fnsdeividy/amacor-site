@@ -29,7 +29,7 @@ const navItems: NavItem[] = [
   { label: 'Rede de Atendimento', href: '/rede-credenciada' },
   { label: 'Área do Beneficiário', href: '/area-do-beneficiario' },
   { label: 'Reajuste Anual', href: '/reajuste-anual' },
-  { label: 'Politica de Reembolso', href: '/politica-de-reembolso' },
+  { label: 'Política de Reembolso', href: '/politica-de-reembolso' },
   { label: 'Contato', href: '/contato' },
 ]
 
