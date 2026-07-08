@@ -153,7 +153,7 @@ export default function Header({ currentPath }: HeaderProps) {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/98 backdrop-blur-sm border-b border-warm-100 shadow-soft">
-      <div className="max-w-7xl mx-auto px-4 tablet:px-6 flex items-center gap-8 h-[80px]">
+      <div className="max-w-7xl mx-auto px-4 tablet:px-6 flex items-center gap-8 h-[90px]">
         {/* Logo / Brand */}
         <a
           href="/"
@@ -161,7 +161,7 @@ export default function Header({ currentPath }: HeaderProps) {
         >
           <img
             src="/img/logo.png"
-            alt="Amacor Planos de Saúde"
+            alt="Amacor - saúde inteligente para quem ama"
             className="h-16 w-auto"
           />
         </a>
