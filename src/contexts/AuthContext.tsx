@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from 'react';
 import type { BeneficiarySession, LoginCredentials, CreateLoginRequest } from '../types/beneficiary';
 import { login as apiLogin, createLogin as apiCreateLogin } from '../services/api';
+import { posthog } from '../lib/posthog';
 
 interface AuthContextData {
   session: BeneficiarySession | null;
@@ -104,9 +105,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         isAuthenticated: true,
       };
       setSession(newSession);
+
+      // Identifica o usuário no PostHog para correlacionar eventos
+      if (posthog.__loaded) {
+        posthog.identify(response.codigo, {
+          nome: response.nome,
+          cpfCnpj: response.cpfCnpj,
+        });
+        posthog.capture('login_success', { codigo: response.codigo });
+      }
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Erro ao realizar login';
       setError(message);
+
+      // Rastreia falha de login (sem dados sensíveis)
+      if (posthog.__loaded) {
+        posthog.capture('login_failed', { error: message });
+      }
+
       throw err;
     } finally {
       setIsLoading(false);
@@ -132,6 +148,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     storeSession(null);
     setSession(null);
     setError(null);
+
+    // Reseta a identidade no PostHog ao fazer logout
+    if (posthog.__loaded) {
+      posthog.reset();
+    }
   }, []);
 
   const clearError = useCallback(() => {
