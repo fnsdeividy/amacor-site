@@ -68,8 +68,15 @@ export default function ProviderNetwork() {
     // Track CEP-derived location for ProviderCard distance display
     if (filters.userLocation) {
       setCepLocation(filters.userLocation)
+      // Quando há uma localização (CEP), ordena por proximidade para que os
+      // prestadores mais próximos apareçam primeiro (a Amacor permanece fixa no
+      // topo por ser rede própria). Sem isso, a lista ficava em ordem
+      // alfabética, fazendo prestadores distantes com nome no início do
+      // alfabeto (ex: AOZOL) aparecerem logo após a Amacor.
+      setSortBy('proximity')
     } else if (!geolocation.position) {
       setCepLocation(null)
+      setSortBy('alphabetical')
     }
     setFilters(filters)
   }

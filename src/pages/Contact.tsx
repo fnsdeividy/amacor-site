@@ -181,10 +181,10 @@ export default function Contact() {
                   <div>
                     <h3 className="text-[17px] font-semibold text-primary-900">E-mail</h3>
                     <a
-                      href="mailto:contato@amacor.com.br"
+                      href="mailto:comercial@mhvida.com.br"
                       className="text-body text-primary-600 hover:text-primary-700 mt-1 inline-block"
                     >
-                      contato@amacor.com.br
+                      comercial@mhvida.com.br
                     </a>
                   </div>
                 </div>
