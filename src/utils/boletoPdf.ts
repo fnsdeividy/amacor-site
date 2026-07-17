@@ -290,21 +290,35 @@ export async function generateBoletoPdf(data: BoletoData): Promise<void> {
   drawFieldLabel(doc, ml, y, 'Instruções');
 
   y += 4;
+
+  // Coluna de valores à direita — define o limite direito do texto de instruções
+  const valX = pageWidth - mr - 50;
+  // Largura máxima do bloco de instruções: para bem antes da coluna de valores
+  const instrMaxWidth = valX - ml - 4;
+
   doc.setFontSize(8);
   doc.setFont('helvetica', 'normal');
+  doc.setTextColor(0, 0, 0);
   const instrucoes = data.mInstrucoes || '';
-  const instrLines = doc.splitTextToSize(instrucoes, cw * 0.6);
+  const instrLines = doc.splitTextToSize(instrucoes, instrMaxWidth);
   doc.text(instrLines, ml, y);
 
+  // Altura consumida pelas instruções (linha ~3.5mm em fonte 8)
+  let instrBottom = y + instrLines.length * 3.5;
+
+  // Mensagem complementar (mMSGNoBoleto) — também precisa quebrar linha
   if (data.mMSGNoBoleto) {
     doc.setFontSize(7);
+    doc.setFont('helvetica', 'normal');
     doc.setTextColor(...MEDIUM_GRAY);
-    doc.text(data.mMSGNoBoleto, ml, y + instrLines.length * 3.5 + 2);
+    const msgLines = doc.splitTextToSize(data.mMSGNoBoleto, instrMaxWidth);
+    const msgY = instrBottom + 2;
+    doc.text(msgLines, ml, msgY);
+    instrBottom = msgY + msgLines.length * 3;
     doc.setTextColor(0, 0, 0);
   }
 
   // Valores à direita
-  const valX = pageWidth - mr - 50;
   let valY = y - 1;
   const valItems = [
     ['(-) Desconto', data.cDesconto],
@@ -323,7 +337,7 @@ export async function generateBoletoPdf(data: BoletoData): Promise<void> {
     valY += 5;
   });
 
-  y = Math.max(y + instrLines.length * 3.5 + 6, valY + 4);
+  y = Math.max(instrBottom + 4, valY + 4);
   doc.setDrawColor(220, 220, 220);
   doc.line(ml, y, ml + cw, y);
 
