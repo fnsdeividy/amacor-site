@@ -38,8 +38,14 @@ function apiFetch(url: string, options: RequestInit = {}): Promise<Response> {
  *
  * O WebService MH Vida responde em ISO-8859-1 (Latin-1), mas tanto o
  * `response.text()` do navegador quanto o proxy do Vite assumem UTF-8,
- * corrompendo os acentos (ex.: "após" → "apÿÿs"). Lemos os bytes crus e
- * decodificamos com o charset correto (detectado na declaração XML).
+ * corrompendo os acentos. Lemos os bytes crus e decodificamos com o charset
+ * correto conforme o formato do transporte.
+ *
+ * IMPORTANTE: quando o WebService responde embrulhado como string JSON
+ * (ex.: "<?xml ...?>..."), o transporte é UTF-8 e deve ser decodificado como
+ * tal — decodificar como Latin-1/Windows-1252 aí corromperia o texto
+ * (transformando o caractere de substituição U+FFFD em "ï¿½").
+ * Apenas o XML cru servido diretamente honra o charset declarado (ISO-8859-1).
  */
 async function decodeBody(response: Response): Promise<string> {
   // Em runtime real usamos arrayBuffer para controlar o charset.
@@ -50,13 +56,18 @@ async function decodeBody(response: Response): Promise<string> {
 
   const buffer = await response.arrayBuffer();
 
-  // Espia os primeiros bytes como latin1 (1 byte = 1 char) para achar o encoding declarado
-  const preview = new TextDecoder('latin1').decode(new Uint8Array(buffer).subarray(0, 300));
+  // Espia os primeiros bytes como latin1 (1 byte = 1 char) para inspecionar o formato
+  const preview = new TextDecoder('latin1').decode(new Uint8Array(buffer).subarray(0, 300)).trimStart();
+
+  // Resposta embrulhada como JSON (string ou objeto de erro) => transporte UTF-8
+  if (preview.startsWith('"') || preview.startsWith('{')) {
+    return new TextDecoder('utf-8').decode(buffer);
+  }
+
+  // XML cru: honra o charset declarado (o WebService legado usa ISO-8859-1).
   const encMatch = preview.match(/encoding[^\w]*([\w-]+)/i);
   let charset = (encMatch?.[1] || 'utf-8').toLowerCase().trim();
-
-  // ISO-8859-1/Latin-1 de sistemas Windows costuma ser, na prática, Windows-1252
-  // (superset que também cobre aspas/traços especiais na faixa 0x80-0x9F).
+  // ISO-8859-1/Latin-1 de sistemas Windows costuma ser, na prática, Windows-1252.
   if (charset === 'iso-8859-1' || charset === 'iso8859-1' || charset === 'latin1') {
     charset = 'windows-1252';
   }
