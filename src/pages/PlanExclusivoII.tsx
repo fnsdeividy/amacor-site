@@ -147,7 +147,7 @@ export default function PlanExclusivoII() {
         description="Entre em contato conosco pelo WhatsApp ou telefone e tire todas as suas duvidas sobre o plano."
         primaryAction={{
           text: 'Fale pelo WhatsApp',
-          link: 'https://wa.me/5521999999999?text=Ola! Gostaria de saber mais sobre o plano Exclusivo II.',
+          link: 'https://wa.me/5521990184171?text=Ola! Gostaria de saber mais sobre o plano Exclusivo II.',
           variant: 'whatsapp',
         }}
         secondaryAction={{

@@ -10,7 +10,7 @@ import benefits from '../data/benefits.json'
 import plans from '../data/plans.json'
 import testimonials from '../data/testimonials.json'
 
-const WHATSAPP_PHONE = '5521999999999'
+const WHATSAPP_PHONE = '5521990184171'
 
 const trustStats = [
   { id: 'tradição', value: '+30', label: 'Anos de tradição' },

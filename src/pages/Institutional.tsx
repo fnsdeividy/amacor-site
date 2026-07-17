@@ -239,7 +239,7 @@ export default function Institutional() {
               Ver planos
             </Link>
             <WhatsAppCTA
-              phoneNumber="5521999999999"
+              phoneNumber="5521990184171"
               message="Olá! Estou na página institucional da Amacor e gostaria de mais informações sobre os planos."
               label="Falar no WhatsApp"
               variant="primary"

@@ -193,7 +193,7 @@ export default function PlanMaisComFranquia() {
         description="Entre em contato conosco pelo WhatsApp ou telefone e tire todas as suas duvidas sobre o plano."
         primaryAction={{
           text: 'Fale pelo WhatsApp',
-          link: 'https://wa.me/5521999999999?text=Ola! Gostaria de saber mais sobre o plano Amacor Mais com Franquia.',
+          link: 'https://wa.me/5521990184171?text=Ola! Gostaria de saber mais sobre o plano Amacor Mais com Franquia.',
           variant: 'whatsapp',
         }}
         secondaryAction={{
@@ -236,7 +236,7 @@ export default function PlanMaisComFranquia() {
             Prefere falar pelo WhatsApp?
           </h3>
           <WhatsAppCTA
-            phoneNumber="5521999999999"
+            phoneNumber="5521990184171"
             message="Ola! Tenho interesse no plano Amacor Mais com Franquia. Gostaria de mais informacoes."
             label="Contratar pelo WhatsApp"
             variant="primary"

@@ -73,7 +73,7 @@ export function Footer(_props: FooterProps) {
             <div className="flex items-center gap-3 mb-6">
               {/* WhatsApp */}
               <a
-                href="https://wa.me/5521999999999"
+                href="https://wa.me/5521990184171"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="WhatsApp da Amacor"

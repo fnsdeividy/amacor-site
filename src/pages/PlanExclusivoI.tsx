@@ -230,7 +230,7 @@ export default function PlanExclusivoI() {
             Fale com um consultor e contrate o plano {plan.name} de forma rápida e fácil.
           </p>
           <WhatsAppCTA
-            phoneNumber="5521999999999"
+            phoneNumber="5521990184171"
             message={`Olá! Tenho interesse no plano ${plan.name}. Gostaria de mais informações.`}
             label="Contratar pelo WhatsApp"
             variant="primary"

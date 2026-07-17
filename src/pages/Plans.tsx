@@ -103,7 +103,7 @@ export default function Plans() {
               ctaText="Ver detalhes"
               ctaLink={`/planos/${plan.slug}`}
               highlighted={plan.highlighted}
-              whatsappNumber="5521999999999"
+              whatsappNumber="5521990184171"
             />
           ))}
         </div>
@@ -244,7 +244,7 @@ export default function Plans() {
           </p>
           <div className="flex flex-col items-center gap-4 tablet:flex-row tablet:justify-center">
             <a
-              href="https://wa.me/5521999999999"
+              href="https://wa.me/5521990184171"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center min-h-touch px-8 py-4 rounded-xl bg-whatsapp text-white font-bold text-body hover:bg-whatsapp-dark focus:outline-none focus:ring-4 focus:ring-whatsapp/40 transition-all duration-200 shadow-sm hover:shadow-md"
