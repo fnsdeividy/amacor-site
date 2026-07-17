@@ -33,22 +33,15 @@ export default async function handler(req, res) {
       },
     });
 
-    // O WebService retorna XML com encoding ISO-8859-1 (Latin-1).
-    // response.text() assume UTF-8 e corrompe caracteres acentuados.
-    // Decodificamos manualmente usando o charset correto.
-    const buffer = await response.arrayBuffer();
-    const contentType = response.headers.get('content-type') || 'text/plain';
+    // Repassa os bytes crus SEM reencodar. O WebService responde em
+    // ISO-8859-1; a decodificação para o charset correto é feita no cliente
+    // (decodeBody em src/services/api.ts), garantindo o mesmo comportamento
+    // em desenvolvimento (proxy do Vite) e em produção (esta função).
+    const arrayBuffer = await response.arrayBuffer();
+    const body = Buffer.from(arrayBuffer);
 
-    // Detectar charset do header Content-Type (ex: "text/xml; charset=iso-8859-1")
-    const charsetMatch = contentType.match(/charset=([^\s;]+)/i);
-    const charset = charsetMatch ? charsetMatch[1] : 'iso-8859-1';
-
-    const decoder = new TextDecoder(charset);
-    const body = decoder.decode(buffer);
-
-    // Repassa o status e envia como UTF-8
     res.status(response.status);
-    res.setHeader('Content-Type', 'text/xml; charset=utf-8');
+    res.setHeader('Content-Type', response.headers.get('content-type') || 'text/xml');
     res.send(body);
   } catch (error) {
     console.error('Erro no proxy WebService:', error.message);

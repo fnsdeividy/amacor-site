@@ -34,11 +34,46 @@ function apiFetch(url: string, options: RequestInit = {}): Promise<Response> {
 }
 
 /**
+ * Decodifica o corpo da resposta respeitando o charset declarado.
+ *
+ * O WebService MH Vida responde em ISO-8859-1 (Latin-1), mas tanto o
+ * `response.text()` do navegador quanto o proxy do Vite assumem UTF-8,
+ * corrompendo os acentos (ex.: "após" → "apÿÿs"). Lemos os bytes crus e
+ * decodificamos com o charset correto (detectado na declaração XML).
+ */
+async function decodeBody(response: Response): Promise<string> {
+  // Em runtime real usamos arrayBuffer para controlar o charset.
+  // Alguns ambientes (ex.: mocks de teste) expõem apenas text().
+  if (typeof response.arrayBuffer !== 'function') {
+    return response.text();
+  }
+
+  const buffer = await response.arrayBuffer();
+
+  // Espia os primeiros bytes como latin1 (1 byte = 1 char) para achar o encoding declarado
+  const preview = new TextDecoder('latin1').decode(new Uint8Array(buffer).subarray(0, 300));
+  const encMatch = preview.match(/encoding[^\w]*([\w-]+)/i);
+  let charset = (encMatch?.[1] || 'utf-8').toLowerCase().trim();
+
+  // ISO-8859-1/Latin-1 de sistemas Windows costuma ser, na prática, Windows-1252
+  // (superset que também cobre aspas/traços especiais na faixa 0x80-0x9F).
+  if (charset === 'iso-8859-1' || charset === 'iso8859-1' || charset === 'latin1') {
+    charset = 'windows-1252';
+  }
+
+  try {
+    return new TextDecoder(charset).decode(buffer);
+  } catch {
+    return new TextDecoder('utf-8').decode(buffer);
+  }
+}
+
+/**
  * Extrai o XML do body da resposta.
  * O proxy pode retornar o XML como string JSON ou XML direto.
  */
 async function extractXML(response: Response): Promise<string> {
-  const text = await response.text();
+  const text = await decodeBody(response);
 
   // String JSON wrapping o XML
   if (text.startsWith('"')) {
