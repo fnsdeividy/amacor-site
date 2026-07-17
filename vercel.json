@@ -5,6 +5,10 @@
       "destination": "/api/ws"
     },
     {
+      "source": "/api/:path*",
+      "destination": "https://amacor-site.onrender.com/api/:path*"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

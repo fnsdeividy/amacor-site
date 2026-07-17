@@ -33,11 +33,22 @@ export default async function handler(req, res) {
       },
     });
 
-    const body = await response.text();
+    // O WebService retorna XML com encoding ISO-8859-1 (Latin-1).
+    // response.text() assume UTF-8 e corrompe caracteres acentuados.
+    // Decodificamos manualmente usando o charset correto.
+    const buffer = await response.arrayBuffer();
+    const contentType = response.headers.get('content-type') || 'text/plain';
 
-    // Repassa o status e content-type da resposta original
+    // Detectar charset do header Content-Type (ex: "text/xml; charset=iso-8859-1")
+    const charsetMatch = contentType.match(/charset=([^\s;]+)/i);
+    const charset = charsetMatch ? charsetMatch[1] : 'iso-8859-1';
+
+    const decoder = new TextDecoder(charset);
+    const body = decoder.decode(buffer);
+
+    // Repassa o status e envia como UTF-8
     res.status(response.status);
-    res.setHeader('Content-Type', response.headers.get('content-type') || 'text/plain');
+    res.setHeader('Content-Type', 'text/xml; charset=utf-8');
     res.send(body);
   } catch (error) {
     console.error('Erro no proxy WebService:', error.message);
