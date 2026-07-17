@@ -8,10 +8,8 @@ const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || '/api';
 
 const TIPO_EXAME_OPTIONS = [
-  'Consulta',
   'Exame laboratorial',
   'Exame de imagem',
-  'Procedimento cirúrgico',
   'Fisioterapia',
   'Terapia ocupacional',
   'Fonoaudiologia',
