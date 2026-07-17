@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-route
 import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer'
 import WhatsAppButton from './components/WhatsAppButton/WhatsAppButton'
+import { PostHogPageTracker } from './components/PostHogProvider'
 import { AuthProvider } from './contexts/AuthContext'
 import { AdminAuthProvider } from './contexts/AdminAuthContext'
 import { AdminRoute } from './components/Guards/AdminRoute'
@@ -62,6 +63,7 @@ function Layout() {
   return (
     <div className="min-h-screen flex flex-col bg-background-white">
       <ScrollToTop />
+      <PostHogPageTracker />
       <Header currentPath={pathname} />
       <main className="flex-1 pt-[80px]">
         <Routes>
