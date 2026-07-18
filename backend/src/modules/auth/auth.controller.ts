@@ -3,6 +3,7 @@ import { validateLoginInput } from './auth.validation';
 import { login } from './auth.service';
 import { ValidationError } from '../../middleware/errorHandler';
 import { AuthenticationError, RateLimitError } from '../../middleware/errorHandler';
+import posthog from '../../config/posthog';
 
 const router = Router();
 
@@ -43,11 +44,43 @@ router.post('/login', async (req: Request, res: Response, next: NextFunction): P
     }
 
     // Sucesso
+    const usuario = result.usuario!;
+    posthog.identify({
+      distinctId: usuario.id,
+      properties: {
+        $set: {
+          nome: usuario.nome,
+          perfil: usuario.perfil,
+        },
+      },
+    });
+    posthog.capture({
+      distinctId: usuario.id,
+      event: 'admin_logged_in',
+      properties: {
+        perfil: usuario.perfil,
+      },
+    });
+
     res.status(200).json({
       token: result.token,
       usuario: result.usuario,
     });
   } catch (error) {
+    if (
+      error instanceof RateLimitError ||
+      error instanceof AuthenticationError
+    ) {
+      const email = req.body?.email as string | undefined;
+      posthog.capture({
+        distinctId: email || 'anonymous',
+        event: 'admin_login_failed',
+        properties: {
+          failure_reason: error instanceof RateLimitError ? 'rate_limited' : 'invalid_credentials',
+          $process_person_profile: false,
+        },
+      });
+    }
     next(error);
   }
 });

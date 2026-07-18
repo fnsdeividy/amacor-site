@@ -7,6 +7,7 @@ import { authMiddleware } from '../../middleware/auth';
 import { authenticatedRateLimiter } from '../../middleware/rateLimiter';
 import { NotFoundError } from '../../middleware/errorHandler';
 import * as anexosRepository from './anexos.repository';
+import posthog from '../../config/posthog';
 
 const router = Router();
 
@@ -100,6 +101,17 @@ router.get(
       if (!fs.existsSync(filePath)) {
         throw new NotFoundError('Arquivo não encontrado no servidor');
       }
+
+      const user = req.user!;
+      posthog.capture({
+        distinctId: user.sub,
+        event: 'attachment_downloaded',
+        properties: {
+          anexo_id: id,
+          tipo_mime: anexo.tipoMime,
+          tamanho_bytes: anexo.tamanhoBytes,
+        },
+      });
 
       res.setHeader('Content-Disposition', `attachment; filename="${encodeURIComponent(anexo.nomeOriginal)}"`);
       res.setHeader('Content-Type', anexo.tipoMime);

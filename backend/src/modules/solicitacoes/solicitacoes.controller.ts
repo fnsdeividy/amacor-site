@@ -2,6 +2,7 @@ import { Router, Request, Response, NextFunction } from 'express';
 import { authMiddleware } from '../../middleware/auth';
 import { authenticatedRateLimiter, publicRateLimiter } from '../../middleware/rateLimiter';
 import { ValidationError, NotFoundError } from '../../middleware/errorHandler';
+import posthog from '../../config/posthog';
 import {
   validateCriarSolicitacao,
   validateObservacao,
@@ -133,6 +134,16 @@ router.get(
 
       const resultado = await service.listarPorBeneficiario(codigo.trim(), { pagina, porPagina });
 
+      posthog.capture({
+        distinctId: codigo.trim(),
+        event: 'beneficiario_solicitacoes_viewed',
+        properties: {
+          codigo_beneficiario: codigo.trim(),
+          total: resultado.total,
+          $process_person_profile: false,
+        },
+      });
+
       res.status(200).json(resultado);
     } catch (error) {
       next(error);
@@ -257,6 +268,18 @@ router.post(
 
       const resultado = await service.criarSolicitacao(dados, pedidoMedico);
 
+      posthog.capture({
+        distinctId: dados.codigoBeneficiario,
+        event: 'solicitacao_created',
+        properties: {
+          solicitacao_id: resultado.id,
+          protocolo: resultado.protocolo,
+          tipo_exame: dados.tipoExame,
+          plano: dados.plano,
+          $process_person_profile: false,
+        },
+      });
+
       res.status(201).json(resultado);
     } catch (error) {
       next(error);
@@ -308,6 +331,16 @@ router.patch(
         throw new ValidationError(resultado.erro);
       }
 
+      posthog.capture({
+        distinctId: user.sub,
+        event: 'solicitacao_status_changed',
+        properties: {
+          solicitacao_id: id,
+          novo_status: novoStatus,
+          responsavel_perfil: user.perfil,
+        },
+      });
+
       res.status(200).json(resultado.solicitacao);
     } catch (error) {
       next(error);
@@ -350,6 +383,16 @@ router.patch(
         }
         throw new ValidationError(resultado.erro);
       }
+
+      posthog.capture({
+        distinctId: user.sub,
+        event: 'solicitacao_sent_to_crm',
+        properties: {
+          solicitacao_id: id,
+          protocolo_crm: protocoloCrm,
+          responsavel_perfil: user.perfil,
+        },
+      });
 
       res.status(200).json(resultado.solicitacao);
     } catch (error) {
@@ -399,6 +442,16 @@ router.post(
         throw new ValidationError(resultado.erro);
       }
 
+      posthog.capture({
+        distinctId: user.sub,
+        event: 'solicitacao_observation_added',
+        properties: {
+          solicitacao_id: id,
+          responsavel_perfil: user.perfil,
+          texto_length: texto.length,
+        },
+      });
+
       res.status(201).json({ mensagem: 'Observação adicionada com sucesso' });
     } catch (error) {
       next(error);
@@ -435,6 +488,17 @@ router.post(
         caminhoArmazenamento: req.file.filename,
         tipoMime: req.file.mimetype,
         tamanhoBytes: req.file.size,
+      });
+
+      posthog.capture({
+        distinctId: id,
+        event: 'document_uploaded',
+        properties: {
+          solicitacao_id: id,
+          tipo_mime: req.file.mimetype,
+          tamanho_bytes: req.file.size,
+          $process_person_profile: false,
+        },
       });
 
       res.status(201).json(resultado);

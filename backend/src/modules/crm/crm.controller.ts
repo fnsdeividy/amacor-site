@@ -5,6 +5,7 @@ import { consultarStatusPorProtocolo, listarSolicitacoesCrm } from './crm.servic
 import * as solicitacoesRepository from '../solicitacoes/solicitacoes.repository';
 import { SolicitacaoStatus } from '../../types/index';
 import { logger } from '../../utils/logger';
+import posthog from '../../config/posthog';
 
 const router = Router();
 
@@ -144,6 +145,18 @@ router.get(
             protocolo,
             statusAnterior: solicitacao.status,
             statusNovo: statusInterno,
+          },
+        });
+
+        posthog.capture({
+          distinctId: admin.sub,
+          event: 'crm_status_synced',
+          properties: {
+            solicitacao_id: solicitacaoId,
+            protocolo,
+            status_anterior: solicitacao.status,
+            status_novo: statusInterno,
+            status_crm: statusCrm,
           },
         });
 

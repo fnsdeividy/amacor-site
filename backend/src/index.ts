@@ -3,6 +3,8 @@ dotenv.config();
 
 import express from 'express';
 import cors from 'cors';
+import { setupExpressRequestContext, setupExpressErrorHandler } from 'posthog-node';
+import posthog from './config/posthog';
 import { errorHandler } from './middleware/errorHandler';
 import authRouter from './modules/auth/auth.controller';
 import solicitacoesRouter from './modules/solicitacoes/solicitacoes.controller';
@@ -16,6 +18,7 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+setupExpressRequestContext(posthog, app);
 
 // Health check
 app.get('/api/health', (_req, res) => {
@@ -32,6 +35,7 @@ app.use('/api/crm', crmRouter);
 app.use('/api/anexos', anexosRouter);
 
 // Error handler (deve ser registrado após todas as rotas)
+setupExpressErrorHandler(posthog, app);
 app.use(errorHandler);
 
 // Start server
