@@ -98,7 +98,7 @@ export default function TISSManual() {
   return (
     <div className="w-full">
       {/* Page Header */}
-      <section className="bg-primary-900 py-16 tablet:py-20 px-4 tablet:px-8">
+      <section className="bg-gradient-brand py-16 tablet:py-20 px-4 tablet:px-8">
         <div className="mx-auto max-w-6xl">
           <h1 className="text-heading-lg tablet:text-heading-xl text-white">
             Padrão TISS

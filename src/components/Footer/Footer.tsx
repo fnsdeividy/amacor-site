@@ -52,6 +52,7 @@ export function Footer(_props: FooterProps) {
                   { label: 'Telemedicina', href: '/telemedicina' },
                   { label: 'Politica de Reembolso', href: '/politica-de-reembolso' },
                   { label: 'IDSS', href: '/idss' },
+                  { label: 'Manual TISS', href: '/manual-tiss' },
                 ].map((link) => (
                   <li key={link.label}>
                     <a
