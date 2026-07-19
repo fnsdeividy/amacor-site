@@ -1,14 +1,11 @@
 import { useState } from 'react'
 
+const TISS_ANS_URL = 'https://www.gov.br/ans/pt-br/assuntos/prestadores/padrao-para-troca-de-informacao-de-saude-suplementar-2013-tiss/padrao-tiss-2013-maio-2026'
+
 interface TISSComponent {
   id: string
   title: string
   description: string
-  documents: {
-    name: string
-    format: string
-    url: string
-  }[]
 }
 
 const tissComponents: TISSComponent[] = [
@@ -17,53 +14,30 @@ const tissComponents: TISSComponent[] = [
     title: 'Componente Organizacional',
     description:
       'Estabelece o conjunto de regras operacionais do Padrão TISS.',
-    documents: [
-      {
-        name: 'Componente Organizacional - Maio/2026',
-        format: 'PDF',
-        url: '/docs/tiss/PadroTISS-ComponenteOrganizacional-202605.pdf',
-      },
-    ],
   },
   {
     id: 'conteudo-estrutura',
     title: 'Componente Conteúdo e Estrutura',
     description:
       'Estabelece a arquitetura dos dados utilizados nas mensagens eletrônicas e no plano de contingência, para coleta e disponibilidade dos dados de atenção à saúde.',
-    documents: [
-      {
-        name: 'Conteúdo e Estrutura - Novembro/2025',
-        format: 'XLSX',
-        url: '/docs/tiss/Padrao-TISS-Componente-de-Conteudo-e-Estrutura-202511.xlsx',
-      },
-    ],
   },
   {
     id: 'representacao-conceitos',
     title: 'Componente Representação de Conceitos em Saúde',
     description:
       'Estabelece o conjunto de termos para identificar os eventos e itens assistenciais na saúde suplementar, consolidados na Terminologia Unificada da Saúde Suplementar - TUSS.',
-    documents: [],
   },
   {
     id: 'seguranca-privacidade',
     title: 'Componente Segurança e Privacidade',
     description:
       'Estabelece os requisitos de proteção para assegurar o direito individual ao sigilo, à privacidade e à confidencialidade dos dados de atenção à saúde. Tem como base o sigilo profissional e segue a legislação.',
-    documents: [
-      {
-        name: 'Segurança e Privacidade - Novembro/2025',
-        format: 'PDF',
-        url: '/docs/tiss/Padrao-TISS-seguranca-202511.pdf',
-      },
-    ],
   },
   {
     id: 'comunicacao',
     title: 'Componente Comunicação',
     description:
       'Estabelece os meios e os métodos de comunicação das mensagens eletrônicas definidas no componente de conteúdo e estrutura. Adota a linguagem de marcação de dados XML - Extensible Markup Language.',
-    documents: [],
   },
 ]
 
@@ -165,42 +139,29 @@ export default function TISSManual() {
                   </p>
                 )}
 
-                {/* Download buttons - shown when expanded */}
-                {activeCard === component.id && component.documents.length > 0 && (
-                  <div className="mt-auto pt-4 w-full space-y-2">
-                    {component.documents.map((doc, idx) => (
-                      <a
-                        key={idx}
-                        href={doc.url}
-                        download
-                        onClick={(e) => e.stopPropagation()}
-                        className="flex items-center justify-center gap-2 w-full px-4 py-2.5 bg-white/20 hover:bg-white/30 rounded-lg text-white text-sm font-medium transition-colors no-underline"
-                        aria-label={`Baixar ${doc.name} em formato ${doc.format}`}
+                {/* Link to ANS - shown when expanded */}
+                {activeCard === component.id && (
+                  <div className="mt-auto pt-4 w-full">
+                    <a
+                      href={TISS_ANS_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="flex items-center justify-center gap-2 w-full px-4 py-2.5 bg-white/20 hover:bg-white/30 rounded-lg text-white text-sm font-medium transition-colors no-underline"
+                      aria-label={`Acessar ${component.title} no site da ANS`}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        aria-hidden="true"
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-4 w-4"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                          aria-hidden="true"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                        Baixar {doc.format}
-                      </a>
-                    ))}
+                        <path fillRule="evenodd" d="M4.083 9h1.946c.089-1.546.383-2.97.837-4.118A6.004 6.004 0 004.083 9zM10 2a8 8 0 100 16 8 8 0 000-16zm0 2c-.076 0-.232.032-.465.262-.238.234-.497.623-.737 1.182-.389.907-.673 2.142-.766 3.556h3.936c-.093-1.414-.377-2.649-.766-3.556-.24-.56-.5-.948-.737-1.182C10.232 4.032 10.076 4 10 4zm3.971 5c-.089-1.546-.383-2.97-.837-4.118A6.004 6.004 0 0115.917 9h-1.946zm-2.003 2H8.032c.093 1.414.377 2.649.766 3.556.24.56.5.948.737 1.182.233.23.389.262.465.262.076 0 .232-.032.465-.262.238-.234.497-.623.737-1.182.389-.907.673-2.142.766-3.556zm1.166 4.118c.454-1.147.748-2.572.837-4.118h1.946a6.004 6.004 0 01-2.783 4.118zm-6.268 0C6.412 13.97 6.118 12.546 6.03 11H4.083a6.004 6.004 0 002.783 4.118z" clipRule="evenodd" />
+                      </svg>
+                      Acessar na ANS
+                    </a>
                   </div>
-                )}
-
-                {/* "No documents" message when expanded */}
-                {activeCard === component.id && component.documents.length === 0 && (
-                  <p className="mt-auto pt-4 text-xs text-white/60 italic">
-                    Documento em breve disponível.
-                  </p>
                 )}
               </div>
             ))}
@@ -222,8 +183,8 @@ export default function TISSManual() {
             <p className="text-body text-warm-600 leading-relaxed mt-4">
               O Padrão TISS é composto por cinco componentes: Organizacional, Conteúdo e
               Estrutura, Representação de Conceitos em Saúde, Segurança e Privacidade, e
-              Comunicação. Clique nos cards acima para ver mais detalhes e baixar os
-              documentos disponíveis.
+              Comunicação. Clique nos cards acima para ver mais detalhes e acessar os
+              documentos disponíveis no site da ANS.
             </p>
           </div>
         </div>
