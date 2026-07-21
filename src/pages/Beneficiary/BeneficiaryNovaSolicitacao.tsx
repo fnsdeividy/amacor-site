@@ -14,6 +14,7 @@ const TIPO_EXAME_OPTIONS = [
   'Terapia ocupacional',
   'Fonoaudiologia',
   'Psicologia',
+  'Reembolso',
   'Outros',
 ];
 
@@ -239,14 +240,13 @@ export default function BeneficiaryNovaSolicitacao() {
           {/* Nome do exame/procedimento */}
           <div>
             <label htmlFor="nomeExame" className="block text-sm font-medium text-gray-700 mb-1">
-              Nome do exame/procedimento <span className="text-red-500">*</span>
+              Nome do exame/procedimento
             </label>
             <input
               id="nomeExame"
               type="text"
               value={nomeExame}
               onChange={(e) => setNomeExame(e.target.value)}
-              required
               maxLength={200}
               placeholder="Ex: Ressonância magnética do joelho"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
