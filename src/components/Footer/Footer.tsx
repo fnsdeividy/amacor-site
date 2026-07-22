@@ -86,7 +86,7 @@ export function Footer(_props: FooterProps) {
               </a>
               {/* Instagram */}
               <a
-                href="https://www.instagram.com/amacorsaude/"
+                href="https://www.instagram.com/amacorplanosdesaude/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram da Amacor"
@@ -112,7 +112,7 @@ export function Footer(_props: FooterProps) {
 
             <h3 className="text-primary-900 font-semibold text-sm mb-3">Atendimento</h3>
             <ul className="space-y-2 text-sm text-warm-600">
-              <li>Seg-Sex: 7h às 19h</li>
+              <li>Seg-Sex: 7h às 18h</li>
               <li>Sábado: 7h às 12h</li>
             </ul>
           </div>

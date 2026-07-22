@@ -214,10 +214,10 @@ export default function Contact() {
                       Horário de atendimento
                     </h3>
                     <p className="text-body text-warm-600 mt-1">
-                      Seg-Sex: 8h às 18h
+                      Seg-Sex: 7h às 18h
                     </p>
                     <p className="text-body text-warm-600">
-                      Sáb: 8h às 12h
+                      Sáb: 7h às 12h
                     </p>
                   </div>
                 </div>
