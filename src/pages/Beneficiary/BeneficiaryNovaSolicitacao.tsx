@@ -256,7 +256,7 @@ export default function BeneficiaryNovaSolicitacao() {
           {/* Prestador */}
           <div>
             <label htmlFor="prestador" className="block text-sm font-medium text-gray-700 mb-1">
-              Prestador (rede credenciada) <span className="text-red-500">*</span>
+              Prestador Solicitante (rede credenciada) <span className="text-red-500">*</span>
             </label>
             <select
               id="prestador"
@@ -271,6 +271,7 @@ export default function BeneficiaryNovaSolicitacao() {
                   {provider.name} — {provider.type}
                 </option>
               ))}
+              <option value="Outros">Outros</option>
             </select>
           </div>
 

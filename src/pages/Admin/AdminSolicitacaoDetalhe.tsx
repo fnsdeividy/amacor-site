@@ -242,6 +242,13 @@ export default function AdminSolicitacaoDetalhe() {
   const [crmStatusMessage, setCrmStatusMessage] = useState('');
   const [crmStatusError, setCrmStatusError] = useState('');
 
+  // Status change state
+  const [statusChangeLoading, setStatusChangeLoading] = useState(false);
+  const [statusChangeMessage, setStatusChangeMessage] = useState('');
+  const [statusChangeError, setStatusChangeError] = useState('');
+  const [showStatusModal, setShowStatusModal] = useState(false);
+  const [pendingStatus, setPendingStatus] = useState<string | null>(null);
+  const [statusDescricao, setStatusDescricao] = useState('');
   // --- Fetch Solicitação ---
 
   const fetchSolicitacao = useCallback(async () => {
@@ -413,6 +420,58 @@ export default function AdminSolicitacaoDetalhe() {
       setTimeout(() => setCrmStatusError(''), 5000);
     } finally {
       setCrmStatusLoading(false);
+    }
+  };
+
+  // --- Alterar Status ---
+
+  const handleStatusChange = (novoStatus: string) => {
+    setPendingStatus(novoStatus);
+    setStatusDescricao('');
+    setShowStatusModal(true);
+  };
+
+  const confirmStatusChange = async () => {
+    if (!session?.token || !id || !pendingStatus) return;
+
+    setStatusChangeLoading(true);
+    setStatusChangeMessage('');
+    setStatusChangeError('');
+
+    try {
+      const body: { status: string; descricao?: string } = { status: pendingStatus };
+      if (statusDescricao.trim()) {
+        body.descricao = statusDescricao.trim();
+      }
+
+      const response = await fetch(`${API_BASE_URL}/solicitacoes/${id}/status`, {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${session.token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => null);
+        throw new Error(errorData?.message || errorData?.erro || `HTTP ${response.status}`);
+      }
+
+      setShowStatusModal(false);
+      setPendingStatus(null);
+      setStatusDescricao('');
+      setStatusChangeMessage(`Status alterado para "${pendingStatus}" com sucesso.`);
+      setTimeout(() => setStatusChangeMessage(''), 5000);
+
+      await fetchSolicitacao();
+      await fetchHistorico(1);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Erro ao alterar status.';
+      setStatusChangeError(message);
+      setTimeout(() => setStatusChangeError(''), 5000);
+    } finally {
+      setStatusChangeLoading(false);
     }
   };
 
@@ -716,6 +775,119 @@ export default function AdminSolicitacaoDetalhe() {
             )}
           </section>
 
+          {/* Ações de Status */}
+          <section className="bg-white rounded-xl shadow-sm p-6">
+            <SectionTitle>Ações</SectionTitle>
+            <p className="text-sm text-warm-500 mb-4">
+              Altere o status desta solicitação conforme a análise realizada.
+            </p>
+
+            <div className="flex flex-wrap gap-3">
+              {/* Autorizar */}
+              {solicitacao.status === 'Em análise' && (
+                <button
+                  type="button"
+                  onClick={() => handleStatusChange('Autorizada')}
+                  className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 transition-colors"
+                >
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Autorizar
+                </button>
+              )}
+
+              {/* Negar */}
+              {solicitacao.status === 'Em análise' && (
+                <button
+                  type="button"
+                  onClick={() => handleStatusChange('Negada')}
+                  className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 transition-colors"
+                >
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                  Negar
+                </button>
+              )}
+
+              {/* Pedir documento */}
+              {solicitacao.status === 'Em análise' && (
+                <button
+                  type="button"
+                  onClick={() => handleStatusChange('Pendente de documento')}
+                  className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-orange-500 rounded-lg hover:bg-orange-600 transition-colors"
+                >
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  Pedir Documento
+                </button>
+              )}
+
+              {/* Colocar Em análise (a partir de Enviada ao CRM) */}
+              {solicitacao.status === 'Enviada ao CRM' && (
+                <button
+                  type="button"
+                  onClick={() => handleStatusChange('Em análise')}
+                  className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors"
+                >
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                  </svg>
+                  Iniciar Análise
+                </button>
+              )}
+
+              {/* Voltar para Em análise (a partir de Pendente de documento) */}
+              {solicitacao.status === 'Pendente de documento' && (
+                <button
+                  type="button"
+                  onClick={() => handleStatusChange('Em análise')}
+                  className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors"
+                >
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                  </svg>
+                  Retomar Análise
+                </button>
+              )}
+
+              {/* Cancelar (disponível em vários status) */}
+              {['Recebida', 'Pendente de análise', 'Enviada ao CRM', 'Pendente de documento', 'Erro de integração'].includes(solicitacao.status) && (
+                <button
+                  type="button"
+                  onClick={() => handleStatusChange('Cancelada')}
+                  className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-warm-700 bg-warm-100 border border-warm-300 rounded-lg hover:bg-warm-200 transition-colors"
+                >
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                  </svg>
+                  Cancelar Solicitação
+                </button>
+              )}
+
+              {/* Status terminal - sem ações */}
+              {['Autorizada', 'Negada', 'Cancelada'].includes(solicitacao.status) && (
+                <p className="text-sm text-warm-500 italic">
+                  Esta solicitação está em status terminal e não permite mais alterações.
+                </p>
+              )}
+            </div>
+
+            {/* Status change messages */}
+            {statusChangeMessage && (
+              <p className="mt-3 text-sm text-green-700 bg-green-50 border border-green-200 rounded-lg p-3" role="status">
+                {statusChangeMessage}
+              </p>
+            )}
+            {statusChangeError && (
+              <p className="mt-3 text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg p-3" role="alert">
+                {statusChangeError}
+              </p>
+            )}
+          </section>
+
           {/* Observações */}
           <section className="bg-white rounded-xl shadow-sm p-6">
             <SectionTitle>Observações Internas</SectionTitle>
@@ -869,6 +1041,79 @@ export default function AdminSolicitacaoDetalhe() {
         onConfirm={handleEnviarCrm}
         onCancel={() => setShowCrmModal(false)}
       />
+
+      {/* Modal de confirmação de alteração de status */}
+      {showStatusModal && pendingStatus && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="status-modal-title"
+        >
+          <div className="w-full max-w-md mx-4 bg-white rounded-xl shadow-xl p-6">
+            <h3 id="status-modal-title" className="text-lg font-semibold text-primary-900 mb-4">
+              Confirmar Alteração de Status
+            </h3>
+
+            <p className="text-sm text-warm-600 mb-2">
+              Deseja alterar o status desta solicitação para:
+            </p>
+            <p className="text-sm font-semibold text-primary-800 mb-4">
+              &ldquo;{pendingStatus}&rdquo;
+            </p>
+
+            <div className="mb-4">
+              <label htmlFor="status-descricao" className="block text-sm font-medium text-warm-700 mb-1">
+                Justificativa / Descrição (opcional)
+              </label>
+              <textarea
+                id="status-descricao"
+                value={statusDescricao}
+                onChange={(e) => setStatusDescricao(e.target.value)}
+                placeholder="Motivo da alteração de status..."
+                rows={3}
+                maxLength={500}
+                className="w-full px-3 py-2 border border-warm-200 rounded-lg focus:ring-2 focus:ring-primary-400 focus:border-transparent outline-none text-sm resize-y"
+              />
+            </div>
+
+            <div className="flex gap-3 justify-end">
+              <button
+                type="button"
+                onClick={() => {
+                  setShowStatusModal(false);
+                  setPendingStatus(null);
+                  setStatusDescricao('');
+                }}
+                disabled={statusChangeLoading}
+                className="px-4 py-2 text-sm font-medium text-warm-700 bg-warm-100 rounded-lg hover:bg-warm-200 transition-colors disabled:opacity-50"
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                onClick={confirmStatusChange}
+                disabled={statusChangeLoading}
+                className={`px-4 py-2 text-sm font-medium text-white rounded-lg transition-colors disabled:opacity-50 flex items-center gap-2 ${
+                  pendingStatus === 'Negada' || pendingStatus === 'Cancelada'
+                    ? 'bg-red-600 hover:bg-red-700'
+                    : pendingStatus === 'Autorizada'
+                    ? 'bg-green-600 hover:bg-green-700'
+                    : 'bg-primary-600 hover:bg-primary-700'
+                }`}
+              >
+                {statusChangeLoading && (
+                  <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  </svg>
+                )}
+                {statusChangeLoading ? 'Alterando...' : 'Confirmar'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

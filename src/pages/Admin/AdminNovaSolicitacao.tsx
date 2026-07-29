@@ -390,6 +390,7 @@ export default function AdminNovaSolicitacao() {
                       {provider.name} — {provider.type}
                     </option>
                   ))}
+                  <option value="Outros">Outros</option>
                 </select>
               </div>
 
