@@ -259,6 +259,95 @@ export async function criar(dados: CriarSolicitacaoInput): Promise<Solicitacao> 
 }
 
 /**
+ * Dados adicionais para criação de solicitação pelo admin (balcão).
+ */
+export interface CriarSolicitacaoAdminInput extends CriarSolicitacaoInput {
+  responsavelNome: string;
+  responsavelPerfil: string;
+}
+
+/**
+ * Cria uma nova solicitação no banco de dados iniciada pelo admin (balcão).
+ *
+ * Similar à função `criar`, mas registra no histórico que a criação
+ * foi feita pelo admin no balcão, não pelo beneficiário.
+ */
+export async function criarAdmin(dados: CriarSolicitacaoAdminInput): Promise<Solicitacao> {
+  const pool = getPool();
+  const client = await pool.connect();
+
+  try {
+    await client.query('BEGIN');
+
+    const insertResult = await client.query<SolicitacaoRow>(
+      `INSERT INTO solicitacoes (
+        codigo_beneficiario, nome_beneficiario, cpf_cnpj, plano,
+        tipo_exame, nome_exame, prestador_nome, prestador_endereco,
+        status, enviado_crm, observacoes, protocolo
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+      RETURNING *`,
+      [
+        dados.codigoBeneficiario,
+        dados.nomeBeneficiario,
+        dados.cpfCnpj,
+        dados.plano,
+        dados.tipoExame,
+        dados.nomeExame,
+        dados.prestadorNome,
+        dados.prestadorEndereco || null,
+        'Pendente de análise' as SolicitacaoStatus,
+        false,
+        dados.observacoes || null,
+        'TEMP',
+      ]
+    );
+
+    const row = insertResult.rows[0];
+
+    const hoje = new Date();
+    const year = hoje.getFullYear();
+    const month = String(hoje.getMonth() + 1).padStart(2, '0');
+    const day = String(hoje.getDate()).padStart(2, '0');
+    const datePrefix = `AMCR-${year}${month}${day}-%`;
+
+    const existingResult = await client.query<{ protocolo: string }>(
+      `SELECT protocolo FROM solicitacoes WHERE protocolo LIKE $1 AND protocolo != 'TEMP'`,
+      [datePrefix]
+    );
+    const existingProtocols = existingResult.rows.map((r) => r.protocolo);
+    const protocolo = gerarProtocoloUnico(existingProtocols, hoje);
+
+    const updateResult = await client.query<SolicitacaoRow>(
+      `UPDATE solicitacoes SET protocolo = $1 WHERE id = $2 RETURNING *`,
+      [protocolo, row.id]
+    );
+
+    // Registra evento de criação no histórico — identifica que foi feita no balcão pelo admin
+    await client.query(
+      `INSERT INTO historico_eventos (
+        solicitacao_id, tipo_evento, descricao, responsavel_nome, responsavel_perfil
+      ) VALUES ($1, $2, $3, $4, $5)`,
+      [
+        row.id,
+        'criacao',
+        'Solicitação criada no balcão pelo administrador',
+        dados.responsavelNome,
+        dados.responsavelPerfil,
+      ]
+    );
+
+    await client.query('COMMIT');
+
+    return mapRowToSolicitacao(updateResult.rows[0]);
+  } catch (error) {
+    await client.query('ROLLBACK');
+    throw error;
+  } finally {
+    client.release();
+  }
+}
+
+/**
  * Busca uma solicitação pelo ID, incluindo seus anexos e histórico de eventos.
  * Retorna null se não encontrada.
  */

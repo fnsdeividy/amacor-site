@@ -4,6 +4,7 @@ import { authenticatedRateLimiter, publicRateLimiter } from '../../middleware/ra
 import { ValidationError, NotFoundError } from '../../middleware/errorHandler';
 import {
   validateCriarSolicitacao,
+  validateCriarSolicitacaoAdmin,
   validateObservacao,
   validatePaginacao,
   isValidUUID,
@@ -256,6 +257,70 @@ router.post(
       };
 
       const resultado = await service.criarSolicitacao(dados, pedidoMedico);
+
+      res.status(201).json(resultado);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+/**
+ * POST /api/solicitacoes/admin
+ *
+ * Cria uma nova solicitação de autorização pelo admin (balcão).
+ * Aceita multipart/form-data com arquivo "pedidoMedico" opcional.
+ * Requer autenticação JWT (admin).
+ */
+router.post(
+  '/admin',
+  authenticatedRateLimiter,
+  authMiddleware,
+  upload.single('pedidoMedico'),
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const validation = validateCriarSolicitacaoAdmin(req.body);
+      if (!validation.valid) {
+        throw new ValidationError('Dados da solicitação inválidos', validation.campos);
+      }
+
+      const user = req.user!;
+
+      const dados = {
+        codigoBeneficiario: (req.body.codigoBeneficiario as string).trim(),
+        nomeBeneficiario: (req.body.nomeBeneficiario as string).trim(),
+        cpfCnpj: (req.body.cpfCnpj as string).trim(),
+        plano: req.body.plano
+          ? (req.body.plano as string).trim()
+          : '',
+        tipoExame: (req.body.tipoExame as string).trim(),
+        nomeExame: req.body.nomeExame
+          ? (req.body.nomeExame as string).trim()
+          : '',
+        prestadorNome: (req.body.prestadorNome as string).trim(),
+        prestadorEndereco: req.body.prestadorEndereco
+          ? (req.body.prestadorEndereco as string).trim()
+          : undefined,
+        observacoes: req.body.observacoes
+          ? (req.body.observacoes as string).trim()
+          : undefined,
+      };
+
+      const pedidoMedico = req.file
+        ? {
+            nomeOriginal: req.file.originalname,
+            caminhoArmazenamento: req.file.filename,
+            tipoMime: req.file.mimetype,
+            tamanhoBytes: req.file.size,
+          }
+        : undefined;
+
+      const resultado = await service.criarSolicitacaoAdmin(
+        dados,
+        user.nome,
+        user.perfil,
+        pedidoMedico
+      );
 
       res.status(201).json(resultado);
     } catch (error) {

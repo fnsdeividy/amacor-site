@@ -498,13 +498,24 @@ export default function AdminSolicitacoes() {
     <div className="min-h-screen bg-warm-50">
       <div className="mx-auto max-w-7xl px-4 py-8 tablet:px-8">
         {/* Page Header */}
-        <header className="mb-6">
-          <h1 className="text-heading-md tablet:text-heading-lg text-primary-900">
-            Solicitações
-          </h1>
-          <p className="mt-2 text-body text-warm-600">
-            Gerencie as solicitações de autorização de exames
-          </p>
+        <header className="mb-6 flex flex-col tablet:flex-row tablet:items-center tablet:justify-between gap-4">
+          <div>
+            <h1 className="text-heading-md tablet:text-heading-lg text-primary-900">
+              Solicitações
+            </h1>
+            <p className="mt-2 text-body text-warm-600">
+              Gerencie as solicitações de autorização de exames
+            </p>
+          </div>
+          <Link
+            to="/admin/solicitacoes/nova"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition-colors text-sm whitespace-nowrap"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+            Nova Solicitação (Balcão)
+          </Link>
         </header>
 
         {/* Filter Panel */}

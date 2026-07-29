@@ -35,6 +35,7 @@ import AdminLogin from './pages/Admin/AdminLogin'
 import AdminDashboard from './pages/Admin/AdminDashboard'
 import AdminSolicitacoes from './pages/Admin/AdminSolicitacoes'
 import AdminSolicitacaoDetalhe from './pages/Admin/AdminSolicitacaoDetalhe'
+import AdminNovaSolicitacao from './pages/Admin/AdminNovaSolicitacao'
 
 // Beneficiary pages
 import BeneficiaryBoletos from './pages/Beneficiary/BeneficiaryBoletos'
@@ -96,6 +97,7 @@ function Layout() {
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
           <Route path="/admin/solicitacoes" element={<AdminRoute><AdminSolicitacoes /></AdminRoute>} />
+          <Route path="/admin/solicitacoes/nova" element={<AdminRoute><AdminNovaSolicitacao /></AdminRoute>} />
           <Route path="/admin/solicitacoes/:id" element={<AdminRoute><AdminSolicitacaoDetalhe /></AdminRoute>} />
 
           {/* Beneficiary protected routes */}

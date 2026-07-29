@@ -5,6 +5,7 @@ import * as repository from './solicitacoes.repository';
 import * as anexosRepository from '../anexos/anexos.repository';
 import {
   CriarSolicitacaoInput,
+  CriarSolicitacaoAdminInput,
   FiltrosSolicitacao,
   Paginacao,
   ResultadoPaginado,
@@ -84,6 +85,57 @@ export async function criarSolicitacao(
   });
 
   // Retornar id, protocolo e numeroInterno (Requisito 7.6)
+  return {
+    id: solicitacao.id,
+    protocolo: solicitacao.protocolo,
+    numeroInterno: solicitacao.numeroInterno,
+  };
+}
+
+/**
+ * Cria uma nova solicitação de autorização pelo admin (balcão).
+ *
+ * - Pedido médico é opcional (pode não estar disponível no balcão)
+ * - Registra no histórico que a criação foi feita pelo admin
+ * - Delega criação ao repositório (protocolo gerado automaticamente, status "Pendente de análise")
+ * - Vincula o arquivo de pedido médico como anexo se fornecido
+ * - Retorna id, protocolo e numeroInterno
+ */
+export async function criarSolicitacaoAdmin(
+  dados: CriarSolicitacaoInput,
+  responsavelNome: string,
+  responsavelPerfil: string,
+  pedidoMedico?: PedidoMedicoFile
+): Promise<CriarSolicitacaoResult> {
+  const solicitacao = await repository.criarAdmin({
+    ...dados,
+    responsavelNome,
+    responsavelPerfil,
+  });
+
+  // Vincular arquivo de pedido médico como anexo se fornecido
+  if (pedidoMedico) {
+    await anexosRepository.criar({
+      solicitacaoId: solicitacao.id,
+      nomeOriginal: pedidoMedico.nomeOriginal,
+      caminhoArmazenamento: pedidoMedico.caminhoArmazenamento,
+      tipoMime: pedidoMedico.tipoMime,
+      tamanhoBytes: pedidoMedico.tamanhoBytes,
+      tipoAnexo: 'pedido_medico',
+    });
+  }
+
+  logger.info('solicitacoes.criar_admin', {
+    userId: responsavelNome,
+    result: 'success',
+    metadata: {
+      solicitacaoId: solicitacao.id,
+      protocolo: solicitacao.protocolo,
+      numeroInterno: solicitacao.numeroInterno,
+      comPedidoMedico: !!pedidoMedico,
+    },
+  });
+
   return {
     id: solicitacao.id,
     protocolo: solicitacao.protocolo,
