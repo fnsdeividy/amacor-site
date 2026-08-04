@@ -32,7 +32,22 @@ export function Footer(_props: FooterProps) {
                 </a>
               </li>
               <li>
-                <span className="font-medium">PLANO AMBULATORIAL:</span>(21) 99018-4171
+                <span className="font-medium">WHATSAPP PLANOS:</span>{' '}
+                <a href="https://wa.me/5521972318026" target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:underline">
+                  (21) 97231-8026
+                </a>
+              </li>
+              <li>
+                <span className="font-medium">WHATSAPP ATENDIMENTO:</span>{' '}
+                <a href="https://wa.me/5521990184171" target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:underline">
+                  (21) 99018-4171
+                </a>
+              </li>
+              <li>
+                <span className="font-medium">TELEFONE:</span>{' '}
+                <a href="tel:+552134059466" className="text-primary-600 hover:underline">
+                  (21) 3405-9466
+                </a>
               </li>
               <li>RT: Dr. Raíssa Heber Pinto Lima</li>
             </ul>
