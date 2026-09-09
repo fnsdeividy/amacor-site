@@ -85,7 +85,8 @@ export function validateCriarSolicitacao(body: unknown): ValidationResult {
 /**
  * Valida os dados de criação de uma solicitação pelo admin (balcão).
  * Mesmos campos obrigatórios que a criação pelo beneficiário,
- * mas o pedido médico é opcional (pode não estar disponível no balcão).
+ * mas o pedido médico é opcional (pode não estar disponível no balcão)
+ * e o CPF/CNPJ também é opcional (nem sempre disponível no balcão).
  */
 export function validateCriarSolicitacaoAdmin(body: unknown): ValidationResult {
   const campos: Record<string, string> = {};
@@ -108,10 +109,11 @@ export function validateCriarSolicitacaoAdmin(body: unknown): ValidationResult {
     campos.nomeBeneficiario = 'Nome do beneficiário deve ter no máximo 200 caracteres';
   }
 
-  if (!data.cpfCnpj || typeof data.cpfCnpj !== 'string' || data.cpfCnpj.trim().length === 0) {
-    campos.cpfCnpj = 'CPF/CNPJ é obrigatório';
-  } else if (data.cpfCnpj.trim().length > 18) {
-    campos.cpfCnpj = 'CPF/CNPJ deve ter no máximo 18 caracteres';
+  // CPF/CNPJ é opcional no balcão
+  if (data.cpfCnpj && typeof data.cpfCnpj === 'string' && data.cpfCnpj.trim().length > 0) {
+    if (data.cpfCnpj.trim().length > 18) {
+      campos.cpfCnpj = 'CPF/CNPJ deve ter no máximo 18 caracteres';
+    }
   }
 
   if (data.plano !== undefined && data.plano !== null && data.plano !== '') {

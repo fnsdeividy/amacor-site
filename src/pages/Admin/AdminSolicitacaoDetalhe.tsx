@@ -90,12 +90,12 @@ function formatFileSize(bytes: number): string {
 
 function getStatusBadgeClass(status: string): string {
   switch (status) {
-    case 'Pendente de análise':
+    case 'Em processamento':
       return 'bg-yellow-100 text-yellow-800 border-yellow-300';
     case 'Enviada ao CRM':
       return 'bg-blue-100 text-blue-800 border-blue-300';
-    case 'Em análise':
-      return 'bg-indigo-100 text-indigo-800 border-indigo-300';
+    case 'Solicitar comparecimento':
+      return 'bg-purple-100 text-purple-800 border-purple-300';
     case 'Pendente de documento':
       return 'bg-orange-100 text-orange-800 border-orange-300';
     case 'Autorizada':
@@ -571,7 +571,7 @@ export default function AdminSolicitacaoDetalhe() {
 
   if (!solicitacao) return null;
 
-  const canMarkAsSent = solicitacao.status === 'Pendente de análise';
+  const canMarkAsSent = solicitacao.status === 'Em processamento';
 
   return (
     <div className="min-h-screen bg-warm-50">
@@ -784,7 +784,7 @@ export default function AdminSolicitacaoDetalhe() {
 
             <div className="flex flex-wrap gap-3">
               {/* Autorizar */}
-              {solicitacao.status === 'Em análise' && (
+              {solicitacao.status === 'Em processamento' && (
                 <button
                   type="button"
                   onClick={() => handleStatusChange('Autorizada')}
@@ -798,7 +798,7 @@ export default function AdminSolicitacaoDetalhe() {
               )}
 
               {/* Negar */}
-              {solicitacao.status === 'Em análise' && (
+              {solicitacao.status === 'Em processamento' && (
                 <button
                   type="button"
                   onClick={() => handleStatusChange('Negada')}
@@ -812,7 +812,7 @@ export default function AdminSolicitacaoDetalhe() {
               )}
 
               {/* Pedir documento */}
-              {solicitacao.status === 'Em análise' && (
+              {solicitacao.status === 'Em processamento' && (
                 <button
                   type="button"
                   onClick={() => handleStatusChange('Pendente de documento')}
@@ -825,36 +825,36 @@ export default function AdminSolicitacaoDetalhe() {
                 </button>
               )}
 
-              {/* Colocar Em análise (a partir de Enviada ao CRM) */}
+              {/* Voltar para Em processamento (a partir de Enviada ao CRM) */}
               {solicitacao.status === 'Enviada ao CRM' && (
                 <button
                   type="button"
-                  onClick={() => handleStatusChange('Em análise')}
+                  onClick={() => handleStatusChange('Em processamento')}
                   className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors"
                 >
                   <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                   </svg>
-                  Iniciar Análise
+                  Retomar Processamento
                 </button>
               )}
 
-              {/* Voltar para Em análise (a partir de Pendente de documento) */}
+              {/* Voltar para Em processamento (a partir de Pendente de documento) */}
               {solicitacao.status === 'Pendente de documento' && (
                 <button
                   type="button"
-                  onClick={() => handleStatusChange('Em análise')}
+                  onClick={() => handleStatusChange('Em processamento')}
                   className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors"
                 >
                   <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                   </svg>
-                  Retomar Análise
+                  Retomar Processamento
                 </button>
               )}
 
               {/* Cancelar (disponível em vários status) */}
-              {['Recebida', 'Pendente de análise', 'Enviada ao CRM', 'Pendente de documento', 'Erro de integração'].includes(solicitacao.status) && (
+              {['Recebida', 'Em processamento', 'Enviada ao CRM', 'Pendente de documento', 'Solicitar comparecimento', 'Erro de integração'].includes(solicitacao.status) && (
                 <button
                   type="button"
                   onClick={() => handleStatusChange('Cancelada')}

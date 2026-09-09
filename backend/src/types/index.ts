@@ -4,10 +4,10 @@
 
 export type SolicitacaoStatus =
   | 'Recebida'
-  | 'Pendente de análise'
+  | 'Em processamento'
   | 'Enviada ao CRM'
-  | 'Em análise'
   | 'Pendente de documento'
+  | 'Solicitar comparecimento'
   | 'Autorizada'
   | 'Negada'
   | 'Cancelada'

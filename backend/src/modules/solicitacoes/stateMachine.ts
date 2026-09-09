@@ -9,11 +9,11 @@ import { AppError } from '../../middleware/errorHandler';
  * lista vazia, impedindo qualquer transição posterior.
  */
 export const TRANSICOES_VALIDAS: Record<SolicitacaoStatus, SolicitacaoStatus[]> = {
-  'Recebida': ['Pendente de análise', 'Cancelada'],
-  'Pendente de análise': ['Enviada ao CRM', 'Cancelada'],
-  'Enviada ao CRM': ['Em análise', 'Erro de integração', 'Cancelada'],
-  'Em análise': ['Pendente de documento', 'Autorizada', 'Negada'],
-  'Pendente de documento': ['Em análise', 'Cancelada'],
+  'Recebida': ['Em processamento', 'Cancelada'],
+  'Em processamento': ['Enviada ao CRM', 'Autorizada', 'Negada', 'Pendente de documento', 'Solicitar comparecimento', 'Cancelada'],
+  'Enviada ao CRM': ['Em processamento', 'Erro de integração', 'Cancelada'],
+  'Pendente de documento': ['Em processamento', 'Cancelada'],
+  'Solicitar comparecimento': ['Em processamento', 'Cancelada'],
   'Autorizada': [],
   'Negada': [],
   'Cancelada': [],

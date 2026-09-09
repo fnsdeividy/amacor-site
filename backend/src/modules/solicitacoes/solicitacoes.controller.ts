@@ -19,10 +19,10 @@ const router = Router();
 // Status válidos para filtro
 const statusValidos: SolicitacaoStatus[] = [
   'Recebida',
-  'Pendente de análise',
+  'Em processamento',
   'Enviada ao CRM',
-  'Em análise',
   'Pendente de documento',
+  'Solicitar comparecimento',
   'Autorizada',
   'Negada',
   'Cancelada',
@@ -289,7 +289,9 @@ router.post(
       const dados = {
         codigoBeneficiario: (req.body.codigoBeneficiario as string).trim(),
         nomeBeneficiario: (req.body.nomeBeneficiario as string).trim(),
-        cpfCnpj: (req.body.cpfCnpj as string).trim(),
+        cpfCnpj: req.body.cpfCnpj
+          ? (req.body.cpfCnpj as string).trim()
+          : '',
         plano: req.body.plano
           ? (req.body.plano as string).trim()
           : '',
