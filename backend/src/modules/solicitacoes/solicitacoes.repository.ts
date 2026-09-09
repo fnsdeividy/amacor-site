@@ -204,7 +204,7 @@ export async function criar(dados: CriarSolicitacaoInput): Promise<Solicitacao> 
         dados.nomeExame,
         dados.prestadorNome,
         dados.prestadorEndereco || null,
-        'Pendente de análise' as SolicitacaoStatus,
+        'Em processamento' as SolicitacaoStatus,
         false,
         dados.observacoes || null,
         'TEMP', // placeholder, será atualizado com o protocolo real
@@ -295,7 +295,7 @@ export async function criarAdmin(dados: CriarSolicitacaoAdminInput): Promise<Sol
         dados.nomeExame,
         dados.prestadorNome,
         dados.prestadorEndereco || null,
-        'Pendente de análise' as SolicitacaoStatus,
+        'Em processamento' as SolicitacaoStatus,
         false,
         dados.observacoes || null,
         'TEMP',
@@ -513,7 +513,7 @@ export async function listarPorBeneficiario(
  *
  * Contadores:
  * - total: todas as solicitações
- * - pendentes: status = 'Pendente de análise'
+ * - pendentes: status = 'Em processamento'
  * - enviadasCrm: status = 'Enviada ao CRM'
  * - autorizadas: status = 'Autorizada'
  * - negadas: status = 'Negada'
@@ -530,7 +530,7 @@ export async function contadores(): Promise<Contadores> {
   }>(
     `SELECT
       COUNT(*) as total,
-      COUNT(*) FILTER (WHERE status = 'Pendente de análise') as pendentes,
+      COUNT(*) FILTER (WHERE status = 'Em processamento') as pendentes,
       COUNT(*) FILTER (WHERE status = 'Enviada ao CRM') as enviadas_crm,
       COUNT(*) FILTER (WHERE status = 'Autorizada') as autorizadas,
       COUNT(*) FILTER (WHERE status = 'Negada') as negadas,

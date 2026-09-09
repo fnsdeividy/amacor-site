@@ -19,8 +19,10 @@ function isValidUUID(value: string): boolean {
  * Status válidos do CRM que podem ser mapeados para status internos.
  */
 const crmStatusMap: Record<string, SolicitacaoStatus> = {
-  'Em análise': 'Em análise',
+  'Em análise': 'Em processamento',
+  'Em processamento': 'Em processamento',
   'Pendente de documento': 'Pendente de documento',
+  'Solicitar comparecimento': 'Solicitar comparecimento',
   'Autorizada': 'Autorizada',
   'Negada': 'Negada',
   'Cancelada': 'Cancelada',
