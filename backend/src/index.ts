@@ -8,6 +8,7 @@ import authRouter from './modules/auth/auth.controller';
 import solicitacoesRouter from './modules/solicitacoes/solicitacoes.controller';
 import crmRouter from './modules/crm/crm.controller';
 import anexosRouter from './modules/anexos/anexos.controller';
+import contatoRouter from './modules/contato/contato.controller';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -30,6 +31,8 @@ app.use('/api/solicitacoes', solicitacoesRouter);
 app.use('/api/crm', crmRouter);
 
 app.use('/api/anexos', anexosRouter);
+
+app.use('/api/contato', contatoRouter);
 
 // Error handler (deve ser registrado após todas as rotas)
 app.use(errorHandler);
