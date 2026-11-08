@@ -1,6 +1,6 @@
 /**
  * Dados da Rede Credenciada AMACOR SAÚDE / MHVIDA
- * Documento: REDE CREDENCIADA - RIO DE JANEIRO JUNHO 2026
+ * Documento: REDE CREDENCIADA - RIO DE JANEIRO NOVEMBRO 2026 (atualização 04/11/2026)
  * Registro ANS: nº 41201-5
  */
 
@@ -23,12 +23,13 @@ export const redeCredenciada: CredentialedProvider[] = [
     type: 'clinica',
     address: 'Rua Augusto de Vasconcelos, 535 - Campo Grande - RJ',
     phones: ['(21) 3405-9494'],
-    hours: 'Segunda a Sábado das 07:00h às 13:00h',
+    whatsapp: '(21) 98391-0224',
+    hours: 'Segunda a Sexta das 07:00h às 18:00h | Sábado das 07:00h às 12:00h',
     specialties: [
       'Angiologia', 'Urologia', 'Cardiologia', 'Ortopedia', 'Pediatria',
       'Pneumologia', 'Clínica Médica', 'Geriatria', 'Dermatologia',
       'Reumatologia', 'Endocrinologista', 'Neurologia', 'Gastroenterologia',
-      'Ginecologia', 'Psiquiatria'
+      'Ginecologia', 'Psiquiatria', 'Psicologia', 'Nutrição', 'Oftalmologia'
     ],
     exams: [
       'Análises Clínicas', 'Endoscopia Digestiva', 'Prova de Função Respiratória',
@@ -62,15 +63,15 @@ export const redeCredenciada: CredentialedProvider[] = [
       'Oftalmologia', 'Clínica Médica', 'Psicologia', 'Cirurgia Geral',
       'Pediatria', 'Dermatologia', 'Proctologia', 'Endocrinologia',
       'Urologia', 'Fonoaudiologia', 'Geriatria', 'Gastroenterologia',
-      'Ginecologia', 'Obstetrícia'
+      'Ginecologia'
     ],
     exams: [
       'Audiometria', 'Procedimentos Dermatológicos', 'Dopplerfluxometria Colorido',
       'Mamografia Digital', 'Densitometria Óssea', 'Mapa 24h', 'Doppler em Geral',
-      'Teste Alérgico', 'Eletroencefalograma com Mapeamento Cerebral', 'Preventivo',
+      'Holter 24h', 'Eletroencefalograma com Mapeamento Cerebral', 'Preventivo',
       'Endoscopia Digestiva', 'Procedimentos Ortopédicos', 'Vídeo-Laringoscopia',
       'Raio X Digital', 'Ecocardiograma Colorido', 'Teste de Orelhinha',
-      'Escanometria', 'Teste de Contato', 'Eletrocardiograma', 'Teste Ergométrico',
+      'Escanometria', 'Eletrocardiograma', 'Teste Ergométrico',
       'Fisioterapia', 'Teste de Sobrecarga Hídrica', 'Impedanciometria', 'Ultrassonografia'
     ]
   },
@@ -80,6 +81,7 @@ export const redeCredenciada: CredentialedProvider[] = [
     type: 'clinica',
     address: 'Rua Carvalho Alvim, 261 - Tijuca - RJ',
     phones: ['(21) 2142-7150', '2142-7171'],
+    whatsapp: '(21) 99631-0022',
     hours: 'Segunda a Sexta-feira das 07h às 18h',
     specialties: [
       'Alergologia', 'Mastologia', 'Angiologia', 'Cirurgia Vascular', 'Neurologia',
@@ -152,8 +154,8 @@ export const redeCredenciada: CredentialedProvider[] = [
     name: 'SOTRE - Fisiotrauma - Ortopedia e Fisioterapia',
     type: 'ortopedia',
     address: 'Rua Silva Cardoso, nº 515 - Bangu - RJ',
-    phones: ['3421-2030', '2301-7726', '3421-2288', '3337-2150'],
-    whatsapp: '96449-8583',
+    phones: ['(21) 96758-4929'],
+    whatsapp: '(21) 96758-4929',
     hours: 'Segunda a Sexta: 08h às 18h | Sábado: 08h às 12h',
     specialties: ['Ortopedia'],
     exams: ['Gesso', 'Acupuntura', 'Raio X', 'Fisioterapia']
@@ -239,15 +241,6 @@ export const redeCredenciada: CredentialedProvider[] = [
     ]
   },
   {
-    id: 'rc-014',
-    name: 'Clínica Polisaude',
-    type: 'clinica',
-    address: 'Avenida Cesário de Melo, 2855 - Sala 501 - Campo Grande - RJ (Edifício Montblanc Towers)',
-    phones: ['(21) 3394-1963'],
-    specialties: ['NeuroPediatria', 'Ginecologia', 'Neurologia', 'Psicologia'],
-    exams: []
-  },
-  {
     id: 'rc-015',
     name: 'Clínica do Sono - Unidade Bangu',
     type: 'clinica',
@@ -259,9 +252,9 @@ export const redeCredenciada: CredentialedProvider[] = [
       'P-300', 'Mapa 24h', 'Registro do Nistagmo Optocinético', 'Potencial Evocado',
       'Testes Vestibulares com Eletronistagmografia',
       'Testes Vestibulares sem Eletronistagmografia', 'Ultrassonografia',
-      'Teste da Orelhinha (Otoemissão)', 'Eletroneuomiografia',
+      'Teste da Orelhinha (Otoemissão)', 'Eletroneuromiografia de Membros',
       'Pesquisa de Nistagmo Pendular', 'Eletroencefalograma com Mapeamento',
-      'Eletrocardiograma', 'Pesquisa de Pares Cranianos'
+      'Pesquisa de Pares Cranianos'
     ]
   },
   {
@@ -308,22 +301,20 @@ export const redeCredenciada: CredentialedProvider[] = [
     exams: ['Exames Oftalmológicos']
   },
   {
-    id: 'rc-020',
-    name: 'Radio Vitae Serviços Médicos',
-    type: 'radiologia',
-    address: 'Rua Hildegarda Ribeiro, 53 - Parte - Campo Grande - RJ',
-    phones: ['(21) 2416-2392', '2412-1125'],
-    specialties: [],
-    exams: ['Radioterapia Ambulatorial']
-  },
-  {
-    id: 'rc-021',
-    name: 'Onco Vitae Serviços Médicos - Botafogo',
-    type: 'oncologia',
-    address: 'Rua Voluntários da Pátria, 126 - Grupo 401 - Botafogo - RJ',
-    phones: ['(21) 2537-5454'],
-    specialties: ['Oncologia', 'Hematologia'],
-    exams: []
+    id: 'rc-051',
+    name: 'Clínica Médica AMEP de Bangu (Cia do Médico)',
+    type: 'clinica',
+    address: 'Rua Doze de Fevereiro, 196 - Loja A 213 - Bangu - RJ',
+    phones: ['(21) 3464-1055', '3331-0725'],
+    whatsapp: '(21) 98243-0335',
+    specialties: [
+      'Alergologia', 'Geriatria', 'Ginecologia', 'Obstetrícia', 'Reumatologia',
+      'Proctologia', 'Hepatologia', 'Pneumologia', 'Nefrologia'
+    ],
+    exams: [
+      'Tilt Test', 'Teste Ergométrico', 'Eletroencefalograma de Rotina',
+      'Radiologia', 'Mamografia', 'Densitometria Óssea', 'Testes Alérgicos'
+    ]
   },
   {
     id: 'rc-022',
@@ -599,6 +590,7 @@ export const redeCredenciada: CredentialedProvider[] = [
     type: 'clinica',
     address: 'Rua Siqueira Campos, 59 - Grupo 507 - Copacabana - RJ',
     phones: ['3816-8855'],
+    whatsapp: '99599-4060',
     specialties: ['Neurofisiologia'],
     exams: [
       'Eletroneuromiografia (MMII, MMSS e Facial)',
@@ -645,7 +637,7 @@ export const redeCredenciada: CredentialedProvider[] = [
     name: 'RDX - Dom Duque Serviços Médicos (Plaza Office)',
     type: 'radiologia',
     address: 'Avenida Maria Teresa, nº 260 - Bloco 03 - Sala 217 - Campo Grande - RJ',
-    phones: ['(021) 2412-5793'],
+    phones: ['(21) 3268-8875'],
     whatsapp: '(21) 99880-0158',
     specialties: [],
     exams: ['Radiologia']
@@ -664,16 +656,6 @@ export const redeCredenciada: CredentialedProvider[] = [
       'Tomografia Computadorizada', 'Vídeo Endoscopia', 'Punções', 'Biópsias',
       'Histerossalpingografia'
     ]
-  },
-  {
-    id: 'rc-048',
-    name: 'Médico Saúde Diagnóstico',
-    type: 'clinica',
-    address: 'Av. Cônego Vasconcelos, nº 423 - Sala 204 - Bangu - RJ',
-    phones: [],
-    whatsapp: '2199333-2990',
-    specialties: ['Gastroenterologia', 'Nutrição'],
-    exams: ['Vídeo Endoscopia Digestiva', 'Retossigmoidoscopia']
   },
   {
     id: 'rc-049',

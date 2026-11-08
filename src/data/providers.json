@@ -18,11 +18,14 @@
       "Pneumologia",
       "Geriatria",
       "Reumatologia",
-      "Neurologia"
+      "Neurologia",
+      "Psicologia",
+      "Nutrição",
+      "Oftalmologia"
     ],
     "exams": [
       "Análises Clínicas",
-      "Endoscopia Digestiva",
+      "Endoscopia Digestiva (com ou sem biópsia)",
       "Prova de Função Respiratória",
       "Procedimentos Dermatológicos",
       "Doppler de Carótidas e Vertebrais",
@@ -34,7 +37,7 @@
       "Doppler Ilíacas",
       "Preventivo",
       "Doppler Aorta Abdominal",
-      "Colonoscopia Ambulatorial",
+      "Colonoscopia Ambulatorial (com ou sem biópsia)",
       "Ecocardiograma",
       "Eletrocardiograma",
       "Doppler Venoso e Arterial"
@@ -53,10 +56,10 @@
     "phone": "(21) 3405-9494",
     "whatsapp": "(21) 98391-0224",
     "operatingHours": {
-      "weekdays": "07:00 às 19:00",
-      "saturday": "07:00 às 13:00"
+      "weekdays": "07:00 às 18:00",
+      "saturday": "07:00 às 12:00"
     },
-    "highlight": "AMA - Atendimento Médico Ambulatorial 12 horas diurno. Ao lado do Corpo de Bombeiros, em frente ao Pátio Campo Grande.",
+    "highlight": "Clínica Médica somente com agendamento pela Central da Clínica Amacor. Ao lado do Corpo de Bombeiros, em frente ao Pátio Campo Grande.",
     "redePropria": true
   },
   {
@@ -106,7 +109,7 @@
       "Fonoaudiologia",
       "Geriatria",
       "Gastroenterologia",
-      "Ginecologia/Obstetrícia",
+      "Ginecologia",
       "Neurologia",
       "Ortopedia/Traumatologia",
       "Oftalmologia",
@@ -121,23 +124,22 @@
       "Densitometria Óssea",
       "Doppler em Geral",
       "Eletroencefalograma c/ Map. Cerebral",
-      "Endoscopia Digestiva",
+      "Endoscopia Digestiva (com ou sem biópsia)",
       "Vídeo-Laringoscopia",
       "Ecocardiograma/Colorido",
       "Escanometria",
       "Eletrocardiograma",
-      "Fisioterapia",
+      "Holter 24h",
+      "Fisioterapia Ortopédica",
       "Impedanciometria",
       "Ultra-Sonografia",
       "Procedimentos Dermatológicos",
       "Mamografia Digital",
       "Mapa 24h",
-      "Teste Alérgico",
       "Preventivo",
       "Procedimentos Ortopédicos",
       "Raio X Digital",
       "Teste de Orelhinha",
-      "Teste de Contato",
       "Teste Ergométrico",
       "Teste de Sobrecarga Hídrica"
     ],
@@ -200,7 +202,7 @@
       "Eletroencefalograma c/ Map. Cerebral",
       "Função Respiratória/Espirometria",
       "Holter 24h/Mapa 24h",
-      "Mamografia Digital",
+      "Mamografia (Digital e alta resolução)",
       "Peniscopia",
       "Procedimentos ORL",
       "Procedimentos Dermatologia",
@@ -213,7 +215,9 @@
       "Ultrassonografia",
       "Vectoeletronistagmografia",
       "Vídeo Endoscopia Nasal",
-      "Vídeo Laringoscopia"
+      "Vídeo Laringoscopia",
+      "Acupuntura",
+      "Fisioterapia"
     ],
     "address": {
       "street": "Rua Carvalho Alvim",
@@ -227,6 +231,7 @@
       "lng": -43.2376
     },
     "phone": "(21) 2142-7150 / 2142-7171",
+    "whatsapp": "(21) 99631-0022",
     "operatingHours": {
       "weekdays": "07:00 às 18:00"
     },
@@ -280,7 +285,19 @@
       "Vídeo-Endoscopia Naso-Sinusal",
       "Vídeo-Faringo-Larincoscopia",
       "Audiometria Impedanciometria",
-      "Colposcopia/Vulvoscopia"
+      "Colposcopia/Vulvoscopia",
+      "Eco Fetal",
+      "Acupuntura",
+      "Biópsia Percutânea guiada por RX/USG",
+      "Biópsia do Cavum",
+      "Nasofibrolaringoscopia",
+      "Pesquisa de Nistagmo Optocinético",
+      "Registro do Nistagmo Pendular",
+      "Pesquisa de Pares Cranianos",
+      "Vectoeletronistagmografia",
+      "Eletrocoagulação do Colo Uterino",
+      "Testes de Contato",
+      "Provas Imuno-alérgicas"
     ],
     "address": {
       "street": "Av. Automóvel Clube",
@@ -298,7 +315,7 @@
       "weekdays": "08:00 às 17:00",
       "saturday": "08:00 às 17:00"
     },
-    "highlight": "Pronto Atendimento Ambulatorial. Agendamento apenas pelo WhatsApp."
+    "highlight": "Pronto Atendimento Ambulatorial (Clínica Médica, Pediatria, Ortopedia e Oftalmologia). Agendamento apenas pelo WhatsApp."
   },
   {
     "id": "prov-006",
@@ -378,7 +395,22 @@
       "Potencial de Acuidade Visual (PAM)",
       "Retinografia Fluorescente",
       "Ultra sonografia Ocular",
-      "Biometria Ultrasônica"
+      "Biometria Ultrasônica",
+      "Pterígio (ambulatorial)",
+      "Calázio (ambulatorial)",
+      "Capsulotomia",
+      "Exercícios de Pleóptica",
+      "Exercícios de Ortóptica",
+      "Sondagem das Vias Lacrimais",
+      "Epilação",
+      "Teste de Sensibilidade de Contraste ou de Cores",
+      "Teste Provocativo para Glaucoma",
+      "Teste Ortóptico (Exame de Motilidade Ocular)",
+      "Tratamento Ocular Quimioterápico Ambulatorial (Injeção)",
+      "Teste do Reflexo Vermelho",
+      "Iridectomia/Iridotomia",
+      "Visão Subnormal",
+      "Recobrimento Conjuntival"
     ],
     "address": {
       "street": "Estrada da Água Branca",
@@ -418,8 +450,8 @@
       "lat": -22.8835,
       "lng": -43.4670
     },
-    "phone": "(21) 3421-2030 / 2301-7726 / 3421-2288 / 3337-2150",
-    "whatsapp": "(21) 96449-8583",
+    "phone": "(21) 96758-4929",
+    "whatsapp": "(21) 96758-4929",
     "operatingHours": {
       "weekdays": "08:00 às 18:00",
       "saturday": "08:00 às 12:00"
@@ -494,7 +526,8 @@
       "Doppler de Carótidas e Vertebrais",
       "Doppler Venoso e Arterial",
       "Eletrocardiograma",
-      "Eletroencefalograma",
+      "Eletroencefalograma Convencional",
+      "Eletroencefalograma com Mapeamento Cerebral",
       "Ecocardiograma",
       "Fundoscopia",
       "Fisioterapias",
@@ -517,7 +550,8 @@
       "Teste Alérgico",
       "Ultrassonografia",
       "Vídeo-Faringo-Larincoscopia",
-      "Vídeo Endoscopia Digestiva"
+      "Vídeo Laringoscopia para Retirada de Corpo Estranho",
+      "Vídeo Endoscopia Digestiva (com ou sem biópsia)"
     ],
     "address": {
       "street": "Estrada do Itanhangá",
@@ -642,11 +676,14 @@
       "Ultra-Sonografia",
       "Teste da Orelhinha",
       "Eletroencefalograma com Mapeamento",
-      "Eletrocardiograma",
       "Prova de Função Pulmonar",
+      "P-300",
       "Pesquisa de Pares Cranianos",
-      "Testes Vestibulares",
-      "Eletroneuomiografia"
+      "Registro do Nistagmo Optocinético",
+      "Pesquisa de Nistagmo Pendular",
+      "Testes Vestibulares com Eletronistagmografia",
+      "Testes Vestibulares sem Eletronistagmografia",
+      "Eletroneuromiografia de Membros"
     ],
     "address": {
       "street": "Rua Silva Cardoso",
@@ -774,45 +811,41 @@
     "highlight": "Hospital do Olho de Campo Grande."
   },
   {
-    "id": "prov-021",
-    "name": "Radio Vitae Serviços Médicos S/C Ltda",
-    "type": "Clínica Especializada",
-    "exams": [
-      "Radioterapia Ambulatorial"
-    ],
-    "address": {
-      "street": "Rua Hildegarda Ribeiro",
-      "number": "53 - Parte",
-      "neighborhood": "Campo Grande",
-      "city": "Rio de Janeiro",
-      "state": "RJ"
-    },
-    "coordinates": {
-      "lat": -22.9018,
-      "lng": -43.5650
-    },
-    "phone": "(21) 2416-2392 / 2412-1125"
-  },
-  {
-    "id": "prov-022",
-    "name": "Onco Vitae Serviços Médicos S/C Ltda",
-    "type": "Clínica Especializada",
+    "id": "prov-042",
+    "name": "Clínica Médica AMEP de Bangu Ltda (Cia do Médico)",
+    "type": "Clínica Ambulatorial",
     "specialties": [
-      "Oncologia",
-      "Hematologia"
+      "Alergologia",
+      "Geriatria",
+      "Ginecologia e Obstetrícia",
+      "Reumatologia",
+      "Proctologia",
+      "Hepatologia",
+      "Pneumologia",
+      "Nefrologia"
+    ],
+    "exams": [
+      "Tilt Test",
+      "Teste Ergométrico",
+      "Eletroencefalograma de Rotina",
+      "Radiologia",
+      "Mamografia",
+      "Densitometria Óssea",
+      "Testes Alérgicos"
     ],
     "address": {
-      "street": "Rua Voluntários da Pátria",
-      "number": "126 - Grupo 401",
-      "neighborhood": "Botafogo",
+      "street": "Rua Doze de Fevereiro",
+      "number": "196 - Loja A 213",
+      "neighborhood": "Bangu",
       "city": "Rio de Janeiro",
       "state": "RJ"
     },
     "coordinates": {
-      "lat": -22.9519,
-      "lng": -43.1828
+      "lat": -22.8790,
+      "lng": -43.4655
     },
-    "phone": "(21) 2537-5454"
+    "phone": "(21) 3464-1055 / 3331-0725",
+    "whatsapp": "(21) 98243-0335"
   },
   {
     "id": "prov-023",
@@ -1180,7 +1213,7 @@
       "lng": -43.5618
     },
     "phone": "(21) 2567-1556 / 2412-1355 / 2423-1155",
-    "highlight": "Agendamento apenas por telefone. Também em Copacabana: Rua Siqueira Campos, 59 - Grupo 507."
+    "highlight": "Agendamento apenas por telefone. Também em Copacabana: Rua Siqueira Campos, 59 - Grupo 507 - Tel.: (21) 3816-8855 / WhatsApp (21) 99599-4060."
   },
   {
     "id": "prov-036",
@@ -1235,7 +1268,7 @@
       "lat": -22.9022,
       "lng": -43.5608
     },
-    "phone": "(21) 2412-5793",
+    "phone": "(21) 3268-8875",
     "whatsapp": "(21) 99880-0158",
     "highlight": "Plaza Office - Viaduto de Campo Grande."
   },
@@ -1271,32 +1304,6 @@
     },
     "phone": "(21) 3799-8988 / 2602-3750",
     "whatsapp": "(21) 98604-3860"
-  },
-  {
-    "id": "prov-039",
-    "name": "Médico Saúde Diagnóstico",
-    "type": "Clínica Especializada",
-    "specialties": [
-      "Gastroenterologia",
-      "Nutrição"
-    ],
-    "exams": [
-      "Retossigmoidoscopia",
-      "Vídeo Endoscopia Digestiva"
-    ],
-    "address": {
-      "street": "Av. Cônego Vasconcelos",
-      "number": "423 - Sala 204",
-      "neighborhood": "Bangu",
-      "city": "Rio de Janeiro",
-      "state": "RJ"
-    },
-    "coordinates": {
-      "lat": -22.8832,
-      "lng": -43.4660
-    },
-    "whatsapp": "(21) 99333-2990",
-    "highlight": "Em frente ao Centro Comercial, próximo ao calçadão de Bangu."
   },
   {
     "id": "prov-040",
