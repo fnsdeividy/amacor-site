@@ -190,6 +190,20 @@ export default function ContactForm({
           submitButtonText
         )}
       </button>
+
+      {/* Aviso LGPD */}
+      <p className="text-center text-sm text-warm-600">
+        Ao enviar, você concorda com a nossa{' '}
+        <a
+          href="/politica-de-privacidade"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary-600 font-medium hover:underline"
+        >
+          Política de Privacidade
+        </a>
+        .
+      </p>
     </form>
   )
 }

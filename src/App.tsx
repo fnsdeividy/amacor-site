@@ -29,6 +29,7 @@ import BeneficiaryArea from './pages/BeneficiaryArea'
 import ExamSearch from './pages/ExamSearch'
 import ReajusteAnual from './pages/ReajusteAnual'
 import ReimbursementPolicy from './pages/ReimbursementPolicy'
+import PrivacyPolicy from './pages/PrivacyPolicy'
 
 // Admin pages
 import AdminLogin from './pages/Admin/AdminLogin'
@@ -92,6 +93,7 @@ function Layout() {
           <Route path="/buscar-exames" element={<ExamSearch />} />
           <Route path="/reajuste-anual" element={<ReajusteAnual />} />
           <Route path="/politica-de-reembolso" element={<ReimbursementPolicy />} />
+          <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
 
           {/* Admin routes */}
           <Route path="/admin/login" element={<AdminLogin />} />
