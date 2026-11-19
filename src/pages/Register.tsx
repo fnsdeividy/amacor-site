@@ -187,6 +187,19 @@ export default function Register() {
           </button>
 
           <p className="text-center text-sm text-gray-600">
+            Ao enviar, você concorda com a nossa{' '}
+            <a
+              href="/politica-de-privacidade"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary-600 font-medium hover:underline"
+            >
+              Política de Privacidade
+            </a>
+            .
+          </p>
+
+          <p className="text-center text-sm text-gray-600">
             Já tem login?{' '}
             <Link to="/login" className="text-primary-600 font-medium hover:underline">
               Entrar

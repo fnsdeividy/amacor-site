@@ -66,6 +66,7 @@ export function Footer(_props: FooterProps) {
                   { label: 'Rede de Atendimento', href: '/rede-credenciada' },
                   { label: 'Telemedicina', href: '/telemedicina' },
                   { label: 'Politica de Reembolso', href: '/politica-de-reembolso' },
+                  { label: 'Política de Privacidade', href: '/politica-de-privacidade' },
                   { label: 'IDSS', href: '/idss' },
                   { label: 'Manual TISS', href: '/manual-tiss' },
                 ].map((link) => (
@@ -154,6 +155,10 @@ export function Footer(_props: FooterProps) {
         <div className="mx-auto max-w-7xl px-4 py-4 tablet:px-6 desktop:px-8 text-center">
           <p className="text-sm text-white">
             © Copyright Amacor Planos de Saúde.
+            <span aria-hidden="true" className="mx-2 text-white/60">|</span>
+            <a href="/politica-de-privacidade" className="underline-offset-2 hover:underline">
+              Política de Privacidade
+            </a>
           </p>
         </div>
       </div>

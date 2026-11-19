@@ -1,0 +1,681 @@
+{
+  "title": "Política de Privacidade – MH Vida",
+  "meta": "**Versão:** [NÚMERO DA VERSÃO] · **Última atualização:** [DATA]",
+  "blocks": [
+    {
+      "type": "heading",
+      "text": "1. Apresentação e objetivo"
+    },
+    {
+      "type": "paragraph",
+      "text": "A missão da MH Vida é promover saúde por meio da prevenção, do cuidado e da inteligência na assistência. Esse cuidado também alcança as informações que os beneficiários nos confiam. Esta Política de Privacidade explica, de forma clara e transparente, como a MH VIDA – OPERADORA DE PLANOS DE SAÚDE LTDA (\"MH Vida\" ou \"nós\") coleta, utiliza, armazena, compartilha e protege dados pessoais, incluindo dados relacionados à saúde."
+    },
+    {
+      "type": "paragraph",
+      "text": "O objetivo deste documento é informar pacientes, beneficiários, usuários do site e demais pessoas que se relacionam conosco sobre o tratamento de seus dados e sobre os direitos que possuem, em conformidade com a Lei nº 13.709/2018 (Lei Geral de Proteção de Dados Pessoais – LGPD), com a regulamentação da Autoridade Nacional de Proteção de Dados (ANPD) e com as normas aplicáveis ao setor de saúde, especialmente a Lei nº 9.656/1998 e a regulamentação da Agência Nacional de Saúde Suplementar (ANS)."
+    },
+    {
+      "type": "paragraph",
+      "text": "O tratamento de dados pela MH Vida é orientado pelos mesmos valores que norteiam a sua atuação, em especial ética e transparência, segurança e compromisso assistencial, humanização e respeito e utilização consciente e eficiente das informações."
+    },
+    {
+      "type": "heading",
+      "text": "2. Quem é o responsável pelo tratamento dos seus dados"
+    },
+    {
+      "type": "paragraph",
+      "text": "O controlador dos dados pessoais tratados nos termos desta Política é:"
+    },
+    {
+      "type": "table",
+      "headers": [
+        "**Informação**",
+        "**Dados**"
+      ],
+      "rows": [
+        [
+          "Razão social",
+          "MH VIDA – OPERADORA DE PLANOS DE SAÚDE LTDA"
+        ],
+        [
+          "Nome fantasia",
+          "[CONFIRMAR NOME FANTASIA]"
+        ],
+        [
+          "CNPJ",
+          "03.670.297/0001-90"
+        ],
+        [
+          "Registro na ANS",
+          "[NÚMERO DO REGISTRO NA ANS]"
+        ],
+        [
+          "Endereço",
+          "Rua Augusto de Vasconcelos, nº 544, loja 148, Campo Grande, Rio de Janeiro – RJ, CEP 23050-340"
+        ],
+        [
+          "Site",
+          "[SITE]"
+        ],
+        [
+          "E-mail de contato",
+          "[E-MAIL INSTITUCIONAL]"
+        ],
+        [
+          "Telefone",
+          "[TELEFONE]"
+        ],
+        [
+          "Encarregado pelo Tratamento de Dados Pessoais (DPO)",
+          "[NOME DO ENCARREGADO OU DA EMPRESA RESPONSÁVEL]"
+        ],
+        [
+          "Canal do Encarregado",
+          "[E-MAIL DO RESPONSÁVEL]"
+        ]
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "O Encarregado é a pessoa indicada pela MH Vida para atuar como canal de comunicação com os titulares de dados e com a ANPD."
+    },
+    {
+      "type": "heading",
+      "text": "3. A quem esta Política se aplica"
+    },
+    {
+      "type": "paragraph",
+      "text": "Esta Política se aplica ao tratamento de dados pessoais realizado pela MH Vida, em meio físico ou digital, envolvendo:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "beneficiários titulares e dependentes, bem como seus responsáveis legais;",
+        "pacientes atendidos em serviços da rede própria, quando houver, e seus acompanhantes;",
+        "interessados em nossos planos, inclusive em propostas de contratação;",
+        "usuários e visitantes do site [SITE] e dos demais canais digitais oficiais da MH Vida;",
+        "pessoas que entram em contato conosco por telefone, e-mail, aplicativos de mensagens, formulários ou presencialmente;",
+        "representantes de empresas ou entidades contratantes de planos coletivos, corretores, prestadores da rede credenciada, fornecedores e parceiros, no limite das informações necessárias ao relacionamento."
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "O tratamento de dados de colaboradores e candidatos a vagas de emprego pode ser regido por documentos internos específicos, que prevalecem naquilo que forem mais específicos que esta Política."
+    },
+    {
+      "type": "paragraph",
+      "text": "Sites, aplicativos ou serviços de terceiros eventualmente acessados a partir dos nossos canais possuem políticas próprias, pelas quais a MH Vida não é responsável. Recomendamos a leitura dessas políticas antes de fornecer dados a terceiros."
+    },
+    {
+      "type": "heading",
+      "text": "4. Conceitos importantes"
+    },
+    {
+      "type": "paragraph",
+      "text": "Para facilitar a leitura, os termos abaixo têm o seguinte significado nesta Política:"
+    },
+    {
+      "type": "table",
+      "headers": [
+        "**Termo**",
+        "**Significado**"
+      ],
+      "rows": [
+        [
+          "Dado pessoal",
+          "Informação relacionada a pessoa natural identificada ou identificável, como nome, CPF, telefone ou endereço."
+        ],
+        [
+          "Dado pessoal sensível",
+          "Dado sobre origem racial ou étnica, convicção religiosa, opinião política, filiação a sindicato ou a organização de caráter religioso, filosófico ou político, dado referente à saúde ou à vida sexual, dado genético ou biométrico, quando vinculado a uma pessoa natural."
+        ],
+        [
+          "Dado anonimizado",
+          "Dado que não permite identificar o titular, considerados os meios técnicos razoáveis disponíveis no momento do tratamento."
+        ],
+        [
+          "Titular",
+          "Pessoa natural a quem se referem os dados pessoais."
+        ],
+        [
+          "Beneficiário",
+          "Pessoa vinculada a plano de saúde operado pela MH Vida, como titular ou dependente."
+        ],
+        [
+          "Tratamento",
+          "Toda operação realizada com dados pessoais, como coleta, utilização, acesso, armazenamento, compartilhamento e eliminação."
+        ],
+        [
+          "Controlador",
+          "Quem toma as decisões sobre o tratamento dos dados pessoais."
+        ],
+        [
+          "Operador",
+          "Quem realiza o tratamento de dados em nome do controlador e conforme suas instruções."
+        ],
+        [
+          "Encarregado (DPO)",
+          "Pessoa indicada pelo controlador para atuar como canal de comunicação com os titulares e com a ANPD."
+        ],
+        [
+          "ANPD",
+          "Autoridade Nacional de Proteção de Dados, órgão responsável por fiscalizar o cumprimento da LGPD."
+        ],
+        [
+          "Consentimento",
+          "Manifestação livre, informada e inequívoca pela qual o titular concorda com o tratamento de seus dados para uma finalidade determinada."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "5. Quais dados pessoais podemos tratar"
+    },
+    {
+      "type": "paragraph",
+      "text": "Tratamos apenas os dados necessários para cada finalidade. Conforme o serviço utilizado e a forma de relacionamento com a MH Vida, podemos tratar:"
+    },
+    {
+      "type": "table",
+      "headers": [
+        "**Categoria**",
+        "**Exemplos**"
+      ],
+      "rows": [
+        [
+          "Dados cadastrais e de identificação",
+          "Nome, nome social, CPF, RG, data de nascimento, sexo, estado civil, filiação, número do Cartão Nacional de Saúde (CNS), número de carteirinha ou matrícula de beneficiário, fotografia de documentos."
+        ],
+        [
+          "Dados de contato",
+          "Endereço, telefone, celular, e-mail."
+        ],
+        [
+          "Dados contratuais e financeiros",
+          "Plano ou serviço contratado, empresa ou entidade contratante, dados de cobrança e pagamento, histórico de pagamentos."
+        ],
+        [
+          "Dados de atendimento",
+          "Histórico de agendamentos, solicitações, autorizações, reclamações, protocolos e gravações de ligações, quando houver aviso prévio."
+        ],
+        [
+          "Dados relacionados à saúde",
+          "Informações de prontuário, anamnese, queixas, diagnósticos, exames, laudos, prescrições, procedimentos, guias de atendimento, declaração de saúde, condições preexistentes e informações de programas de prevenção e acompanhamento."
+        ],
+        [
+          "Dados de navegação",
+          "Endereço IP, data e hora de acesso, tipo de navegador e dispositivo, páginas visitadas e informações coletadas por cookies, conforme a seção 11."
+        ],
+        [
+          "Dados de segurança e acesso",
+          "Registros de acesso a áreas restritas do site ou aplicativo e, quando houver, imagens captadas por câmeras de segurança em nossas unidades."
+        ]
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Dados relacionados à saúde são dados pessoais sensíveis e recebem proteção reforçada, conforme a seção seguinte."
+    },
+    {
+      "type": "heading",
+      "text": "6. Dados pessoais sensíveis"
+    },
+    {
+      "type": "paragraph",
+      "text": "Pela natureza de nossas atividades, tratamos dados referentes à saúde, que a LGPD classifica como dados pessoais sensíveis. Esses dados só são tratados nas hipóteses autorizadas pelo art. 11 da LGPD, com acesso restrito a pessoas que deles necessitem para o desempenho de suas funções e sujeitas a dever de sigilo, inclusive o sigilo profissional previsto nos códigos de ética das profissões de saúde."
+    },
+    {
+      "type": "paragraph",
+      "text": "Outros dados sensíveis, como dados biométricos, genéticos, sobre vida sexual, origem racial ou étnica e convicção religiosa, somente serão tratados quando necessários ao atendimento, à segurança do titular ou ao cumprimento de obrigação legal ou regulatória, ou mediante consentimento específico, quando esta for a base legal aplicável."
+    },
+    {
+      "type": "paragraph",
+      "text": "No tratamento de dados de saúde, a MH Vida observa, entre outras, as seguintes regras:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Vedada a seleção de riscos.** A MH Vida não utiliza dados de saúde para seleção de riscos na contratação de qualquer modalidade de plano, nem na contratação ou exclusão de beneficiários, conforme o art. 11, § 5º, da LGPD. As informações da declaração de saúde são utilizadas apenas nos limites autorizados pela legislação de saúde suplementar.",
+        "**Sem vantagem econômica indevida.** Dados de saúde não são comunicados ou compartilhados com outros controladores para obtenção de vantagem econômica, ressalvadas as hipóteses permitidas pelo art. 11, § 4º, da LGPD, como a prestação de serviços de saúde e de assistência à saúde em benefício do titular.",
+        "**Prontuário.** Quando houver atendimento em rede própria, o prontuário do paciente é mantido com sigilo e pelos prazos previstos na legislação e nas normas dos conselhos profissionais, e o acesso a ele observa essas mesmas regras.",
+        "**Uso de dados anonimizados.** Sempre que possível, estudos, indicadores e análises de gestão em saúde são realizados com dados anonimizados ou pseudonimizados."
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "7. Como coletamos os dados"
+    },
+    {
+      "type": "paragraph",
+      "text": "Os dados podem ser coletados das seguintes formas:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Diretamente com você:** no preenchimento de cadastros, propostas de adesão e declarações de saúde; em agendamentos; durante consultas, exames e demais atendimentos; e em contatos por telefone, e-mail, formulários do site, aplicativos de mensagens ou presencialmente em nossas unidades.",
+        "**Durante a utilização dos serviços:** pelos registros gerados no atendimento, como prontuário, resultados de exames, guias, autorizações e histórico de utilização.",
+        "**Por terceiros autorizados:** por meio de profissionais e estabelecimentos de saúde que realizem seu atendimento, laboratórios, empresas ou entidades contratantes de planos coletivos, responsáveis legais, titulares de plano que incluam dependentes e fontes públicas, quando permitido por lei.",
+        "**Automaticamente, nos canais digitais:** por meio de cookies e tecnologias semelhantes, conforme a seção 11.",
+        "**Em atendimentos por telessaúde:** quando oferecidos, observada a legislação específica sobre telessaúde."
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "8. Para que utilizamos os dados"
+    },
+    {
+      "type": "paragraph",
+      "text": "Os dados pessoais são tratados para finalidades legítimas, específicas e informadas ao titular, entre as quais:"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "**Assistência à saúde:** viabilizar a cobertura assistencial contratada, por meio da rede própria ou credenciada, e desenvolver programas de promoção da saúde, prevenção de riscos e doenças e acompanhamento contínuo.",
+        "**Gestão do plano de saúde:** analisar propostas de adesão, emitir carteirinhas, autorizar procedimentos, gerenciar a rede credenciada, processar contas médicas e administrar o contrato.",
+        "**Atendimento e relacionamento:** realizar agendamentos, confirmar consultas, responder dúvidas, solicitações e reclamações, e prestar informações sobre os serviços contratados.",
+        "**Comunicação:** enviar avisos sobre atendimentos, resultados, cobranças, alterações contratuais e comunicações institucionais, conforme a seção 18.",
+        "**Obrigações legais e regulatórias:** manter prontuários, emitir documentos fiscais, enviar informações exigidas pela ANS e por autoridades sanitárias, notificar doenças de notificação compulsória e atender requisições de autoridades competentes.",
+        "**Gestão administrativa e financeira:** faturamento, cobrança, auditoria, controle de qualidade e gestão de contratos com prestadores e fornecedores.",
+        "**Segurança e prevenção a fraudes:** confirmar a identidade do titular, proteger o acesso a sistemas e unidades, prevenir fraudes e utilização indevida dos serviços.",
+        "**Exercício de direitos:** defender os interesses da MH Vida e dos titulares em processos administrativos, judiciais ou arbitrais.",
+        "**Melhoria dos serviços:** avaliar a satisfação dos pacientes e beneficiários, aperfeiçoar a qualidade assistencial e o funcionamento dos canais digitais, preferencialmente com dados anonimizados ou agregados."
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Caso seja necessário utilizar dados para finalidade nova e incompatível com as informadas, o titular será previamente informado e, quando exigido, seu consentimento será solicitado."
+    },
+    {
+      "type": "heading",
+      "text": "9. Bases legais do tratamento"
+    },
+    {
+      "type": "paragraph",
+      "text": "Todo tratamento de dados realizado pela MH Vida está amparado em uma das hipóteses autorizadas pela LGPD (arts. 7º e 11). Os dados de saúde, por serem sensíveis, seguem as hipóteses específicas do art. 11."
+    },
+    {
+      "type": "table",
+      "headers": [
+        "**Base legal**",
+        "**O que significa**",
+        "**Exemplos de uso**"
+      ],
+      "rows": [
+        [
+          "Tutela da saúde (art. 7º, VIII, e art. 11, II, \"f\")",
+          "Tratamento realizado por profissionais de saúde, serviços de saúde ou autoridade sanitária para cuidar da saúde do titular.",
+          "Consultas, exames, diagnósticos, prontuário, acompanhamento e programas de prevenção."
+        ],
+        [
+          "Cumprimento de obrigação legal ou regulatória (art. 7º, II, e art. 11, II, \"a\")",
+          "Tratamento exigido por lei ou por norma de órgão regulador.",
+          "Guarda de prontuário, envio de informações à ANS e a autoridades sanitárias, obrigações fiscais e notificações compulsórias."
+        ],
+        [
+          "Execução de contrato e procedimentos preliminares (art. 7º, V)",
+          "Tratamento necessário para contratar ou cumprir um contrato do qual o titular é parte.",
+          "Cadastro, adesão ao plano, emissão de carteirinha, cobrança e atendimento contratual."
+        ],
+        [
+          "Exercício regular de direitos (art. 7º, VI, e art. 11, II, \"d\")",
+          "Uso dos dados para defesa em processos e procedimentos, inclusive contratuais.",
+          "Manutenção de registros para responder a demandas judiciais, administrativas ou arbitrais."
+        ],
+        [
+          "Proteção da vida ou da incolumidade física (art. 7º, VII, e art. 11, II, \"e\")",
+          "Tratamento necessário para proteger a vida do titular ou de terceiros.",
+          "Situações de urgência e emergência."
+        ],
+        [
+          "Prevenção à fraude e segurança do titular (art. 11, II, \"g\")",
+          "Tratamento para confirmar identidade e evitar fraudes em processos de identificação e autenticação.",
+          "Validação de identidade no atendimento e no acesso a sistemas."
+        ],
+        [
+          "Legítimo interesse (art. 7º, IX)",
+          "Tratamento para interesses legítimos da MH Vida ou de terceiros, respeitados os direitos e as expectativas do titular. Não se aplica a dados sensíveis.",
+          "Segurança dos canais digitais, melhoria de serviços e comunicações institucionais relacionadas ao serviço contratado."
+        ],
+        [
+          "Proteção do crédito (art. 7º, X)",
+          "Tratamento para cobrança e análise de crédito, nos termos da legislação.",
+          "Cobrança de valores em aberto."
+        ],
+        [
+          "Consentimento (art. 7º, I, e art. 11, I)",
+          "Autorização específica do titular, que pode ser revogada a qualquer momento.",
+          "Envio de conteúdos de marketing, cookies não essenciais e outras situações em que nenhuma outra base legal se aplique."
+        ]
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Quando o tratamento depender de consentimento, ele será solicitado de forma destacada e específica. A revogação do consentimento não afeta os tratamentos realizados anteriormente nem aqueles amparados em outras bases legais."
+    },
+    {
+      "type": "heading",
+      "text": "10. Compartilhamento de dados pessoais"
+    },
+    {
+      "type": "paragraph",
+      "text": "A MH Vida não vende dados pessoais. O compartilhamento ocorre somente quando necessário às finalidades desta Política, com base legal adequada e limitado aos dados indispensáveis em cada caso. Os dados podem ser compartilhados com:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Profissionais e estabelecimentos de saúde:** médicos, equipes multiprofissionais, clínicas, hospitais, laboratórios e demais prestadores da rede própria, credenciada ou referenciada envolvidos no seu atendimento.",
+        "**Administradoras de benefícios, corretores e outras operadoras:** quando necessário à contratação, à administração do plano, à portabilidade de carências ou ao atendimento fora da rede, limitado às informações indispensáveis e observada a regulamentação da ANS.",
+        "**Empresas ou entidades contratantes de planos coletivos:** apenas dados cadastrais, contratuais e financeiros necessários à gestão do contrato. Dados de saúde individualizados não são compartilhados com o empregador ou a entidade contratante, salvo quando exigido ou permitido por lei, ou com autorização do titular.",
+        "**Fornecedores e prestadores de serviços:** empresas que nos apoiam em atividades como tecnologia da informação, hospedagem de dados, sistemas de gestão, atendimento, meios de pagamento, cobrança, auditoria, consultorias e assessorias. Esses fornecedores atuam de acordo com nossas instruções e estão sujeitos a obrigações contratuais de confidencialidade e proteção de dados.",
+        "**Autoridades públicas e órgãos reguladores:** ANS, Ministério da Saúde, autoridades sanitárias, ANPD, Poder Judiciário, Ministério Público, autoridades fiscais e outros órgãos, para cumprimento de obrigação legal, regulatória ou ordem judicial.",
+        "**Operações societárias:** em caso de fusão, incorporação, aquisição ou transferência de carteira, os dados poderão ser transferidos ao novo responsável, que deverá observar a legislação de proteção de dados e, quando aplicável, as normas da ANS."
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Você pode solicitar informações sobre as entidades com as quais seus dados foram compartilhados pelos canais indicados na seção 15."
+    },
+    {
+      "type": "heading",
+      "text": "11. Cookies e tecnologias semelhantes"
+    },
+    {
+      "type": "paragraph",
+      "text": "Cookies são pequenos arquivos armazenados no seu navegador ou dispositivo quando você acessa um site. Eles permitem que o site funcione corretamente, lembre suas preferências e gere informações sobre sua utilização. O site [SITE] pode utilizar as seguintes categorias:"
+    },
+    {
+      "type": "table",
+      "headers": [
+        "**Categoria**",
+        "**Para que serve**",
+        "**Necessita de consentimento?**"
+      ],
+      "rows": [
+        [
+          "Estritamente necessários",
+          "Garantem o funcionamento e a segurança do site, como navegação entre páginas e acesso a áreas restritas.",
+          "Não. Não podem ser desativados sem prejudicar o funcionamento do site."
+        ],
+        [
+          "Funcionais",
+          "Lembram escolhas feitas por você, como preferências de exibição.",
+          "Conforme a configuração informada no aviso de cookies."
+        ],
+        [
+          "Analíticos ou de desempenho",
+          "Geram estatísticas sobre como o site é utilizado, para melhorar sua experiência.",
+          "Sim, salvo quando a legislação permitir outra base legal."
+        ],
+        [
+          "Publicidade ou marketing",
+          "Exibem conteúdos e anúncios mais relevantes, inclusive em sites de terceiros.",
+          "Sim."
+        ]
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Os cookies não são utilizados para inferir ou coletar informações sobre a sua saúde para fins publicitários. Ao acessar o site, você poderá aceitar, recusar ou personalizar os cookies não essenciais por meio do aviso exibido na página e alterar suas escolhas a qualquer momento. Você também pode bloquear ou excluir cookies nas configurações do seu navegador, ciente de que algumas funcionalidades podem ser afetadas."
+    },
+    {
+      "type": "heading",
+      "text": "12. Segurança da informação"
+    },
+    {
+      "type": "paragraph",
+      "text": "A MH Vida adota medidas técnicas e administrativas razoáveis e compatíveis com a natureza dos dados tratados, especialmente dos dados de saúde, para protegê-los contra acessos não autorizados e situações acidentais ou ilícitas de destruição, perda, alteração, comunicação ou difusão. Essas medidas são orientadas pelos seguintes princípios:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Necessidade e acesso restrito:** cada pessoa acessa apenas os dados indispensáveis às suas atividades.",
+        "**Confidencialidade:** colaboradores, profissionais de saúde e fornecedores estão sujeitos a deveres de sigilo legais, éticos ou contratuais.",
+        "**Controle e rastreabilidade:** o acesso a sistemas e informações é controlado e pode ser registrado e monitorado.",
+        "**Prevenção e melhoria contínua:** políticas internas, treinamentos e revisões periódicas das práticas de segurança, acompanhando a evolução tecnológica.",
+        "**Exigências a terceiros:** fornecedores que tratam dados em nosso nome devem adotar padrões de segurança e proteção de dados compatíveis com os nossos."
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Nenhum sistema é completamente imune a riscos. Por isso, além das medidas adotadas pela MH Vida, recomendamos que você mantenha suas senhas em sigilo, utilize dispositivos e redes confiáveis e desconfie de contatos que solicitem dados em nome da MH Vida por canais não oficiais. A MH Vida não solicita senhas por telefone, e-mail ou aplicativos de mensagens."
+    },
+    {
+      "type": "heading",
+      "text": "13. Por quanto tempo os dados são mantidos"
+    },
+    {
+      "type": "paragraph",
+      "text": "Os dados pessoais são mantidos pelo tempo necessário para cumprir as finalidades para as quais foram coletados e, após esse período, pelo prazo exigido por obrigações legais e regulatórias ou para o exercício regular de direitos. Os prazos variam conforme o tipo de dado. Por exemplo:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Prontuário do paciente, quando houver atendimento em rede própria:** mantido pelo prazo mínimo previsto na Lei nº 13.787/2018 e nas normas dos conselhos profissionais, contado do último registro, podendo ser preservado por prazo superior quando houver obrigação ou justificativa legítima.",
+        "**Dados contratuais, cadastrais e financeiros:** mantidos durante a vigência do relacionamento e pelos prazos prescricionais, fiscais e regulatórios aplicáveis, inclusive os da legislação de saúde suplementar.",
+        "**Registros de acesso ao site:** mantidos pelo prazo mínimo previsto no Marco Civil da Internet (Lei nº 12.965/2014) ou por prazo superior quando necessário para fins de segurança ou defesa de direitos.",
+        "**Dados tratados com base no consentimento:** mantidos até a revogação do consentimento, ressalvadas as hipóteses legais de conservação."
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Encerrado o prazo de retenção, os dados serão eliminados de forma segura ou anonimizados. A conservação após o término do tratamento somente ocorrerá nas hipóteses do art. 16 da LGPD."
+    },
+    {
+      "type": "heading",
+      "text": "14. Seus direitos como titular"
+    },
+    {
+      "type": "paragraph",
+      "text": "Nos termos do art. 18 da LGPD, você pode solicitar à MH Vida, a qualquer momento e gratuitamente:"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "**Confirmação** da existência de tratamento dos seus dados.",
+        "**Acesso** aos dados pessoais que tratamos sobre você.",
+        "**Correção** de dados incompletos, inexatos ou desatualizados.",
+        "**Anonimização, bloqueio ou eliminação** de dados desnecessários, excessivos ou tratados em desconformidade com a LGPD.",
+        "**Portabilidade** dos dados a outro fornecedor de serviço ou produto, conforme regulamentação da ANPD e observados os segredos comercial e industrial.",
+        "**Eliminação** dos dados tratados com base no consentimento, ressalvadas as hipóteses legais de conservação.",
+        "**Informação** sobre as entidades públicas e privadas com as quais compartilhamos seus dados.",
+        "**Informação** sobre a possibilidade de não fornecer consentimento e sobre as consequências da negativa.",
+        "**Revogação do consentimento**, quando esta for a base legal do tratamento.",
+        "**Oposição** a tratamento realizado com base em outra hipótese legal, em caso de descumprimento da LGPD.",
+        "**Revisão** de decisões tomadas unicamente com base em tratamento automatizado que afetem seus interesses (art. 20 da LGPD)."
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Alguns direitos podem ter limites. Por exemplo, dados do prontuário e informações exigidas pela ANS ou por outras autoridades não podem ser eliminados antes do prazo legal de guarda. Nesses casos, explicaremos os motivos do atendimento parcial ou da recusa."
+    },
+    {
+      "type": "paragraph",
+      "text": "Você também pode apresentar reclamação à ANPD. Recomendamos, contudo, que entre em contato primeiro com o nosso Encarregado, para que possamos resolver sua solicitação com agilidade."
+    },
+    {
+      "type": "heading",
+      "text": "15. Como exercer seus direitos"
+    },
+    {
+      "type": "paragraph",
+      "text": "As solicitações relacionadas aos seus dados pessoais podem ser feitas pelos seguintes canais:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**E-mail do Encarregado:** [E-MAIL DO RESPONSÁVEL]",
+        "**Formulário eletrônico:** [LINK DO FORMULÁRIO, SE HOUVER]",
+        "**Telefone:** [TELEFONE DA CENTRAL DE ATENDIMENTO]",
+        "**Presencialmente ou por correspondência:** Rua Augusto de Vasconcelos, nº 544, loja 148, Campo Grande, Rio de Janeiro – RJ, CEP 23050-340, aos cuidados do Encarregado pelo Tratamento de Dados Pessoais"
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Para proteger seus dados, poderemos solicitar informações ou documentos que confirmem sua identidade ou, no caso de representante, a comprovação de poderes. Pedidos de acesso a dados de saúde, especialmente de prontuário, observarão também as regras de sigilo profissional e as normas dos conselhos de classe."
+    },
+    {
+      "type": "paragraph",
+      "text": "A confirmação de existência de tratamento ou o acesso aos dados serão fornecidos, em formato simplificado, imediatamente ou, por declaração clara e completa, em até 15 (quinze) dias contados do requerimento, conforme o art. 19 da LGPD. As demais solicitações serão respondidas nos prazos previstos na legislação e na regulamentação da ANPD. Se não for possível atender ao pedido de imediato, informaremos os motivos."
+    },
+    {
+      "type": "heading",
+      "text": "16. Dados de crianças e adolescentes"
+    },
+    {
+      "type": "paragraph",
+      "text": "A MH Vida pode tratar dados de crianças e adolescentes, por exemplo, quando são beneficiários dependentes ou pacientes da rede própria. Esse tratamento é realizado sempre no seu melhor interesse, nos termos do art. 14 da LGPD, do Estatuto da Criança e do Adolescente (Lei nº 8.069/1990) e da regulamentação da ANPD."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Os dados são tratados com base nas hipóteses legais aplicáveis, inclusive a tutela da saúde e o cumprimento de obrigações legais e regulatórias. Quando a base legal for o consentimento, ele será obtido de forma específica e em destaque de pelo menos um dos pais ou do responsável legal.",
+        "Os pais ou responsáveis legais exercem os direitos previstos nesta Política em nome da criança ou do adolescente, observadas a legislação aplicável e as normas éticas das profissões de saúde quanto ao sigilo devido ao paciente adolescente.",
+        "Coletamos apenas os dados estritamente necessários e não condicionamos a participação em atividades ao fornecimento de dados além dos indispensáveis.",
+        "Os canais digitais da MH Vida não são direcionados ao público infantil, e dados de crianças e adolescentes não são utilizados para fins de marketing."
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "17. Dados de terceiros fornecidos por você"
+    },
+    {
+      "type": "paragraph",
+      "text": "Em algumas situações, você poderá nos fornecer dados de outras pessoas, como dependentes, familiares, acompanhantes, contatos de emergência ou pessoas sob sua responsabilidade legal."
+    },
+    {
+      "type": "paragraph",
+      "text": "Ao fazê-lo, você declara que possui legitimidade para compartilhar essas informações, que elas são verdadeiras e atualizadas e que informou o terceiro sobre o compartilhamento e sobre esta Política, quando cabível. Você é responsável pela legitimidade desse compartilhamento, nos termos da legislação aplicável. Os dados de terceiros serão tratados pela MH Vida com a mesma proteção conferida aos seus próprios dados."
+    },
+    {
+      "type": "heading",
+      "text": "18. Comunicações e marketing"
+    },
+    {
+      "type": "paragraph",
+      "text": "A MH Vida envia dois tipos de comunicação:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Comunicações de serviço:** confirmações e lembretes de agendamento, avisos sobre resultados, autorizações, cobranças, alterações contratuais ou regulatórias e orientações relacionadas ao seu atendimento ou contrato. Por serem necessárias à prestação do serviço, não dependem de consentimento.",
+        "**Comunicações institucionais e informativas:** conteúdos sobre prevenção e promoção da saúde, novidades, campanhas e serviços da MH Vida. Essas comunicações são enviadas com base no consentimento ou no legítimo interesse, conforme o caso, sempre com a possibilidade de descadastramento."
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Você pode deixar de receber comunicações institucionais e informativas a qualquer momento, pelo link de descadastramento presente nas mensagens, quando houver, ou pelos canais da seção 15. O descadastramento não interrompe as comunicações de serviço."
+    },
+    {
+      "type": "paragraph",
+      "text": "Dados de saúde não são utilizados para fins publicitários nem para obtenção de vantagem econômica, nos termos do art. 11, § 4º, da LGPD. Programas de prevenção e acompanhamento que utilizem informações de saúde têm caráter assistencial e observam as bases legais aplicáveis."
+    },
+    {
+      "type": "heading",
+      "text": "19. Incidentes de segurança"
+    },
+    {
+      "type": "paragraph",
+      "text": "Caso ocorra um incidente de segurança envolvendo dados pessoais, a MH Vida adotará as medidas cabíveis para apurar os fatos, conter e mitigar seus efeitos e prevenir novas ocorrências."
+    },
+    {
+      "type": "paragraph",
+      "text": "Quando o incidente puder acarretar risco ou dano relevante aos titulares, a MH Vida comunicará a ANPD e os titulares afetados, nos prazos e na forma previstos no art. 48 da LGPD e no Regulamento de Comunicação de Incidente de Segurança da ANPD. A comunicação informará, entre outros pontos, a natureza dos dados afetados, os riscos envolvidos, as medidas adotadas e as recomendações para reduzir eventuais prejuízos."
+    },
+    {
+      "type": "paragraph",
+      "text": "Se você identificar qualquer situação que possa indicar um incidente envolvendo dados tratados pela MH Vida, comunique imediatamente o Encarregado pelo canal [E-MAIL DO RESPONSÁVEL]."
+    },
+    {
+      "type": "heading",
+      "text": "20. Atualizações desta Política"
+    },
+    {
+      "type": "paragraph",
+      "text": "Esta Política poderá ser atualizada a qualquer tempo para refletir alterações legislativas, regulatórias, tecnológicas ou operacionais. A versão vigente estará sempre disponível em [SITE], com a indicação da data da última atualização."
+    },
+    {
+      "type": "paragraph",
+      "text": "Em caso de alterações relevantes, especialmente quanto às finalidades do tratamento ou ao compartilhamento de dados, a MH Vida dará publicidade à mudança por meio do site ou de outros canais adequados e, quando exigido por lei, solicitará novo consentimento."
+    },
+    {
+      "type": "heading",
+      "text": "21. Contato e atendimento ao titular"
+    },
+    {
+      "type": "paragraph",
+      "text": "Para dúvidas, sugestões, reclamações ou solicitações relacionadas a esta Política ou ao tratamento dos seus dados pessoais, utilize os canais abaixo:"
+    },
+    {
+      "type": "table",
+      "headers": [
+        "**Canal**",
+        "**Contato**"
+      ],
+      "rows": [
+        [
+          "Encarregado pelo Tratamento de Dados (DPO)",
+          "[NOME DO RESPONSÁVEL] – [E-MAIL DO RESPONSÁVEL]"
+        ],
+        [
+          "Formulário de solicitações",
+          "[LINK DO FORMULÁRIO, SE HOUVER]"
+        ],
+        [
+          "Central de atendimento",
+          "[TELEFONE] – [HORÁRIO DE ATENDIMENTO]"
+        ],
+        [
+          "Ouvidoria (se aplicável)",
+          "[TELEFONE E/OU E-MAIL DA OUVIDORIA]"
+        ],
+        [
+          "Endereço para correspondência",
+          "Rua Augusto de Vasconcelos, nº 544, loja 148, Campo Grande, Rio de Janeiro – RJ, CEP 23050-340, aos cuidados do Encarregado"
+        ]
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Se sua dúvida ou reclamação não for resolvida por esses canais, você poderá recorrer à ANPD e, em matérias relacionadas a planos de saúde, à ANS."
+    },
+    {
+      "type": "heading",
+      "text": "22. Disposições finais"
+    },
+    {
+      "type": "paragraph",
+      "text": "Esta Política complementa os contratos, termos de uso e demais documentos que regem a sua relação com a MH Vida. Documentos específicos, como termos de consentimento ou contratos de plano de saúde, podem trazer informações adicionais sobre o tratamento de dados em determinados serviços, sempre de forma compatível com esta Política e com a legislação aplicável."
+    },
+    {
+      "type": "paragraph",
+      "text": "Nenhuma disposição desta Política limita os direitos assegurados aos titulares pela LGPD, pelo Código de Defesa do Consumidor ou por outras normas aplicáveis. Caso alguma disposição seja considerada inválida, as demais permanecerão em vigor."
+    },
+    {
+      "type": "paragraph",
+      "text": "Esta Política é regida pela legislação brasileira. Fica eleito o foro do domicílio do titular para dirimir eventuais controvérsias, quando se tratar de relação de consumo, ou, nos demais casos, o foro da Comarca da Capital do Estado do Rio de Janeiro, ressalvadas as competências legais específicas."
+    },
+    {
+      "type": "paragraph",
+      "text": "**Vigência:** esta Política entra em vigor em [DATA DE VIGÊNCIA]."
+    },
+    {
+      "type": "paragraph",
+      "text": "**Versão:** [NÚMERO DA VERSÃO] – **Última atualização:** [DATA]"
+    },
+    {
+      "type": "paragraph",
+      "text": "MH VIDA – OPERADORA DE PLANOS DE SAÚDE LTDA – CNPJ 03.670.297/0001-90 – Registro ANS nº [NÚMERO DO REGISTRO NA ANS]"
+    }
+  ]
+}
